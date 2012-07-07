@@ -60,6 +60,8 @@ class Api < Goliath::API
   # POST /upload returns json with url to uploaded file
   #
   # @example
+  #   $ curl -X POST  -F file_uuid=some_uuid_here -F file=@spec/fixtures/files/upload1.txt http://localhost:9000/upload
+  #   #=> {"url":"http://localhost:9000/uploads/some_uuid_here"}
   #
   def upload(env)
     uuid = params['file_uuid']
