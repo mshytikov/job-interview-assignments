@@ -7,10 +7,11 @@
 # 
 #
 
+ENV['RACK_ENV'] ||= 'test'
+
 require_relative '../super_upload.rb'
 require 'goliath/test_helper'
 
-Goliath.env = :test
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # # in spec/support/ and its subdirectories.
