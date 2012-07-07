@@ -1,5 +1,9 @@
 class Api < Goliath::API
-  use Goliath::Rack::Tracer
+
+  use(Rack::Static,                     # render static files from ./public
+      :root => Goliath::Application.app_path("public"),
+      :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images'])
+
   def on_body(env, data)
     env.logger.info 'received data: ' + data
   end
@@ -7,4 +11,6 @@ class Api < Goliath::API
   def response(env)
     [200, {}, "Hello World"]
   end
+
+
 end
