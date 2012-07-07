@@ -53,4 +53,16 @@ describe Api do
       first_uuid.should_not eq(second_uuid)
     end
   end
+
+  describe "GET /uploads/:uuid" do
+    it "should returns file from uploads dir"  do
+      with_api(Api) do
+        get_request(:path => '/uploads/test-non-uuid-file-txt') do |c| 
+          c.response_header.status.should == 200
+          c.response.should == "This is test uploaded file"
+        end
+      end
+    end
+  end
+
 end
