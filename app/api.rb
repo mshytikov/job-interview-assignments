@@ -24,6 +24,8 @@ class Api < Goliath::API
       hello_world
     when '/uuid.json'
       uuid
+    when /\A\/progress\/(.+)/
+      progress(env, :file_uuid)
     when '/upload'
       only_post_allowed!(env)
       upload(env)
@@ -76,5 +78,14 @@ class Api < Goliath::API
     [ 201, {'Content-Type' => 'application/json', 'Location' => url}, { url: url} ]
   end
 
+  # GET /progress/:file_uuid returns json with progress
+  #
+  # @example
+  #   #=> {"state":"done"}
+  #
+  def progress(env, file_uuid)
+    state = "done"
+    [ 200, {'Content-Type' => 'application/json'}, { state: state} ]
+  end
 
 end
