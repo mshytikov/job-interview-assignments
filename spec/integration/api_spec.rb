@@ -34,19 +34,23 @@ describe Api do
           c.response_header.status.should == 200
           resp = from_json(c.response)
           resp.should be_instance_of Hash
-          resp.should have_key("uuid")
+          resp.should have_key('uuid')
           resp.should have(1).pair
-          resp[:uuid].should == /\A\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\z/ #very simple regexp for uuid format test
+          resp['uuid'].should =~ /\A\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\z/ #very simple regexp for uuid format test
         end
       end
     end
 
     it "responds new uuid each time" do
+      first_uuid = second_uuid = nil
       with_api(Api) do
-        first_uuid = get_request(:path => '/uuid.json'){|c| from_json(c.response)["uuid"] }
-        second_uuid = get_request(:path => '/uuid.json'){|c| from_json(c.response)["uuid"] }
-        first_uuid.should_not be_eq(second_uuid)
+        get_request(:path => '/uuid.json'){|c| first_uuid = from_json(c.response)['uuid'] }
       end
+      with_api(Api) do
+        get_request(:path => '/uuid.json'){|c| second_uuid = from_json(c.response)['uuid'] }
+      end
+
+      first_uuid.should_not eq(second_uuid)
     end
   end
 end
