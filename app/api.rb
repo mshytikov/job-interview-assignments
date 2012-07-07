@@ -9,9 +9,9 @@ class Api < Goliath::API
 
 
   #Commented due to Params and rack.input  omg spent 1 hour to find the problem
-  #def on_headers(env, headers)
-    #env.logger.info 'received headers: ' + headers.inspect
-  #end
+  def on_headers(env, headers)
+    env.logger.info 'received headers: ' + headers.inspect
+  end
 
   #def on_body(env, data)
     #env.logger.info 'received data: ' + data
@@ -36,6 +36,10 @@ class Api < Goliath::API
 
   def only_post_allowed!(env)
     raise(Goliath::Validation::MethodNotAllowedError) if env[Goliath::Request::REQUEST_METHOD] != 'POST'
+  end
+
+  def full_file_path(file_uuid)
+    File.join(Goliath::Application.app_path("public"), "/uploads", file_uuid)
   end
 
 
@@ -73,7 +77,7 @@ class Api < Goliath::API
     return validation_error(400, "File not uploded") if tempfile.nil?
 
     url = "#{env.config[:server_url]}/uploads/#{uuid}"
-    new_path = File.join(Goliath::Application.app_path("public"), "/uploads", uuid)
+    new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)
     [ 201, {'Content-Type' => 'application/json', 'Location' => url}, { url: url} ]
   end
@@ -85,12 +89,14 @@ class Api < Goliath::API
   #   #=> {"state":"uploading", "received":10, "size":110}
   #
   def progress(env, file_uuid)
-    file_path = File.join(Goliath::Application.app_path("public"), "/uploads", file_uuid)
-    if File.exists?(file_path)
-     [ 200, {'Content-Type' => 'application/json'}, { state: "done" } ] 
+    if p = env.config[:progress][file_uuid]
+      [ 200, {'Content-Type' => 'application/json'}, p ]
+    elsif File.exists?(full_file_path(file_uuid))
+      [ 200, {'Content-Type' => 'application/json'}, { state: "done" } ] 
     else
       raise Goliath::Validation::NotFoundError
     end
   end
+
 
 end

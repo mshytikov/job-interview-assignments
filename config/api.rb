@@ -1,4 +1,4 @@
-
+config[:progress] = {}
 environment :production do
 end
 
