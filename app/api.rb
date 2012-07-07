@@ -26,9 +26,9 @@ class Api < Goliath::API
       uuid
     when /\A\/progress\/(.+)/
       progress(env, $1)
-    when '/upload'
+    when /\A\/upload\/(.+)/
       only_post_allowed!(env)
-      upload(env)
+      upload(env, $1)
     else
       raise Goliath::Validation::NotFoundError
     end
@@ -66,11 +66,10 @@ class Api < Goliath::API
   # POST /upload returns json with url to uploaded file
   #
   # @example
-  #   $ curl -X POST  -F file_uuid=some_uuid_here -F file=@spec/fixtures/files/upload1.txt http://localhost:9000/upload
-  #   #=> {"url":"http://localhost:9000/uploads/some_uuid_here"}
+  #   $ curl -X POST  -F file=@spec/fixtures/files/upload1.txt http://localhost:9000/upload/file-uuid
+  #   #=> {"url":"http://localhost:9000/uploads/file-uuid"}
   #
-  def upload(env)
-    uuid = params['file_uuid']
+  def upload(env, uuid)
     uploaded_file = params['file'] || {}
     tempfile = uploaded_file[:tempfile]
     

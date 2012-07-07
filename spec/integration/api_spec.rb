@@ -66,16 +66,16 @@ describe Api do
     end
   end
 
-  describe "POST /upload" do
+  describe "POST /upload/:file_uuid" do
     describe "successful case" do
       let(:uuid){ SecureRandom.uuid }
       let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
-      let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
+      let(:body){ MultipartBody.new(file: File.new('./spec/fixtures/files/upload1.txt')) }
       let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
       it "should upload file" do
         with_api(Api, api_options) do
-          post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
+          post_request({path: "/upload/#{uuid}", body: body.to_s, head: head}, err) do |c|
             c.response_header.status.should == 201
             c.response_header["Location"].should == expected_url
 
@@ -92,7 +92,7 @@ describe Api do
       it "uploaded file should be valid and accesible by url" do
         url_to_file = nil
         with_api(Api, api_options) do
-          post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
+          post_request({path: "/upload/#{uuid}", body: body.to_s, head: head}, err) do |c|
             c.response_header.status.should == 201
             url_to_file = c.response_header["Location"]
           end
@@ -114,7 +114,7 @@ describe Api do
     describe "unsuccessful case" do
       it "returns Method Not Allowed  on GET" do
         with_api(Api) do
-          get_request({path: '/upload'}, err) do |c|
+          get_request({path: '/upload/some-uuid'}, err) do |c|
             c.response_header.status.should == 405
           end
         end
@@ -130,9 +130,9 @@ describe Api do
   describe "GET /progress/:file_uuid" do
     describe "successful case" do
       let(:uuid) {SecureRandom.uuid }
-      let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
+      let(:body){ MultipartBody.new(file: File.new('./spec/fixtures/files/upload1.txt')) }
       let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
-      let(:upload_data){{path: '/upload', body: body.to_s, head: head} }
+      let(:upload_data){{path: "/upload/#{uuid}", body: body.to_s, head: head} }
 
       it "returns correct  progress for uploaded file" do
         with_api(Api, api_options) do
