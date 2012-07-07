@@ -113,7 +113,7 @@ describe Api do
     end
 
     describe "unsuccessful case" do
-      it "returns 404 on GET" do
+      it "returns Method Not Allowed  on GET" do
         with_api(Api) do
           get_request({path: '/upload'}, err) do |c|
             c.response_header.status.should == 405
@@ -128,13 +128,26 @@ describe Api do
 
   end
 
-  describe "GET /progress/:filename" do
-    it "returns correct  progress for uploaded file" do
-      with_api(Api) do
-        get_request(:path => '/progress/test-non-uuid-file-txt') do |c| 
-          c.response_header.status.should == 200
-          resp = from_json(c.response)
-          resp.should == { 'state' => 'done' }
+  describe "GET /progress/:file_uuid" do
+    describe "successful case" do
+      it "returns correct  progress for uploaded file" do
+        with_api(Api) do
+          get_request(:path => '/progress/test-non-uuid-file-txt') do |c| 
+            c.response_header.status.should == 200
+            resp = from_json(c.response)
+            resp.should == { 'state' => 'done' }
+          end
+        end
+      end
+    end
+    describe "unsuccessful case"  do
+      describe "not registred upload" do
+        it "should returns Not Found " do
+          with_api(Api) do
+            get_request({path: "/upload/not-registred-uuid"}, err) do |c|
+              c.response_header.status.should == 404
+            end
+          end
         end
       end
     end
