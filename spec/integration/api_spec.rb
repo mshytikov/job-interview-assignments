@@ -54,7 +54,7 @@ describe Api do
     end
   end
 
-  describe "GET /uploads/:uuid" do
+  describe "GET /uploads/:filename" do
     it "should returns file from uploads dir"  do
       with_api(Api) do
         get_request(:path => '/uploads/test-non-uuid-file-txt') do |c| 
