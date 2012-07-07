@@ -15,4 +15,9 @@ This form also will have file_uuid field which will be used as uniq identifier o
 4. On saving the form will be submited with file_uuid and text
 In case if file upload is in progress notification should be shown like  "submision will be done after file upload complete"
 
+Notes: 
+1. Due to requirements to minimize dependencies I will use plain JS instead of jQuery.
+2. Full page management will be done using JS.
+
+
 
