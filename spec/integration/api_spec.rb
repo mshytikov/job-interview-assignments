@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'multipart_body'
 
 describe Api do
   let(:err) { Proc.new { fail "API request failed" } }
@@ -65,4 +66,30 @@ describe Api do
     end
   end
 
+  describe "POST /uploads" do
+    let(:uuid){ SecureRandom.uuid }
+    let(:expected_url){ "http://localhost:9000/uploads/#{uuid}" }
+
+    it "should upload file" do
+
+      body = MultipartBody.new(file_uuid: uuid ,file:File.new('./spec/fixtures/files/upload1.txt'))
+      head = {'content-type' => "multipart/form-data; boundary=#{body.boundary}"}
+
+      with_api(Api) do
+        post_request({:body => body.to_s, :head => head}, err) do |c|
+          c.response_header.status.should == 201
+          c.response_header["Location"].should == expected_url
+
+          resp = from_json(c.response)
+          c.response_header.should have_key("Location")
+
+          resp.should be_instance_of Hash
+          resp.should have(1).pair
+          resp.should have_key('url')
+          resp['url'].should == expected_url
+        end
+      end
+
+    end
+  end
 end
