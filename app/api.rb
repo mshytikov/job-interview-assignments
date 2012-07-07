@@ -25,7 +25,7 @@ class Api < Goliath::API
     when '/uuid.json'
       uuid
     when /\A\/progress\/(.+)/
-      progress(env, :file_uuid)
+      progress(env, $1)
     when '/upload'
       only_post_allowed!(env)
       upload(env)
@@ -84,8 +84,12 @@ class Api < Goliath::API
   #   #=> {"state":"done"}
   #
   def progress(env, file_uuid)
-    state = "done"
-    [ 200, {'Content-Type' => 'application/json'}, { state: state} ]
+    file_path = File.join(Goliath::Application.app_path("public"), "/uploads", file_uuid)
+    if File.exists?(file_path)
+     [ 200, {'Content-Type' => 'application/json'}, { state: "done" } ] 
+    else
+      raise Goliath::Validation::NotFoundError
+    end
   end
 
 end

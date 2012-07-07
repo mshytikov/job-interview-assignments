@@ -3,7 +3,7 @@ require 'multipart_body'
 
 describe Api do
   let(:err) { Proc.new { fail "API request failed" } }
-
+  let(:api_options){ {:log_file => "log/test.log" }}
 
   describe "GET /" do
     it 'returns "Hello world"' do
@@ -70,7 +70,6 @@ describe Api do
     describe "successful case" do
       let(:uuid){ SecureRandom.uuid }
       let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
-      let(:api_options){ {:log_file => "log/test.log" }}
       let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
       let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
@@ -131,7 +130,7 @@ describe Api do
   describe "GET /progress/:file_uuid" do
     describe "successful case" do
       it "returns correct  progress for uploaded file" do
-        with_api(Api) do
+        with_api(Api, api_options) do
           get_request(:path => '/progress/test-non-uuid-file-txt') do |c| 
             c.response_header.status.should == 200
             resp = from_json(c.response)
@@ -144,7 +143,7 @@ describe Api do
       describe "not registred upload" do
         it "should returns Not Found " do
           with_api(Api) do
-            get_request({path: "/upload/not-registred-uuid"}, err) do |c|
+            get_request({path: "/progress/not-registred-uuid"}, err) do |c|
               c.response_header.status.should == 404
             end
           end
