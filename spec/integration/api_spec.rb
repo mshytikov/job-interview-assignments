@@ -119,4 +119,17 @@ describe Api do
     end
 
   end
+
+  describe "GET /progress/:filename" do
+    it "returns correct  progress for uploaded file" do
+      with_api(Api) do
+        get_request(:path => '/progress/test-non-uuid-file-txt') do |c| 
+          c.response_header.status.should == 200
+          resp = from_json(c.response)
+          resp.should == { 'state' => 'done' }
+        end
+      end
+    end
+  end
+
 end
