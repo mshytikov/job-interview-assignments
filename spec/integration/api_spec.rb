@@ -59,7 +59,7 @@ describe Api do
       with_api(Api) do
         get_request(:path => '/uploads/test-non-uuid-file-txt') do |c| 
           c.response_header.status.should == 200
-          c.response.should == "This is test uploaded file"
+          c.response.should == "This is test uploaded file\n"
         end
       end
     end

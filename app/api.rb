@@ -2,7 +2,7 @@ class Api < Goliath::API
 
   use(Rack::Static,                     # render static files from ./public
       :root => Goliath::Application.app_path("public"),
-      :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images'])
+      :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images', '/uploads'])
 
   use Goliath::Rack::Formatters::JSON
 
