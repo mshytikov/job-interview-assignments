@@ -25,11 +25,17 @@ class Api < Goliath::API
     when '/uuid.json'
       uuid
     when '/upload'
+      only_post_allowed!(env)
       upload(env)
     else
       raise Goliath::Validation::NotFoundError
     end
   end
+
+  def only_post_allowed!(env)
+    raise(Goliath::Validation::MethodNotAllowedError) if env[Goliath::Request::REQUEST_METHOD] != 'POST'
+  end
+
 
   def hello_world
     [200, {}, 'Hello World']
