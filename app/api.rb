@@ -11,11 +11,18 @@ class Api < Goliath::API
   #Commented due to Params and rack.input  omg spent 1 hour to find the problem
   def on_headers(env, headers)
     env.logger.info 'received headers: ' + headers.inspect
+    init_progress(env, headers) if env['PATH_INFO'] =~ /\A\/upload\/.+/
   end
 
   #def on_body(env, data)
     #env.logger.info 'received data: ' + data
   #end
+  #
+   
+  def init_progress(env, headers)
+    uuid =  env['PATH_INFO'][/\A\/upload\/(.+)/, 1]
+    env.config[:progress][uuid] = { state: "uploading", received: "0", size: headers['Content-Length']}
+  end
 
   def response(env)
     #simple hand made routing due to routing was removed from goliath
