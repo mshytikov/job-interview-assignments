@@ -4,13 +4,18 @@ class Api < Goliath::API
       :root => Goliath::Application.app_path("public"),
       :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images', '/uploads'])
 
+  use Goliath::Rack::Params
   use Goliath::Rack::Formatters::JSON
 
 
+  #Commented due to Params and rack.input  omg spent 1 hour to find the problem
+  #def on_headers(env, headers)
+    #env.logger.info 'received headers: ' + headers.inspect
+  #end
 
-  def on_body(env, data)
-    env.logger.info 'received data: ' + data
-  end
+  #def on_body(env, data)
+    #env.logger.info 'received data: ' + data
+  #end
 
   def response(env)
     #simple hand made routing due to routing was removed from goliath
@@ -20,7 +25,7 @@ class Api < Goliath::API
     when '/uuid.json'
       uuid
     when '/upload'
-      upload
+      upload(env)
     else
       raise Goliath::Validation::NotFoundError
     end
@@ -41,7 +46,7 @@ class Api < Goliath::API
     [
       200,
       {'Content-Type' => 'application/json'},
-      { :uuid => SecureRandom.uuid}
+      { uuid: SecureRandom.uuid}
     ]
   end
 
@@ -50,12 +55,10 @@ class Api < Goliath::API
   #
   # @example
   #
-  def upload
-    [
-      200,
-      {'Content-Type' => 'application/json'},
-      { :uuid => SecureRandom.uuid}
-    ]
+  def upload(env)
+    uuid = params['file_uuid']
+    url = "#{env.config[:server_url]}/uploads/#{uuid}"
+    [ 201, {'Content-Type' => 'application/json', 'Location' => url}, { url: url} ]
   end
 
 

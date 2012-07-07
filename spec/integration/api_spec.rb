@@ -68,21 +68,19 @@ describe Api do
 
   describe "POST /upload" do
     let(:uuid){ SecureRandom.uuid }
-    let(:expected_url){ "http://localhost:9000/upload/#{uuid}" }
+    let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
     let(:api_options){ {:log_file => "log/test.log" }}
+    let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
+    let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
     it "should upload file" do
-
-      body = MultipartBody.new(file_uuid: uuid ,file:File.new('./spec/fixtures/files/upload1.txt'))
-      head = {'content-type' => "multipart/form-data; boundary=#{body.boundary}"}
-
       with_api(Api, api_options) do
         post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
           c.response_header.status.should == 201
           c.response_header["Location"].should == expected_url
 
           resp = from_json(c.response)
-          c.response_header.should have_key("Location")
+          c.response_header.should have_key("LOCATION")
 
           resp.should be_instance_of Hash
           resp.should have(1).pair
