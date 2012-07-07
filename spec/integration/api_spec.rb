@@ -80,7 +80,6 @@ describe Api do
           c.response_header["Location"].should == expected_url
 
           resp = from_json(c.response)
-          c.response_header.should have_key("LOCATION")
 
           resp.should be_instance_of Hash
           resp.should have(1).pair
@@ -94,7 +93,8 @@ describe Api do
       url_to_file = nil
       with_api(Api, api_options) do
         post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
-          url_to_file = c.response_header["LOCATION"]
+          c.response_header.status.should == 201
+          url_to_file = c.response_header["Location"]
         end
       end
 
@@ -107,7 +107,7 @@ describe Api do
         end
       end
 
-      file_content.should == "UPLOAD_TEST1"
+      file_content.should == "UPLOAD_TEST1\n"
     end
   end
 end

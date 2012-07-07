@@ -57,7 +57,14 @@ class Api < Goliath::API
   #
   def upload(env)
     uuid = params['file_uuid']
+    uploaded_file = params['file'] || {}
+    tempfile = uploaded_file[:tempfile]
+    
+    return validation_error(400, "File not uploded") if tempfile.nil?
+
     url = "#{env.config[:server_url]}/uploads/#{uuid}"
+    new_path = File.join(Goliath::Application.app_path("public"), "/uploads", uuid)
+    FileUtils.mv(tempfile.path, new_path)
     [ 201, {'Content-Type' => 'application/json', 'Location' => url}, { url: url} ]
   end
 
