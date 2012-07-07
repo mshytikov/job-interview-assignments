@@ -27,4 +27,18 @@ describe Api do
   end
 
 
+  describe "GET /uuid.json" do
+    it "responds new uuid" do
+      with_api(Api) do
+        get_request(:path => '/uuid.json') do |c|
+          c.response_header.status.should == 200
+          resp = from_json(c.response)
+          resp.should be_instance_of Hash
+          resp.should have_key("uuid")
+          resp.should have(1).pair
+          resp[:uuid].should == /\A\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\z/ #very simple regexp for uuid format test
+        end
+      end
+    end
+  end
 end
