@@ -19,6 +19,8 @@ class Api < Goliath::API
       hello_world
     when '/uuid.json'
       uuid
+    when '/upload'
+      upload
     else
       raise Goliath::Validation::NotFoundError
     end
@@ -36,6 +38,19 @@ class Api < Goliath::API
   #   #=> {"uuid":"86430adf-3b81-4fd2-b4fe-625b73c2fd6c"}
   # 
   def uuid
+    [
+      200,
+      {'Content-Type' => 'application/json'},
+      { :uuid => SecureRandom.uuid}
+    ]
+  end
+
+
+  # POST /upload returns json with url to uploaded file
+  #
+  # @example
+  #
+  def upload
     [
       200,
       {'Content-Type' => 'application/json'},
