@@ -28,6 +28,13 @@ class Api < Goliath::API
     [200, {}, 'Hello World']
   end
 
+
+  # GET /uuid.json returns new uuid
+  # 
+  # @example
+  #   $ curl localhost:9000/uuid.json
+  #   #=> {"uuid":"86430adf-3b81-4fd2-b4fe-625b73c2fd6c"}
+  # 
   def uuid
     [
       200,
