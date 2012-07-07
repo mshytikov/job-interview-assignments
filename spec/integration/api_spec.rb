@@ -129,12 +129,33 @@ describe Api do
 
   describe "GET /progress/:file_uuid" do
     describe "successful case" do
+      let(:uuid) {SecureRandom.uuid }
+      let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
+      let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
+      let(:upload_data){{path: '/upload', body: body.to_s, head: head} }
+
       it "returns correct  progress for uploaded file" do
         with_api(Api, api_options) do
           get_request(:path => '/progress/test-non-uuid-file-txt') do |c| 
             c.response_header.status.should == 200
             resp = from_json(c.response)
             resp.should == { 'state' => 'done' }
+          end
+        end
+      end
+      it "returns correct  progress for upload in progress" do
+        with_api(Api, api_options) do
+          conn = create_test_request(upload_data)
+          conn.extend(SuperUpload::SendDataHook)
+          req = conn.aget()
+          req.errback &err
+          req.errback { stop }
+
+          get_request(:path => "/progress/#{uuid}") do |c| 
+            c.response_header.status.should == 200
+            resp = from_json(c.response)
+            resp.should == { 'state' => 'uploading', 'size' => '10', 'total' => '40' }
+            EM.next_tick{ conn.release_send_data! }
           end
         end
       end
