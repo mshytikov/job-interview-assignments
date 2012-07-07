@@ -67,47 +67,56 @@ describe Api do
   end
 
   describe "POST /upload" do
-    let(:uuid){ SecureRandom.uuid }
-    let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
-    let(:api_options){ {:log_file => "log/test.log" }}
-    let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
-    let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
+    describe "successful case" do
+      let(:uuid){ SecureRandom.uuid }
+      let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
+      let(:api_options){ {:log_file => "log/test.log" }}
+      let(:body){ MultipartBody.new(file_uuid: uuid ,file: File.new('./spec/fixtures/files/upload1.txt')) }
+      let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
-    it "should upload file" do
-      with_api(Api, api_options) do
-        post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
-          c.response_header.status.should == 201
-          c.response_header["Location"].should == expected_url
+      it "should upload file" do
+        with_api(Api, api_options) do
+          post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
+            c.response_header.status.should == 201
+            c.response_header["Location"].should == expected_url
 
-          resp = from_json(c.response)
+            resp = from_json(c.response)
 
-          resp.should be_instance_of Hash
-          resp.should have(1).pair
-          resp.should have_key('url')
-          resp['url'].should == expected_url
+            resp.should be_instance_of Hash
+            resp.should have(1).pair
+            resp.should have_key('url')
+            resp['url'].should == expected_url
+          end
         end
+      end
+
+      it "uploaded file should be valid and accesible by url" do
+        url_to_file = nil
+        with_api(Api, api_options) do
+          post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
+            c.response_header.status.should == 201
+            url_to_file = c.response_header["Location"]
+          end
+        end
+
+        file_content = nil
+        with_api(Api) do |api| 
+          path = url_to_file.sub(api.config[:server_url], '')
+          get_request(:path => path) do |c|
+            c.response_header.status.should == 200
+            file_content = c.response  
+          end
+        end
+
+        file_content.should == "UPLOAD_TEST1\n"
       end
     end
 
-    it "uploaded file should be valid and accesible by url" do
-      url_to_file = nil
-      with_api(Api, api_options) do
-        post_request({path: '/upload', body: body.to_s, head: head}, err) do |c|
-          c.response_header.status.should == 201
-          url_to_file = c.response_header["Location"]
-        end
+    describe "unsuccessful case" do
+      it "should raise exception on unregistred uuid" do
+        pending "UUID filtering should be added"
       end
-
-      file_content = nil
-      with_api(Api) do |api| 
-        path = url_to_file.sub(api.config[:server_url], '')
-        get_request(:path => path) do |c|
-          c.response_header.status.should == 200
-          file_content = c.response  
-        end
-      end
-
-      file_content.should == "UPLOAD_TEST1\n"
     end
+
   end
 end
