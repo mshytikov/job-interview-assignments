@@ -82,6 +82,7 @@ class Api < Goliath::API
   #
   # @example
   #   #=> {"state":"done"}
+  #   #=> {"state":"uploading", "received":10, "size":110}
   #
   def progress(env, file_uuid)
     file_path = File.join(Goliath::Application.app_path("public"), "/uploads", file_uuid)
