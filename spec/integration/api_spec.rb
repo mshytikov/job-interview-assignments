@@ -79,7 +79,7 @@ describe Api do
             c.response_header.status.should == 201
             c.response_header["Location"].should == expected_url
             c.response.should include("<div id='state'>compleated</div>")
-            c.response.should include("href='#{expected_url}'")
+            c.response.should include("id='file_url' href='#{expected_url}'")
           end
         end
       end

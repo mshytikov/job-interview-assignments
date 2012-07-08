@@ -98,7 +98,7 @@ class Api < Goliath::API
     new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)
     [ 201, {'Content-Type' => 'text/html', 'Location' => url},
-      "<div id='state'>compleated</div><a href='#{url}'>Uploaded to here</a>"
+      "<div id='state'>compleated</div><a id='file_url' href='#{url}'>Uploaded to here</a>"
     ]
   end
 

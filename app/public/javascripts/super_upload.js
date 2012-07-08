@@ -58,6 +58,11 @@ function setProgress(p){
  
 function uploadCompleated(){
   document.getElementById('progress').innerHTML = "100";
+
+  //copy url to main doc
+  
+  var link = getIframeDoc().getElementById('file_url')
+  document.body.appendChild(link);
 }
 
 function updateProgress(){
