@@ -45,7 +45,7 @@ function getIframeState(){
 }
 
 function setTimer(){
-  setTimeout(checkIframeStatus, 100);
+  setTimeout(checkIframeStatus, 1000);
 }
 
 

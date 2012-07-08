@@ -7,7 +7,7 @@ function sendJSONP(url, callback) {
     return;
   }
 
-  url += '?callback='+callback;
+  url += '?callback='+callback+'&random'+ Math.random();
 
   var e = Conf.jsonpElement;
   if (e) {
