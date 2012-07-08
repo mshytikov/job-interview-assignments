@@ -92,6 +92,8 @@ class Api < Goliath::API
     
     return validation_error(400, "File not uploded") if tempfile.nil?
 
+    extension = File.extname(uploaded_file[:filename])
+    uuid += extension
     url = "#{env.config[:server_url]}/uploads/#{uuid}"
     new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)

@@ -69,7 +69,7 @@ describe Api do
   describe "POST /upload/:file_uuid" do
     describe "successful case" do
       let(:uuid){ SecureRandom.uuid }
-      let(:expected_url){ "http://localhost:9900/uploads/#{uuid}" }
+      let(:expected_url){ "http://localhost:9900/uploads/#{uuid}.txt" }
       let(:body){ MultipartBody.new(file: File.new('./spec/fixtures/files/upload1.txt')) }
       let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
