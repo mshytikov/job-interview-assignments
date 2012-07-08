@@ -11,6 +11,16 @@
     <h1>Super Upload</h1>
     <div>Progress: <span id="progress">0</span>%</div>
     <iframe id='super_iframe' src="/super_iframe.html"> </iframe>
+
+
+      <form  id='save_form' action="/save" method="POST" onSubmit="save(); return false;" accept-charset="utf-8" >
+        <textarea name="title"> </textarea>
+        <input id='attachment' name='attachment' type='hidden' /> 
+        <input id='save_button' type="submit" />
+        <div id='alert'></div>
+      </form>
+
+    
   </body>
 
 </html>

@@ -1,5 +1,7 @@
 Conf.uuid = null;
 Conf.waiting_for_progress = false;
+Conf.state = 'init';
+Conf.save = false;
 
 
 function fetchUUID(){
@@ -22,14 +24,16 @@ function isIframeReady(){
 function checkIframeStatus(){
   if ( isIframeReady() ){
     var status = getIframeState();
-     if ( status == 'compleated') {
+    Conf.state = 'ready';
+    if ( status == 'compleated') {
       uploadCompleated();
-     } else {
-       if (status == 'uploading') {
-         updateProgress();
-       }
-       setTimer();
-     }
+    } else {
+      if (status == 'uploading') {
+        Conf.state = 'waiting';
+        updateProgress();
+      }
+      setTimer();
+    }
   } else {
     setTimer();
   }
@@ -55,14 +59,19 @@ function setProgress(p){
   }
   document.getElementById('progress').innerHTML = Math.round(v);
 };
- 
+
 function uploadCompleated(){
   document.getElementById('progress').innerHTML = "100";
 
   //copy url to main doc
-  
   var link = getIframeDoc().getElementById('file_url')
-  document.body.appendChild(link);
+  document.body.appendChild(link.cloneNode(true));
+
+  //set hidden attachment value
+  document.getElementById('attachment').value = link.getAttribute("href")
+
+  //auto save form if needed
+  if (Conf.save) { save() }
 }
 
 function updateProgress(){
@@ -77,3 +86,26 @@ function getIframeDoc()
   return  document.getElementById('super_iframe').contentWindow.document;
 }
 
+
+function save(){
+  Conf.save = true;
+
+  //dissable button
+  document.getElementById('save_button').disabled = true;
+
+
+  if (Conf.state == 'submission') {
+    return true;
+  }
+  checkIframeStatus();
+  if (Conf.state == 'ready') {
+    Conf.state == 'submission';
+    document.forms['save_form'].submit();
+  } else {
+    Conf.state = 'waiting';
+    //show alert
+    document.getElementById('alert').innerHTML = 'Saving attachment';
+
+  }
+  return false;
+}

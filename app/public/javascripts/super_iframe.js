@@ -8,4 +8,9 @@ function updateUUID(hash){
 
 function startUpload(){
   document.getElementById('state').innerHTML= 'uploading';
+  autosubmit();
+}
+
+function autosubmit(){
+  document.getElementById('super_form').submit();
 }
