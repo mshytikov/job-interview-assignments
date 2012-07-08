@@ -104,6 +104,18 @@ describe Api do
 
         file_content.should == "UPLOAD_TEST1\n"
       end
+
+      describe "shared progress status" do
+        it "uuid should be unregistred after upload fineshed" do
+          with_api(Api, api_options) do |api|
+            lambda {
+              post_request({path: "/upload/#{uuid}", body: body.to_s, head: head}, err) do |c|
+                c.response_header.status.should == 201
+              end
+            }.should_not change { api.config[:progress].size }
+          end
+        end
+      end
     end
 
     describe "unsuccessful case" do
