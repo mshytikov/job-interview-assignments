@@ -129,7 +129,10 @@ class Api < Goliath::API
     elsif p = env.config[:progress][file_uuid]
       [ 200, {'Content-Type' => 'application/json'}, p ]
     else
-      raise Goliath::Validation::NotFoundError
+      #FIXME should raise  Goliath::Validation::NotFoundError
+      #but JSONP can't hadle this correctly
+      e = Goliath::Validation::NotFoundError.new
+      validation_error(e.status_code, e.message, {'Content-Type' => 'application/json'})
     end
   end
 
