@@ -8,6 +8,7 @@ function updateUUID(hash){
 
 function startUpload(){
   document.getElementById('state').innerHTML= 'uploading';
+  document.body.setAttribute("style", "display: none;");
   autosubmit();
 }
 

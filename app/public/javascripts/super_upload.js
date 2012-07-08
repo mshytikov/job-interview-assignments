@@ -67,10 +67,13 @@ function uploadCompleated(){
 
   //copy url to main doc
   var link = getIframeDoc().getElementById('file_url')
-  document.body.appendChild(link.cloneNode(true));
 
   //set hidden attachment value
   document.getElementById('attachment').value = link.getAttribute("href")
+
+  var iframe = document.getElementById('super_iframe');
+  iframe.parentNode.replaceChild(link.cloneNode(true), iframe);
+
 
   //auto save form if needed
   if (Conf.save) { save() }
