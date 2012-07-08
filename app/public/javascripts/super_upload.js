@@ -1,4 +1,5 @@
 Conf.uuid = null;
+Conf.waiting_for_progress = false;
 
 
 function fetchUUID(){
@@ -40,11 +41,12 @@ function getIframeState(){
 }
 
 function setTimer(){
-  setTimeout(checkIframeStatus, 10);
+  setTimeout(checkIframeStatus, 100);
 }
 
 
 function setProgress(p){
+  Conf.waiting_for_progress = false;
   var v = 0;
   if (p['state'] == 'done') {
     v = 100;
@@ -59,7 +61,10 @@ function uploadCompleated(){
 }
 
 function updateProgress(){
-  sendJSONP("/progress/"+Conf.uuid, 'setProgress');
+  if ( Conf.waiting_for_progress == false ) {
+    Conf.waiting_for_progress = true;
+    sendJSONP("/progress/"+Conf.uuid, 'setProgress');
+  }
 }
 
 function getIframeDoc()
