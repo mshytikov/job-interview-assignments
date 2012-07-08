@@ -182,4 +182,17 @@ describe Api do
     end
   end
 
+  describe "POST /save" do
+    let(:text) { "Some text"}
+    let(:attachment) { "http://some.attachment.com" }
+    it "should respond with saved results" do
+      with_api(Api) do
+        post_request({path: "/save", text: text, attachment: attachment}, err) do |c|
+          c.response_header.status.should == 201
+          c.response.should include(text)
+          c.response.should include(attachment)
+        end
+      end
+    end
+  end
 end
