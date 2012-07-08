@@ -1,5 +1,7 @@
 class Api < Goliath::API
 
+  UPLOAD_ENDPOINT = /\A\/upload\/(.+)/
+
   use(Rack::Static,                     # render static files from ./public
       :root => Goliath::Application.app_path("public"),
       :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images', '/uploads'])
@@ -8,21 +10,27 @@ class Api < Goliath::API
   use Goliath::Rack::Formatters::JSON
 
 
-  #Commented due to Params and rack.input  omg spent 1 hour to find the problem
   def on_headers(env, headers)
-    env.logger.info 'received headers: ' + headers.inspect
-    init_progress(env, headers) if env['PATH_INFO'] =~ /\A\/upload\/.+/
+    init_progress(env, headers) if env['PATH_INFO'] =~ UPLOAD_ENDPOINT
   end
 
-  #def on_body(env, data)
-    #env.logger.info 'received data: ' + data
-  #end
-  #
+  def on_body(env, data)
+    move_progress(env, data) if env['PATH_INFO'] =~ UPLOAD_ENDPOINT
+    env[RACK_INPUT] << data
+  end
+  
    
   def init_progress(env, headers)
-    uuid =  env['PATH_INFO'][/\A\/upload\/(.+)/, 1]
-    env.config[:progress][uuid] = { state: "uploading", received: "0", size: headers['Content-Length']}
+    uuid =  env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+    size =  headers['Content-Length'].to_i
+    env.config[:progress][uuid] = { state: "uploading", received: 0, size: size }
   end
+
+  def move_progress(env, data)
+    uuid =  env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+    env.config[:progress][uuid][:received] += data.bytesize
+  end
+
 
   def response(env)
     #simple hand made routing due to routing was removed from goliath
@@ -33,7 +41,7 @@ class Api < Goliath::API
       uuid
     when /\A\/progress\/(.+)/
       progress(env, $1)
-    when /\A\/upload\/(.+)/
+    when UPLOAD_ENDPOINT
       only_post_allowed!(env)
       upload(env, $1)
     else

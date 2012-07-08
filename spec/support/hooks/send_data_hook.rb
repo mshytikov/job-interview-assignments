@@ -17,7 +17,7 @@ module SuperUpload
         l = data.bytesize
         first_part = data.byteslice(0, l/2)
         @second_part = data.byteslice(l/2, l-l/2)
-        origin_send_data(@first_part)
+        origin_send_data(first_part)
       end
     end
 
