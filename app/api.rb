@@ -20,16 +20,31 @@ class Api < Goliath::API
     move_progress(env, data) if env['PATH_INFO'] =~ UPLOAD_ENDPOINT
     env[RACK_INPUT] << data
   end
+
+  def on_close(env)
+    delete_progress(env) if env['PATH_INFO'] =~ UPLOAD_ENDPOINT
+  end
+
+  def uuid_from_env(env)
+    env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+  end
+
+  def delete_progress(env)
+    uuid = uuid_from_env(env)
+    env.config[:progress].delete(uuid)
+    env.logger.info "Upload ended. Active uploads = %s"%[env.config[:progress].size]
+  end
   
    
   def init_progress(env, headers)
-    uuid =  env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+    uuid = uuid_from_env(env)
     size =  headers['Content-Length'].to_i
     env.config[:progress][uuid] = { state: "uploading", received: 0, size: size }
+    env.logger.info "New upload started. Active uploads = %s"%[env.config[:progress].size]
   end
 
   def move_progress(env, data)
-    uuid =  env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+    uuid = uuid_from_env(env)
     env.config[:progress][uuid][:received] += data.bytesize
   end
 
