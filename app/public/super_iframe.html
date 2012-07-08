@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Super Upload</title>
+    <script type="text/javascript" src="/javascripts/utils.js"></script>
+    <script type="text/javascript" src="/javascripts/super_iframe.js"></script>
+    <script type="text/javascript">
+      sendJSONP("/uuid.json", 'updateUUID');
+    </script>
+  </head>
+
+  <body>
+    <form id='super_form' action="/upload/" method="POST" enctype="multipart/form-data" onsubmit="startUpload();" >
+        <input type="file" name="file"><br>
+        <input type="submit">
+      </form>
+
+      <div id='uuid'></div>
+      <div id='state'>init</div>
+  </body>
+
+</html>

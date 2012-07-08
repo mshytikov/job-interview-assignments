@@ -3,10 +3,14 @@
 
   <head>
     <title>Super Upload</title>
+    <script type="text/javascript" src="/javascripts/utils.js"></script>
+    <script type="text/javascript" src="/javascripts/super_upload.js"></script>
   </head>
 
-  <body>
+  <body onload="checkIframeStatus();">
     <h1>Super Upload</h1>
+    <div>Progress: <span id="progress">0</span>%</div>
+    <iframe id='super_iframe' src="/super_iframe.html"> </iframe>
   </body>
 
 </html>
