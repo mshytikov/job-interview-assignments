@@ -78,13 +78,8 @@ describe Api do
           post_request({path: "/upload/#{uuid}", body: body.to_s, head: head}, err) do |c|
             c.response_header.status.should == 201
             c.response_header["Location"].should == expected_url
-
-            resp = from_json(c.response)
-
-            resp.should be_instance_of Hash
-            resp.should have(1).pair
-            resp.should have_key('url')
-            resp['url'].should == expected_url
+            c.response.should include("<div id='state'>compleated</div>")
+            c.response.should include("href='#{expected_url}'")
           end
         end
       end
