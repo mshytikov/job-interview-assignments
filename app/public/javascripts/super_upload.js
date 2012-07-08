@@ -52,12 +52,14 @@ function setTimer(){
 function setProgress(p){
   Conf.waiting_for_progress = false;
   var v = 0;
-  if (p['state'] == 'done') {
-    v = 100;
-  } else {
-    v = p['received']/p['size']*100;
+  if (p['state']) {
+    if (p['state'] == 'done') {
+      v = 100;
+    } else {
+      v = p['received']/p['size']*100;
+    }
+    document.getElementById('progress').innerHTML = Math.round(v);
   }
-  document.getElementById('progress').innerHTML = Math.round(v);
 };
 
 function uploadCompleated(){
@@ -88,16 +90,17 @@ function getIframeDoc()
 
 
 function save(){
-  Conf.save = true;
-
-  //dissable button
-  document.getElementById('save_button').disabled = true;
-
+  if (Conf.save == false) {
+    //dissable button
+    document.getElementById('save_button').disabled = true;
+    
+    Conf.save = true;
+  }
 
   if (Conf.state == 'submission') {
     return true;
   }
-  checkIframeStatus();
+
   if (Conf.state == 'ready') {
     Conf.state == 'submission';
     document.forms['save_form'].submit();
