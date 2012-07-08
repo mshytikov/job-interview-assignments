@@ -183,13 +183,16 @@ describe Api do
   end
 
   describe "POST /save" do
-    let(:text) { "Some text"}
+    let(:title) { "Some text"}
     let(:attachment) { "http://some.attachment.com" }
+    let(:body) { {title: title, attachment: attachment} }
+    let(:head){ {'Content-Type' =>  "application/x-www-form-urlencoded; charset=utf-8" } }
+
     it "should respond with saved results" do
       with_api(Api) do
-        post_request({path: "/save", text: text, attachment: attachment}, err) do |c|
+        post_request({path: "/save", body: body, head: head}, err) do |c|
           c.response_header.status.should == 201
-          c.response.should include(text)
+          c.response.should include(title)
           c.response.should include(attachment)
         end
       end

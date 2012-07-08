@@ -54,6 +54,8 @@ class Api < Goliath::API
     case env['PATH_INFO']
     when '/'
       hello_world
+    when '/save'
+      save(env)
     when /\A\/uuid.json/
       uuid
     when /\A\/progress\/(.+)/
@@ -134,6 +136,14 @@ class Api < Goliath::API
       e = Goliath::Validation::NotFoundError.new
       validation_error(e.status_code, e.message, {'Content-Type' => 'application/json'})
     end
+  end
+
+  # POST /save returns form fields
+  #
+  def save(env)
+      [ 201, {'Content-Type' => 'text/html'},
+        "<div>#{params['title']}<div><a id='file_url' href='#{params['attachment']}'>Attachment</a>"
+      ]
   end
 
 
