@@ -81,6 +81,7 @@ function uploadCompleated(){
 
 function updateProgress(){
   if ( Conf.waiting_for_progress == false ) {
+    document.getElementById('super_iframe').setAttribute("style", "display: none;");
     Conf.waiting_for_progress = true;
     sendJSONP("/progress/"+Conf.uuid, 'setProgress');
   }
