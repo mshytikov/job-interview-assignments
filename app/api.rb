@@ -4,10 +4,12 @@ class Api < Goliath::API
 
   use(Rack::Static,                     # render static files from ./public
       :root => Goliath::Application.app_path("public"),
-      :urls => ['/super_upload.html', '/stylesheets', '/javascripts', '/images', '/uploads'])
+      :urls => ['/super_iframe.html', '/super_upload.html', '/stylesheets', '/javascripts', '/images', '/uploads'])
 
   use Goliath::Rack::Params
+  use Goliath::Rack::JSONP
   use Goliath::Rack::Formatters::JSON
+
 
 
   def on_headers(env, headers)
@@ -37,7 +39,7 @@ class Api < Goliath::API
     case env['PATH_INFO']
     when '/'
       hello_world
-    when '/uuid.json'
+    when /\A\/uuid.json/
       uuid
     when /\A\/progress\/(.+)/
       progress(env, $1)
@@ -93,7 +95,9 @@ class Api < Goliath::API
     url = "#{env.config[:server_url]}/uploads/#{uuid}"
     new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)
-    [ 201, {'Content-Type' => 'application/json', 'Location' => url}, { url: url} ]
+    [ 201, {'Content-Type' => 'text/html', 'Location' => url},
+      "<div id='state'>compleated</div><a href='#{url}'>Uploaded to here</a>"
+    ]
   end
 
   # GET /progress/:file_uuid returns json with progress
@@ -103,10 +107,10 @@ class Api < Goliath::API
   #   #=> {"state":"uploading", "received":10, "size":110}
   #
   def progress(env, file_uuid)
-    if p = env.config[:progress][file_uuid]
-      [ 200, {'Content-Type' => 'application/json'}, p ]
-    elsif File.exists?(full_file_path(file_uuid))
+    if File.exists?(full_file_path(file_uuid))
       [ 200, {'Content-Type' => 'application/json'}, { state: "done" } ] 
+    elsif p = env.config[:progress][file_uuid]
+      [ 200, {'Content-Type' => 'application/json'}, p ]
     else
       raise Goliath::Validation::NotFoundError
     end
