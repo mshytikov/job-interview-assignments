@@ -141,9 +141,9 @@ class Api < Goliath::API
   # POST /save returns form fields
   #
   def save(env)
-      [ 201, {'Content-Type' => 'text/html'},
-        "<div>#{params['title']}<div><a id='file_url' href='#{params['attachment']}'>Attachment</a>"
-      ]
+    body = "<div>#{params['title']}<div>"
+    body += "<a id='file_url' href='#{params['attachment']}'>Attachment</a>" if params['attachment'].=~ /\Ahttp/
+    [ 201, {'Content-Type' => 'text/html'}, body ]
   end
 
 
