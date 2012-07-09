@@ -1,5 +1,5 @@
 // Just copypaste from google
-var Conf = {
+var ENV = {
   jsonpElement : null
 }
 function sendJSONP(url, callback) {
@@ -9,7 +9,7 @@ function sendJSONP(url, callback) {
 
   url += '?callback='+callback+'&random'+ Math.random();
 
-  var e = Conf.jsonpElement;
+  var e = ENV.jsonpElement;
   if (e) {
     e.parentNode.removeChild(e);
   }
@@ -18,6 +18,6 @@ function sendJSONP(url, callback) {
   e.setAttribute('type','text/javascript');
   document.getElementsByTagName('head')[0].appendChild(e);
   e.setAttribute('src', url);
-  Conf.jsonpElement = e;
+  ENV.jsonpElement = e;
 }
 

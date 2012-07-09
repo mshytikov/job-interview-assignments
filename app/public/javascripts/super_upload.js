@@ -1,7 +1,7 @@
-Conf.uuid = null;
-Conf.waiting_for_progress = false;
-Conf.state = 'init';
-Conf.save = false;
+ENV.uuid = null;
+ENV.waiting_for_progress = false; //flag for progress
+ENV.state = 'init';
+ENV.save = false; //flag for user click on save
 
 
 function fetchUUID(){
@@ -13,9 +13,9 @@ function isIframeReady(){
   var iframe = document.getElementById('super_iframe')
   if (iframe == null){
     return false;
-  } else if (Conf.uuid == null) {
-    Conf.uuid = fetchUUID();
-    return (Conf.uuid == null ? false : true)
+  } else if (ENV.uuid == null) {
+    ENV.uuid = fetchUUID();
+    return (ENV.uuid == null ? false : true)
   } else {
     return true;
   }
@@ -24,12 +24,12 @@ function isIframeReady(){
 function checkIframeStatus(){
   if ( isIframeReady() ){
     var status = getIframeState();
-    Conf.state = 'ready';
+    ENV.state = 'ready';
     if ( status == 'compleated') {
       uploadCompleated();
     } else {
       if (status == 'uploading') {
-        Conf.state = 'waiting';
+        ENV.state = 'waiting';
         updateProgress();
       }
       setTimer();
@@ -50,7 +50,7 @@ function setTimer(){
 
 
 function setProgress(p){
-  Conf.waiting_for_progress = false;
+  ENV.waiting_for_progress = false;
   var v = 0;
   if (p['state']) {
     if (p['state'] == 'done') {
@@ -76,14 +76,14 @@ function uploadCompleated(){
 
 
   //auto save form if needed
-  if (Conf.save) { save() }
+  if (ENV.save) { save() }
 }
 
 function updateProgress(){
-  if ( Conf.waiting_for_progress == false ) {
+  if ( ENV.waiting_for_progress == false ) {
     document.getElementById('super_iframe').setAttribute("style", "display: none;");
-    Conf.waiting_for_progress = true;
-    sendJSONP("/progress/"+Conf.uuid, 'setProgress');
+    ENV.waiting_for_progress = true;
+    sendJSONP("/progress/"+ENV.uuid, 'setProgress');
   }
 }
 
@@ -94,22 +94,22 @@ function getIframeDoc()
 
 
 function save(){
-  if (Conf.save == false) {
+  if (ENV.save == false) {
     //dissable button
     document.getElementById('save_button').disabled = true;
     
-    Conf.save = true;
+    ENV.save = true;
   }
 
-  if (Conf.state == 'submission') {
+  if (ENV.state == 'submission') {
     return true;
   }
 
-  if (Conf.state == 'ready') {
-    Conf.state == 'submission';
+  if (ENV.state == 'ready') {
+    ENV.state == 'submission';
     document.forms['save_form'].submit();
   } else {
-    Conf.state = 'waiting';
+    ENV.state = 'waiting';
     //show alert
     document.getElementById('alert').innerHTML = 'Saving attachment';
 
