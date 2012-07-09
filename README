@@ -20,4 +20,19 @@ Notes:
 2. Full page management will be done using JS.
 
 
+### Instalation ###
+
+  $ rvm install 1.9.3
+  $ git clone ...
+  $ cs super_upload
+  $ bundle
+
+### Run ###
+
+  $ ruby super_upload.rb -sv
+
+### Deployed demo ###
+
+Demo deployed on Heroku  [HERE](http://mshytikov-super-upload.herokuapp.com/super_upload.html)
+
 
