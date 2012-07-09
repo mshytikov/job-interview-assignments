@@ -23,14 +23,18 @@ In case if file upload is in progress notification should be shown like  "submis
 
 ### Instalation ###
 
+```bash
   $ rvm install 1.9.3
   $ git clone https://github.com/mshytikov/super_upload.git
   $ cs super_upload
   $ bundle
+```
 
 ### Run ###
 
+```bash
   $ ruby super_upload.rb -sv
+```
 
 ### Deployed demo ###
 
