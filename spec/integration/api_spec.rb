@@ -69,7 +69,7 @@ describe Api do
   describe "POST /upload/:file_uuid" do
     describe "successful case" do
       let(:uuid){ SecureRandom.uuid }
-      let(:expected_url){ "http://localhost:9900/uploads/#{uuid}.txt" }
+      let(:expected_url){ "/uploads/#{uuid}.txt" }
       let(:body){ MultipartBody.new(file: File.new('./spec/fixtures/files/upload1.txt')) }
       let(:head) { {'Content-Type' => "multipart/form-data; boundary=#{body.boundary}"} }
 
@@ -77,7 +77,7 @@ describe Api do
         with_api(Api, api_options) do
           post_request({path: "/upload/#{uuid}", body: body.to_s, head: head}, err) do |c|
             c.response_header.status.should == 201
-            c.response_header["Location"].should == expected_url
+            c.response_header["Location"].should == "http://localhost:9900#{expected_url}"
             c.response.should include("<div id='state'>compleated</div>")
             c.response.should include("id='file_url' href='#{expected_url}'")
           end
@@ -95,7 +95,7 @@ describe Api do
 
         file_content = nil
         with_api(Api) do |api| 
-          path = url_to_file.sub(api.config[:server_url], '')
+          path = url_to_file.sub("http://localhost:9900", '')
           get_request(:path => path) do |c|
             c.response_header.status.should == 200
             file_content = c.response  
