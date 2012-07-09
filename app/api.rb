@@ -111,7 +111,7 @@ class Api < Goliath::API
 
     extension = File.extname(uploaded_file[:filename])
     uuid += extension
-    url = "#{env.config[:server_url]}/uploads/#{uuid}"
+    url = "/uploads/#{uuid}"
     new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)
     [ 201, {'Content-Type' => 'text/html', 'Location' => url},
