@@ -1,0 +1,20 @@
+#super_iframe {
+  border: 0px;
+  height: 30px;
+  overflow: hidden;
+}
+
+textarea {
+  min-height: 200px;
+  min-width: 400px;
+}
+
+#file_url {
+  display: inline-block;
+  height: 35px;
+}
+
+#alert {
+  background: yellow;
+}
+
