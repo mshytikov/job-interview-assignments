@@ -23,7 +23,7 @@ Notes:
 ### Instalation ###
 
   $ rvm install 1.9.3
-  $ git clone ...
+  $ git clone https://github.com/mshytikov/super_upload.git
   $ cs super_upload
   $ bundle
 
