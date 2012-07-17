@@ -1,5 +1,6 @@
 class Api < Goliath::API
   include ApiHelperMethods
+  include Goliath::Rack::Templates
 
   # render static files from ./public
   use(Rack::Static,
@@ -66,19 +67,14 @@ class Api < Goliath::API
   #   #=> {"url":"http://localhost:9000/uploads/file-uuid"}
   #
   def upload(env)
-    uploaded_file = params['file'] || {}
-    tempfile = uploaded_file[:tempfile]
-    
-    return validation_error(400, "File not uploded") if tempfile.nil?
 
-    uuid = uuid_from_env(env)
-    extension = File.extname(uploaded_file[:filename])
-    uuid += extension
-    url = "/uploads/#{uuid}"
-    new_path = full_file_path(uuid)
-    FileUtils.mv(tempfile.path, new_path)
+    url = save_uploaded_file(env, params['file'])
 
-    [ 201, {'Content-Type' => 'text/html', 'Location' => url}, render(:uploaded, {:url => url}) ]
+    if url
+      [ 201, {'Content-Type' => 'text/html', 'Location' => url}, haml(:uploaded, :locals => {:url => url}) ]
+    else
+      validation_error(400, "File not uploded")
+    end
   end
 
   # GET /progress/:file_uuid returns json with progress
@@ -103,7 +99,8 @@ class Api < Goliath::API
   # POST /save returns form fields
   #
   def save(env)
-    [201, {}, render(:saved, params)]
+    locals  = {title: params['title'], attachment: params['attachment']}
+    [201, {}, haml(:saved, :locals => locals )]
   end
 
 

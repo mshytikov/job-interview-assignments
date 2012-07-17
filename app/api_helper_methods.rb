@@ -37,22 +37,18 @@ module ApiHelperMethods
     !uuid_from_env(env).nil?
   end 
 
-  #FIXME here I want to use templates ( Goliath::Rack::Templates)
-  # But according to requirements to minimize dependencies I will do plain rendering
-  def render(view, locals)
-    case view
-    when :uploaded
-      "<div id='state'>compleated</div><a id='file_url' href='#{locals[:url]}'>Uploaded to here</a>"
-    when :saved
-      body = "<h1>Saved</h1><h4>Title:</h4><div>#{locals['title']}</div><h4>Attachemnt:</h4>"
-      if locals['attachment'].to_s.empty?
-        body << "<div>No attachements</div>"
-      else
-        body << "<a id='file_url' href='#{locals['attachment']}'>Download</a>" 
-      end
-      body
-    else 
-      raise "Unknown view"
-    end
+  #returns path to file
+  def save_uploaded_file(env, file)
+    uploaded_file = file || {}
+    tempfile = uploaded_file[:tempfile]
+    return nil if tempfile.nil?
+
+    uuid = uuid_from_env(env)
+    extension = File.extname(uploaded_file[:filename])
+    uuid += extension
+    new_path = full_file_path(uuid)
+    FileUtils.mv(tempfile.path, new_path)
+    "/uploads/#{uuid}"
   end
+
 end
