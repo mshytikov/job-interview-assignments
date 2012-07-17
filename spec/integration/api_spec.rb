@@ -119,14 +119,6 @@ describe Api do
     end
 
     describe "unsuccessful case" do
-      it "returns Method Not Allowed  on GET" do
-        with_api(Api) do
-          get_request({path: '/upload/some-uuid'}, err) do |c|
-            c.response_header.status.should == 405
-          end
-        end
-      end
-
       it "should raise exception on unregistred uuid" do
         pending "UUID filtering should be added"
       end

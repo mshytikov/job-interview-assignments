@@ -11,6 +11,31 @@ class Api < Goliath::API
   use Goliath::Rack::JSONP
   use Goliath::Rack::Formatters::JSON
 
+  def self.match(pattern)
+    %r{\A#{pattern}\z}
+  end
+
+  ENDPOINTS = {
+    root:       match('/'),
+    save:       match('/save'),
+    uuid:       match('/uuid.json'),
+    upload:     match('/upload/(.+)'),
+    progress:   match('/progress/(.+)'),
+  }
+
+  def route_to_action(env)
+    #simple hand made routing due to routing was removed from goliath
+    route_to = ENDPOINTS.find{|k,v| env['PATH_INFO'] =~ v}
+    if route_to
+      env[:uuid] = $1
+      send("#{route_to.first}", env)
+    else
+      raise Goliath::Validation::NotFoundError
+    end
+  end
+
+
+
   def on_headers(env, headers)
     init_progress(env, headers) if upload_endpoint(env)
   end
@@ -24,27 +49,11 @@ class Api < Goliath::API
     delete_progress(env) if upload_endpoint(env)
   end
 
-
   def response(env)
-    #simple hand made routing due to routing was removed from goliath
-    case env['PATH_INFO']
-    when '/'
-      hello_world
-    when '/save'
-      save(env)
-    when /\A\/uuid.json/
-      uuid
-    when /\A\/progress\/(.+)/
-      progress(env, $1)
-    when /\A\/upload\/(.+)/
-      only_post_allowed!(env)
-      upload(env)
-    else
-      raise Goliath::Validation::NotFoundError
-    end
+    route_to_action(env)
   end
 
-  def hello_world
+  def root(env)
     [200, {}, 'Hello World']
   end
 
@@ -55,7 +64,7 @@ class Api < Goliath::API
   #   $ curl localhost:9000/uuid.json
   #   #=> {"uuid":"86430adf-3b81-4fd2-b4fe-625b73c2fd6c"}
   # 
-  def uuid
+  def uuid(env)
     [ 200, {'Content-Type' => 'application/json'}, { uuid: SecureRandom.uuid} ]
   end
 
@@ -67,9 +76,7 @@ class Api < Goliath::API
   #   #=> {"url":"http://localhost:9000/uploads/file-uuid"}
   #
   def upload(env)
-
     url = save_uploaded_file(env, params['file'])
-
     if url
       [ 201, {'Content-Type' => 'text/html', 'Location' => url}, haml(:uploaded, :locals => {:url => url}) ]
     else
@@ -83,11 +90,10 @@ class Api < Goliath::API
   #   #=> {"state":"done"}
   #   #=> {"state":"uploading", "received":10, "size":110}
   #
-  def progress(env, file_uuid)
-    if File.exists?(full_file_path(file_uuid))
-      [ 200, {'Content-Type' => 'application/json'}, { state: "done" } ] 
-    elsif p = env.config[:progress][file_uuid]
-      [ 200, {'Content-Type' => 'application/json'}, p ]
+  def progress(env)
+    status =  progress_status(env)
+    if status
+      [ 200, {'Content-Type' => 'application/json'}, status] 
     else
       #FIXME should raise  Goliath::Validation::NotFoundError
       #but JSONP can't hadle this correctly

@@ -1,17 +1,11 @@
 module ApiHelperMethods
 
-  UPLOAD_ENDPOINT = /\A\/upload\/(.+)/
-
-  def only_post_allowed!(env)
-    raise(Goliath::Validation::MethodNotAllowedError) if env[Goliath::Request::REQUEST_METHOD] != 'POST'
-  end
-
   def full_file_path(file_uuid)
     File.join(Goliath::Application.app_path("public"), "/uploads", file_uuid)
   end
 
   def uuid_from_env(env)
-    env['PATH_INFO'][UPLOAD_ENDPOINT, 1]
+    env[:uuid] || env['PATH_INFO'].split('/')[2]
   end
 
   def delete_progress(env)
@@ -34,7 +28,7 @@ module ApiHelperMethods
   end
 
   def upload_endpoint(env)
-    !uuid_from_env(env).nil?
+    env['PATH_INFO'] =~ Api::ENDPOINTS[:upload]
   end 
 
   #returns path to file
@@ -49,6 +43,15 @@ module ApiHelperMethods
     new_path = full_file_path(uuid)
     FileUtils.mv(tempfile.path, new_path)
     "/uploads/#{uuid}"
+  end
+
+  def progress_status(env)
+    file_uuid = uuid_from_env(env)
+    if File.exists?(full_file_path(file_uuid))
+      { state: "done" } 
+    else 
+      env.config[:progress][file_uuid]
+    end
   end
 
 end
