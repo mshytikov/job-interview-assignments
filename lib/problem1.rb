@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 require 'problem1/constants'
 
 module Problem1
@@ -12,8 +13,8 @@ module Problem1
     def letters_count(number)
 
       case 
-      when number > 1000
-        raise ArgumentError, "Number must be <= 1000"
+      when number > 1000 || number < 1 
+        raise ArgumentError, "Number must be in range (1..1000)"
 
       when predefined_count(number)
         predefined_count(number)

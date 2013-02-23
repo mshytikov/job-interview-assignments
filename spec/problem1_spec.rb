@@ -11,6 +11,7 @@ describe Problem1 do
     it { Problem1.letters_count(1000).should == 11 }
     it { Problem1.letters_count(100).should == 10 }
     it { expect{ Problem1.letters_count(1001) }.to raise_error(ArgumentError)}
+    it { expect{ Problem1.letters_count(-1) }.to raise_error(ArgumentError)}
   end
 
 
