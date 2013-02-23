@@ -9,6 +9,7 @@ describe Problem1 do
     it { Problem1.letters_count(115).should == 20 }
     it { Problem1.letters_count(42).should == 8 }
     it { Problem1.letters_count(1000).should == 11 }
+    it { Problem1.letters_count(100).should == 10 }
     it { expect{ Problem1.letters_count(10000) }.to raise_error(ArgumentError)}
   end
 
