@@ -56,5 +56,6 @@ module Problem1
       NUMBER_TO_LETTERS_COUNT[tens_count*10] + letters_count(number - tens_count*10)
     end
   end
+
 end
 
