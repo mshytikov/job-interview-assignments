@@ -13,8 +13,6 @@ end
 
 desc "Solve problem1 till letters_count_till[1000]"
 task  :letters_count_till, :number do |t, args|
-  number =  args[:number].to_i
-  result =  (1..number).inject(0){|sum, n| sum + Problem1.letters_count(n) }
-  puts result
+  puts Problem1.letters_count_till(args[:number].to_i)
 end 
 

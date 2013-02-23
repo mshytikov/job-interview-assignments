@@ -20,10 +20,11 @@ no common pattern. We should calculate it one by one
 All numbers between 1- 999 can be writen in combination from previously
 calculated numbers.
 
-Rake tasks (rake -T)
+All rake tasks:
+$ rake -T
 
-Run 
-rake letters_count_till[]
+Run for 1000
+$ rake letters_count_till[1000]
 
 
 

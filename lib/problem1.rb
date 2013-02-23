@@ -39,6 +39,9 @@ module Problem1
     end
 
 
+    def letters_count_till(number)
+     (1..number).inject(0){|sum, n| sum + Problem1.letters_count(n) }
+    end
   end
 
 end
