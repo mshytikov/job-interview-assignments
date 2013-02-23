@@ -14,6 +14,10 @@ describe Problem1 do
     it { expect{ Problem1.letters_count(-1) }.to raise_error(ArgumentError)}
   end
 
+  describe ".letters_count_till" do
+    it { Problem1.letters_count_till(1000).should == 21124}
+  end
+
 
 end
 
