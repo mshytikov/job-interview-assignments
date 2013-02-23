@@ -46,13 +46,13 @@ module Problem1
     return letters_count if letters_count
 
     if number >= 1000 and number < 9999
-        thousands_count = (number / 1000)
-        prefix_len = letters_count(thousands_count) + THOUSAND_COUNT
-        if (number % 1000).zero?
-          prefix_len
-        else
-          prefix_len  + AND_COUNT + letters_count(number - thousands_count*1000)
-        end
+      thousands_count = (number / 1000)
+      prefix_len = letters_count(thousands_count) + THOUSAND_COUNT
+      if (number % 1000).zero?
+        prefix_len
+      else
+        prefix_len  + AND_COUNT + letters_count(number - thousands_count*1000)
+      end
     elsif number >= 100 
       hundreds_count = (number / 100)
       prefix_len = letters_count(hundreds_count) + HUNDRED_COUNT 
