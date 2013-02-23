@@ -39,6 +39,7 @@ module Problem1
   AND_COUNT= 3
 
   def self.letters_count(number)
+    raise(ArgumentError, "Supported numbers < 10000")  if number > 9999
     return 0 if number.zero?
 
     letters_count = NUMBER_TO_LETTERS_COUNT[number]
