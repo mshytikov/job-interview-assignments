@@ -1,7 +1,7 @@
-require "rspec/core/rake_task"
-
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 require 'lib/problem1'
+require "rspec/core/rake_task"
+
 
 RSpec::Core::RakeTask.new
 task :default => :spec
