@@ -49,11 +49,10 @@ module Problem1
       letters_count(thousands_count) + NUMBER_TO_LETTERS_COUNT[1000]  + AND_COUNT + letters_count(number - thousands_count*1000)
     elsif number > 100 
       hundreds_count = (number / 100)
-      puts letters_count(number - hundreds_count*100)
       letters_count(hundreds_count) + NUMBER_TO_LETTERS_COUNT[100]  + AND_COUNT + letters_count(number - hundreds_count*100)
     elsif number > 20
       tens_count = (number / 10)
-      letters_count(tens_count) + letters_count(number - tens_count*10)
+      NUMBER_TO_LETTERS_COUNT[tens_count*10] + letters_count(number - tens_count*10)
     end
   end
 end
