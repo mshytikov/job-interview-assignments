@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
+
 gem 'sqlite3'
 gem 'pg'
 
@@ -25,6 +26,7 @@ gem 'jquery-rails'
    gem 'rspec-rails'
    gem 'factory_girl_rails'
    gem 'database_cleaner'
+   gem 'capybara'
  end
 
 # To use Jbuilder templates for JSON
