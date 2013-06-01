@@ -32,11 +32,13 @@ Test:
 
 Run Server: 
 
-   $ rails s
+    $ rails s
+
 
 ## Usage
 
 1. Create Users in rails console
+ 
 ```
 $ rails c
 
