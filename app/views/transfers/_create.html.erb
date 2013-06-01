@@ -1,5 +1,5 @@
 <div>
-  <%= form_for(:transfer) do |f| %>
+  <%= form_for(:transfer, url: transfers_path) do |f| %>
 
     <%= f.label :to_user_id, "To User ID" %>
     <%= f.text_field :to_user_id %>

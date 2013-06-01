@@ -8,6 +8,7 @@ describe Transfer do
 
     context "with transfer to same account" do
       let(:transfer) { FactoryGirl.build(:transfer, account: account, to_account: account  ) }
+
       context "without validation" do
         it "raises error" do
           expect { transfer.save(false) }.to raise_error
@@ -18,6 +19,7 @@ describe Transfer do
     context "with negative amount" do
       let(:amount) { -1 }
       let(:transfer) { FactoryGirl.build(:transfer, amount: amount, account: account, to_account: to_account) }
+
       context "with validation" do
         it "returns false" do
           transfer.save.should be_false
@@ -27,15 +29,14 @@ describe Transfer do
           transfer.save
           transfer.should have(1).error_on(:amount)
         end
-        
       end
     end
 
     describe "founds transfer" do
       let(:amount) { 1 }
       let(:transfer) { FactoryGirl.build(:transfer, amount: amount, account: account, to_account: to_account) }
-      context "successful" do
 
+      context "successful" do
         it { transfer.save.should be_true}
         it "increases distanation account" do
           expect { transfer.save }.to change { to_account.reload.balance }.by(amount)
