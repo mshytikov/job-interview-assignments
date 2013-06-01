@@ -30,7 +30,7 @@ class Transfer < ActiveRecord::Base
   end
 
   def positive_account_balance
-    if (account.balance - self.amount) < 0
+    if (account.balance - self.amount.to_i) < 0
       errors.add(:amount, "greater than balance. Can't run a deficit")
     end
   end

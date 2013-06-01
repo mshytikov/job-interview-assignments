@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Transfer do
 
   describe ".save" do
-    let(:account) { FactoryGirl.create(:user).account }
+    let(:account)    { FactoryGirl.create(:user).account }
     let(:to_account) { FactoryGirl.create(:user).account }
 
     context "with transfer to same account" do
@@ -17,7 +17,7 @@ describe Transfer do
     end
 
     context "with negative amount" do
-      let(:amount) { -1 }
+      let(:amount)   { -1 }
       let(:transfer) { FactoryGirl.build(:transfer, amount: amount, account: account, to_account: to_account) }
 
       context "with validation" do
@@ -33,7 +33,7 @@ describe Transfer do
     end
 
     describe "funds transfer" do
-      let(:amount) { 1 }
+      let(:amount)   { 1 }
       let(:transfer) { FactoryGirl.build(:transfer, amount: amount, account: account, to_account: to_account) }
 
       context "successful" do
@@ -42,8 +42,8 @@ describe Transfer do
           expect { transfer.save }.to change { to_account.reload.balance }.by(amount)
         end
         it "decreases source account" do
-          expect { transfer.save }.to change { account.reload.balance }.by(-amount)
-      end
+          expect { transfer.save }.to change { account.reload.balance    }.by(-amount)
+        end
       end
     end
   end

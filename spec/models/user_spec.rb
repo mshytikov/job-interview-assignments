@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   describe ".create" do
-    let(:email) { FactoryGirl.generate(:email) }
+    let(:email)    { FactoryGirl.generate(:email) }
     let(:password) { FactoryGirl.generate(:password) }
 
     subject { User.create(email: email, password: password) }
@@ -30,8 +30,8 @@ describe User do
   end
 
   describe ".build_transfer with valid params" do
-    let(:amount) { 10 }
-    let(:user) { FactoryGirl.create(:user, balance: 100) }
+    let(:amount)  { 10 }
+    let(:user)    { FactoryGirl.create(:user, balance: 100) }
     let(:to_user) { FactoryGirl.create(:user) }
 
     subject { user.build_transfer(to_user, amount) }
