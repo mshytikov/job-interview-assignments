@@ -27,9 +27,11 @@ Install:
     $ rake db:migrate
 
 Test:
+
     $ rake
 
 Run Server: 
+
    $ rails s
 
 ## Usage
