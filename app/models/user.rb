@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email
 
 
-  has_one :account, :autosave => true
+  has_one :account, :autosave => true, :inverse_of => :user
 
   before_create :build_account
 
