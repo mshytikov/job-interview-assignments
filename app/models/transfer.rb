@@ -11,11 +11,11 @@ class Transfer < ActiveRecord::Base
   validate :positive_account_balance
   validate :account_diference
 
-  before_create :transfer_founds
+  before_create :transfer_funds
 
   private 
 
-  def transfer_founds
+  def transfer_funds
     from_account = Account.find(self.account_id, :lock => true)
     to_account = Account.find(self.to_account_id, :lock => true)
 

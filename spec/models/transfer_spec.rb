@@ -32,7 +32,7 @@ describe Transfer do
       end
     end
 
-    describe "founds transfer" do
+    describe "funds transfer" do
       let(:amount) { 1 }
       let(:transfer) { FactoryGirl.build(:transfer, amount: amount, account: account, to_account: to_account) }
 
