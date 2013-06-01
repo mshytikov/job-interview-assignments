@@ -50,4 +50,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.include FeaturesHelper, example_group: { file_path: %r{spec/features} }
+
 end
