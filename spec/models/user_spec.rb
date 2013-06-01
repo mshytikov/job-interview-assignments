@@ -27,7 +27,15 @@ describe User do
       before { FactoryGirl.create(:user, email: email) }
       it { should have(1).error_on(:email) }
     end
+  end
 
+  describe ".build_transfer with valid params" do
+    let(:amount) { 10 }
+    let(:user) { FactoryGirl.create(:user, balance: 100) }
+    let(:to_user) { FactoryGirl.create(:user) }
 
+    subject { user.build_transfer(to_user, amount) }
+    it { should be_instance_of Transfer }
+    its(:save) { should be_true }
   end
 end

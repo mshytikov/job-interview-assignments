@@ -10,11 +10,17 @@ class User < ActiveRecord::Base
 
   has_one :account, :autosave => true, :inverse_of => :user
 
-  before_create :build_account
+  after_initialize :init_account
 
-  delegate :balance, :to => :account
+  delegate :balance, :balance=, :to => :account
 
-  def build_transfer
+  def build_transfer(user, amount)
+    account.transfers.build(to_account_id: user.account.id, amount: amount)
   end
 
+
+  def init_account
+    self.account ||= build_account
+  end
 end
+
