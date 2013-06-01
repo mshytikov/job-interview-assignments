@@ -8,7 +8,7 @@ class TransfersController < ApplicationController
     if transfer.save
       flash[:notice] = "Successfully transfered #{amount} to User ID: #{@to_user.id}"
     else
-      flash[:error] = transfer.base_error
+      flash[:error] = transfer.errors.full_messages.first
     end
     redirect_to root_url
   end
@@ -18,7 +18,7 @@ class TransfersController < ApplicationController
   def find_user
     @to_user = User.find_by_id(params[:transfer][:to_user_id]) 
     if @to_user.nil?
-      flash[:error] = "Unknown user with id =#{params[:to_user_id]}"
+      flash[:error] = "Invalid destination"
       redirect_to root_url
     end
   end 

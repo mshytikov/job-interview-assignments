@@ -7,6 +7,7 @@ class Transfer < ActiveRecord::Base
   validates_numericality_of :amount, :only_integer => true, :greater_than => 0
   validates_presence_of :to_account_id
   validate :positive_account_balance
+  validate :account_diference
 
   before_create :transfer_founds
 
@@ -26,6 +27,12 @@ class Transfer < ActiveRecord::Base
   def positive_account_balance
     if (account.balance - self.amount) < 0
       errors.add(:amount, "greater than balance. Can't run a deficit")
+    end
+  end
+
+  def account_diference
+    if (account_id == to_account_id)
+      errors.add(:base, "Invalid destination")
     end
   end
 

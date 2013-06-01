@@ -20,14 +20,29 @@ describe "User Profile" do
 
   describe "transfer" do
     let!(:balance) { user.balance }
-    before do
-      fill_in "To User ID",    with: to_user.id
-      fill_in "Amount",        with: 10
-      click_button "Transfer"
+    describe "to existing user" do
+      before do
+        fill_in "To User ID",    with: to_user.id
+        fill_in "Amount",        with: 10
+        click_button "Transfer"
+      end
+
+      it_behaves_like "page without errors" 
+      it { should  have_selector("h2", text: "Balance: #{balance - 10}") }
+      it { should have_notice_message('Successfully transfered 10') }
     end
 
-    it_behaves_like "page without errors" 
-    it { should  have_selector("h2", text: "Balance: #{balance - 10}") }
-    it { should have_notice_message('Successfully transfered 10') }
+    describe "to myself user" do
+      before do
+        fill_in "To User ID",    with: user.id
+        fill_in "Amount",        with: 10
+        click_button "Transfer"
+      end
+
+      it { should  have_selector("h2", text: "Balance: #{balance}") }
+      it { should have_error_message('Invalid destination') }
+    end
+
+    end
+
   end
-end
