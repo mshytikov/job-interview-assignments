@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :case_sensitive => false
   validates_presence_of :password, :on => :create
   validates_presence_of :email
+
+
+  has_one :account, :autosave => true
+
+  before_create :build_account
+
+  delegate :balance, :to => :account
+
 end

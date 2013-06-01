@@ -9,6 +9,8 @@ describe User do
 
     context "email and password are valid" do
       it { should have(:no).errors }
+      its(:account) { should_not be_nil }
+      its(:balance) { should be_zero}
     end
 
     context "email is blank" do
