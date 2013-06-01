@@ -8,4 +8,8 @@ FactoryGirl.define do
     "password_#{n}"
   end
 
+  sequence :amount do |n|
+    n+1
+  end
+
 end
