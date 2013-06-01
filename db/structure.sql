@@ -107,6 +107,8 @@ CREATE TABLE transfers (
     amount integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
+    account_balance integer NOT NULL,
+    to_account_balance integer NOT NULL,
     CONSTRAINT positive_amount CHECK ((amount > 0)),
     CONSTRAINT transfer_direction CHECK ((account_id <> to_account_id))
 );
@@ -297,3 +299,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130601125713');
 INSERT INTO schema_migrations (version) VALUES ('20130601134428');
 
 INSERT INTO schema_migrations (version) VALUES ('20130601145527');
+
+INSERT INTO schema_migrations (version) VALUES ('20130601192540');

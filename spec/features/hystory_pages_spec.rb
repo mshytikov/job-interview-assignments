@@ -32,5 +32,8 @@ describe "Transfers Hystory" do
     it { should have_selector('td', text: "10" ) }
     it { should have_selector('td', text: "20" ) }
 
+    it { should have_selector('td', text: "110" ) }
+    it { should have_selector('td', text: "90" ) }
+
   end
 end

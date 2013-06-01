@@ -1,4 +1,6 @@
 class Transfer < ActiveRecord::Base
+  default_scope order(:id)
+
   attr_accessible :amount, :to_account_id
 
   belongs_to :account
@@ -19,6 +21,9 @@ class Transfer < ActiveRecord::Base
 
     from_account.balance -= self.amount
     to_account.balance += self.amount
+
+    self.account_balance = from_account.balance
+    self.to_account_balance = to_account.balance
 
     to_account.save!
     from_account.save!
