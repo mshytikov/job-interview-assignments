@@ -14,4 +14,7 @@ class User < ActiveRecord::Base
 
   delegate :balance, :to => :account
 
+  def build_transfer
+  end
+
 end

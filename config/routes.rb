@@ -1,5 +1,7 @@
 SimpleBankingApp::Application.routes.draw do
 
+  get "transfers/create"
+
   get "users/show"
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -8,7 +10,8 @@ SimpleBankingApp::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   resources :users, only: [:show]
+  resources :transfers, only: [:create]
 
-  root :to =>  "users#show"
+  root :to =>  "users#show" 
 
 end

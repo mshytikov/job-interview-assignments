@@ -1,0 +1,12 @@
+<div>
+  <%= form_for(:transfer) do |f| %>
+
+    <%= f.label :to_user_id, "To User ID" %>
+    <%= f.text_field :to_user_id %>
+
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+
+    <%= f.submit "Transfer" %>
+  <% end %>
+<div>
