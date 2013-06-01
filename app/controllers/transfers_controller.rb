@@ -1,6 +1,10 @@
 class TransfersController < ApplicationController
 
-  before_filter :find_user
+  before_filter :find_user, :only => [:create]
+
+  def index
+    @transfers = current_user.transfers_hystory
+  end
 
   def create
     amount = params[:transfer][:amount]

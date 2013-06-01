@@ -10,7 +10,7 @@ SimpleBankingApp::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   resources :users, only: [:show]
-  resources :transfers, only: [:create]
+  resources :transfers, only: [:create, :index]
 
   root :to =>  "users#show" 
 

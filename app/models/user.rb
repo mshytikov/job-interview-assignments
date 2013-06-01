@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     account.transfers.build(to_account_id: user.account.id, amount: amount)
   end
 
+  def transfers_hystory
+    Transfer.where("account_id = ? or to_account_id = ?", account.id , account.id).includes(:account)
+  end
+
 
   def init_account
     self.account ||= build_account
