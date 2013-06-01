@@ -2,6 +2,7 @@ class Transfer < ActiveRecord::Base
   attr_accessible :amount, :to_account_id
 
   belongs_to :account
+  belongs_to :to_account, :class_name => 'Account', :foreign_key => 'to_account_id'
 
   validates_numericality_of :amount, :only_integer => true, :greater_than => 0
   validates_presence_of :to_account_id

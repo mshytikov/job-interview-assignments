@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :account do
-    balance 0
+    balance 100
   end
 end
