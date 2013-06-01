@@ -13,8 +13,8 @@ class Transfer < ActiveRecord::Base
   private 
 
   def transfer_founds
-    from_account = Account.find(self.account_id)
-    to_account = Account.find(self.to_account_id)
+    from_account = Account.find(self.account_id, :lock => true)
+    to_account = Account.find(self.to_account_id, :lock => true)
 
     from_account.balance -= self.amount
     to_account.balance += self.amount
