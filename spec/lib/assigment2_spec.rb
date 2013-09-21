@@ -21,13 +21,13 @@ describe "Assignment2" do
     end
 
     context "value is multiples of both three and five" do
-        let(:value) { 15 }
-        it{ should == 'Fizz' }
-     end
-
-    context "value is multiples of both three and five" do
-        let(:value) { 15 }
+        let(:value) { 30 }
         it{ should == 'FizzBuzz' }
+    end
+
+    context "value is not  multiples of three or five" do
+        let(:value) { 16 }
+        it{ should == '16' }
      end
 
   end
