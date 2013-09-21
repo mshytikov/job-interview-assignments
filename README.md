@@ -1,29 +1,13 @@
 # Assignment2
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'assignment2'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install assignment2
+Write a program that prints the numbers from 1 to 100. But for multiples
+of three print "Fizz"
+instead of the number and for the multiples of five print "Buzz". For
+numbers which are
+multiples of both three and five print "FizzBuzz"
 
 ## Usage
 
-TODO: Write usage instructions here
+1. Run tests with:   `rake`
+2. Solve assignment: `rake print`
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
