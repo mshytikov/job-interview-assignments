@@ -16,12 +16,6 @@ describe ConvertersController do
       its("body") { should == expected_body.to_json }
     end
 
-    shared_examples_for "bad convert request" do
-      subject { response }
-      it { should_not be_success }
-      its("status") { should == 400 }
-    end
-
     describe "succesfull cases" do
       context "with one value" do
         let(:expected_body) {
@@ -31,7 +25,7 @@ describe ConvertersController do
             values: { 5 => 41 }
           }
         }
-        before { get 'convert', { from: 'celsium', to: 'fahrenheit', values: "5" } }
+        before { get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "5" } }
         it_behaves_like "successful convert request"
       end
 
@@ -43,7 +37,7 @@ describe ConvertersController do
             values: { 4 =>  41, 0 => 32 }
           }
         }
-        before { get 'convert', { from: 'celsium', to: 'fahrenheit', values: "5, 0" } }
+        before { get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "5, 0" } }
         it_behaves_like "successful convert request"
 
       end
@@ -51,23 +45,35 @@ describe ConvertersController do
 
     describe "unsuccessful cases" do
       context "with invalid 'values' parameter" do
-          before { get 'convert', { from: 'celsium', to: 'fahrenheit', values: "abc" } }
-          it_behaves_like "bad convert request"
+        it "raise error" do
+          expect{
+            get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "abc" } 
+          }.to raise_error ArgumentError
+        end
       end
 
       context "without required  params" do
         context "without 'from' " do
-          before { get 'convert', { to: 'celsium', values: "1" } }
-          it_behaves_like "bad convert request"
+          it "raise error" do
+            expect{
+              get 'convert', { format: 'json',  to: 'celsium', values: "1" } 
+            }.to raise_error  ActionController::ParameterMissing
+          end
         end
         context "without 'to' " do
-          before { get 'convert', { to: 'celsium', values: "1" } }
-          it_behaves_like "bad convert request"
+          it "raise error" do
+            expect{
+              get 'convert', { format: 'json', from: 'celsium', values: "1" } 
+            }.to raise_error  ActionController::ParameterMissing
+          end
         end
 
         context "without 'values' " do
-          before { get 'convert', {form: 'fahrenheit', to: 'celsium'} }
-          it_behaves_like "bad convert request"
+          it "raise error" do
+            expect{
+              get 'convert', { format: 'json', form: 'fahrenheit', to: 'celsium'} 
+            }.to raise_error  ActionController::ParameterMissing
+          end
         end
       end
 
