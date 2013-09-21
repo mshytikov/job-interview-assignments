@@ -1,5 +1,9 @@
 require "assignment2/version"
 
 module Assignment2
-  # Your code goes here...
+  
+  class << self
+    def fizz_buzz(i)
+    end
+  end
 end
