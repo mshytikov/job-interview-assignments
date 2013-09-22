@@ -22,7 +22,7 @@ describe ConvertersController do
           {
             from:   :celsius,
             to:     :fahrenheit,
-            values: { 5 => 41 }
+            values: { 5.0 => 41.0 }
           }
         }
         before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5" } }
@@ -34,7 +34,7 @@ describe ConvertersController do
           {
             from:   :celsius,
             to:     :fahrenheit,
-            values: { 4 =>  41, 0 => 32 }
+            values: { 5.0 =>  41.0, 0.0 => 32.0 }
           }
         }
         before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5, 0" } }
@@ -44,6 +44,22 @@ describe ConvertersController do
     end
 
     describe "unsuccessful cases" do
+      context "with invalid 'from' parameter" do
+        it "raise error" do
+          expect{
+            get 'convert', { format: 'json', from: 'unknown_conversion', to: 'fahrenheit', values: "1" } 
+          }.to raise_error ArgumentError
+        end
+      end
+
+      context "with invalid 'to' parameter" do
+        it "raise error" do
+          expect{
+            get 'convert', { format: 'json', from: 'celsius', to: 'unknown_conversion', values: "1" } 
+          }.to raise_error ArgumentError
+        end
+      end
+
       context "with invalid 'values' parameter" do
         it "raise error" do
           expect{
