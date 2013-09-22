@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Converter do
 
-  describe ".celcius_to_fahrenheit(value)" do
-    subject{ Converter.celcius_to_fahrenheit(value) }
+  describe ".celsius_to_fahrenheit(value)" do
+    subject{ Converter.celsius_to_fahrenheit(value) }
     context "with integer value" do
       let(:value) { 1 }
       it { should == 33.8 }
@@ -14,8 +14,8 @@ describe Converter do
     end
   end
 
-  describe ".fahrenheit_to_celcius" do
-    subject{ Converter.fahrenheit_to_celcius(value) }
+  describe ".fahrenheit_to_celsius" do
+    subject{ Converter.fahrenheit_to_celsius(value) }
     context "with integer value" do
       let(:value) { 1 }
       it { should be_within(0.0001).of(-17.2222) }
@@ -28,11 +28,11 @@ describe Converter do
 
   describe ".convert" do
     context "with supported conversion" do
-      it "converts fahrenheit to celcius" do
-        Converter.convert('fahrenheit', 'celcius', 1).should be_within(0.0001).of(-17.2222) 
+      it "converts fahrenheit to celsius" do
+        Converter.convert('fahrenheit', 'celsius', 1).should be_within(0.0001).of(-17.2222) 
       end
-      it "converts celcius to fahrenheit" do
-        Converter.convert('celcius', 'fahrenheit', 1).should == 33.8
+      it "converts celsius to fahrenheit" do
+        Converter.convert('celsius', 'fahrenheit', 1).should == 33.8
       end
     end
 

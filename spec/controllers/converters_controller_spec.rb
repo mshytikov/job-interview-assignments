@@ -20,24 +20,24 @@ describe ConvertersController do
       context "with one value" do
         let(:expected_body) {
           {
-            from:   :celsium,
+            from:   :celsius,
             to:     :fahrenheit,
             values: { 5 => 41 }
           }
         }
-        before { get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "5" } }
+        before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5" } }
         it_behaves_like "successful convert request"
       end
 
       context "with multiple value" do
         let(:expected_body) {
           {
-            from:   :celsium,
+            from:   :celsius,
             to:     :fahrenheit,
             values: { 4 =>  41, 0 => 32 }
           }
         }
-        before { get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "5, 0" } }
+        before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5, 0" } }
         it_behaves_like "successful convert request"
 
       end
@@ -47,7 +47,7 @@ describe ConvertersController do
       context "with invalid 'values' parameter" do
         it "raise error" do
           expect{
-            get 'convert', { format: 'json', from: 'celsium', to: 'fahrenheit', values: "abc" } 
+            get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "abc" } 
           }.to raise_error ArgumentError
         end
       end
@@ -56,14 +56,14 @@ describe ConvertersController do
         context "without 'from' " do
           it "raise error" do
             expect{
-              get 'convert', { format: 'json',  to: 'celsium', values: "1" } 
+              get 'convert', { format: 'json',  to: 'celsius', values: "1" } 
             }.to raise_error  ActionController::ParameterMissing
           end
         end
         context "without 'to' " do
           it "raise error" do
             expect{
-              get 'convert', { format: 'json', from: 'celsium', values: "1" } 
+              get 'convert', { format: 'json', from: 'celsius', values: "1" } 
             }.to raise_error  ActionController::ParameterMissing
           end
         end
@@ -71,7 +71,7 @@ describe ConvertersController do
         context "without 'values' " do
           it "raise error" do
             expect{
-              get 'convert', { format: 'json', form: 'fahrenheit', to: 'celsium'} 
+              get 'convert', { format: 'json', form: 'fahrenheit', to: 'celsius'} 
             }.to raise_error  ActionController::ParameterMissing
           end
         end

@@ -8,11 +8,11 @@ module Converter
       public_send(method_name, value)
     end
 
-    def fahrenheit_to_celcius(value)
+    def fahrenheit_to_celsius(value)
       (value - 32)*5.0/9.0
     end
 
-    def celcius_to_fahrenheit(value)
+    def celsius_to_fahrenheit(value)
       value*9.0/5.0 + 32
     end
 
