@@ -47,8 +47,8 @@ describe Converter do
 
   describe ".types" do
     subject { Converter.types }
-    it { should be_an Hash}
-    its("[:celsius]")   { should == :fahrenheit }
-    its("[:fahrenheit]"){ should == :celsius }
+    it { should be_an Array}
+    it { should include(['fahrenheit', 'celsius']) }
+    it { should include(['celsius', 'fahrenheit']) }
   end
 end
