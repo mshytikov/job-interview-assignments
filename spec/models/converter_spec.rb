@@ -44,4 +44,11 @@ describe Converter do
       end
     end
   end
+
+  describe ".types" do
+    subject { Converter.types }
+    it { should be_an Hash}
+    its("[:celsius]")   { should == :fahrenheit }
+    its("[:fahrenheit]"){ should == :celsius }
+  end
 end
