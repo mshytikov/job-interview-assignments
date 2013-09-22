@@ -1,6 +1,7 @@
 module Converter
 
   class << self
+
     def convert(from, to, value)
       method_name = "#{from}_to_#{to}"
       raise(ArgumentError, "undefined conversion from '#{from}' to '#{to}'") unless respond_to?(method_name) 
@@ -8,12 +9,12 @@ module Converter
     end
 
     def fahrenheit_to_celcius(value)
-
+      (value - 32)*5.0/9.0
     end
 
     def celcius_to_fahrenheit(value)
+      value*9.0/5.0 + 32
     end
-
 
   end
 end
