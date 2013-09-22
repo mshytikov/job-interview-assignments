@@ -1,2 +1,18 @@
-<h1>Converters#convert</h1>
-<p>Find me in app/views/converters/convert.html.erb</p>
+<h1>Conversion results</h1>
+
+<table border="1">
+  <tr>
+    <%=content_tag :th, @result[:from] %>
+    <%=content_tag :th, @result[:to] %>
+  </tr>
+  <% @result[:values].each do |from,to| %>
+    <tr>
+      <td><%= from %></td>
+      <td><%= to %></td>
+   </tr>
+  <% end %>
+</table>
+
+<br>
+<%= link_to "back", converters_index_path %>
+
