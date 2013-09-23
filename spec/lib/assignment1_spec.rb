@@ -35,7 +35,7 @@ describe Assignment1 do
           describe "child C" do
             subject { a_node.children[0] }
             it "same as root child C" do 
-               should be(c_node)
+              should be(c_node)
             end
           end
         end
@@ -52,14 +52,14 @@ describe Assignment1 do
           describe "child A" do
             subject { b_node.children[0] }
             it "same as root child A" do 
-               should be(a_node)
+              should be(a_node)
             end
           end
 
           describe "child C" do
             subject { b_node.children[1] }
             it "same as root child C" do 
-               should be(c_node)
+              should be(c_node)
             end
           end
         end
@@ -125,20 +125,19 @@ describe Assignment1 do
     end
   end
 
-  describe ".solve", :vcr do
-    let(:call_trace) { [] }
-    let!(:visit_node) { ->(node){ call_trace << [node.id, node.inputs_count + node.children_inputs_count] } }
-    let(:expected_call_trace) { [
-      [ uri(root), 8 ],
-      [ uri('a.html'), 4 ],
-      [ uri('b.html'), 6 ],
-      [ uri('c.html'), 4 ],
-      [ uri('d.html'), 2 ]
-    ] }
-    it "should call block with node in BFS traversal" do
-      expect {
-        solve(uri(root), &visit_node)
-      }.to change{ call_trace }.from([]).to(expected_call_trace)
+  describe ".solve" do
+    describe "call trace" do
+      use_vcr_cassette
+      let(:call_trace) { [] }
+      let(:visit_node) { ->(node){ call_trace << [node.id, node.inputs_count + node.children_inputs_count] } }
+      subject{ call_trace }
+      before{ Assignment1.solve(uri(:root), &visit_node) }
+      its(:size) { should == 5}
+      its([0]){ should == [uri(:root),    8 ] }
+      its([1]){ should == [uri('a.html'), 4 ] }
+      its([2]){ should == [uri('b.html'), 6 ] }
+      its([3]){ should == [uri('c.html'), 4 ] }
+      its([4]){ should == [uri('d.html'), 2 ] }
     end
   end
 end
