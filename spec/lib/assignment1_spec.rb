@@ -124,5 +124,22 @@ describe Assignment1 do
       end
     end
   end
+
+  describe ".solve", :vcr do
+    let(:call_trace) { [] }
+    let!(:visit_node) { ->(node){ call_trace << [node.id, node.inputs_count + node.children_inputs_count] } }
+    let(:expected_call_trace) { [
+      [ uri(root), 8 ],
+      [ uri('a.html'), 4 ],
+      [ uri('b.html'), 6 ],
+      [ uri('c.html'), 4 ],
+      [ uri('d.html'), 2 ]
+    ] }
+    it "should call block with node in BFS traversal" do
+      expect {
+        solve(uri(root), &visit_node)
+      }.to change{ call_trace }.from([]).to(expected_call_trace)
+    end
+  end
 end
 
