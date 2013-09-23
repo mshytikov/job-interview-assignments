@@ -9,18 +9,28 @@ module Assignment1
   class << self
 
     def build_tree(url, deep = 3, limit = 50)
-      visit_node(url, 0, 0, deep, limit)
+      visit_node(url, 0, deep, limit, {})
     end
 
-    def visit_node(url, level, nodes_count, deep, limit)
-      node = Node.new(url).build
-      nodes_count += 1
+
+
+    private
+    def visit_node(url, level, deep, limit, visited_nodes)
+      node = Node.new(url)
+
+      #return node if already  visited
+      return visited_nodes[node.id] if visited_nodes.has_key?(node.id)
+
+      # crawl web page
+      node.build
+
+      visited_nodes[node.id] = node
+
       if level < deep
         node.links.each{|link|
-            break if nodes_count >= limit
-            child = visit_node(link, level + 1, nodes_count, deep, limit)
+            break if visited_nodes.size > limit
+            child = visit_node(link, level + 1, deep, limit, visited_nodes)
             node.add_child(child)
-            nodes_count += 1
         }
       end
       node

@@ -34,7 +34,9 @@ describe Assignment1 do
 
           describe "child C" do
             subject { a_node.children[0] }
-            it { should == c_node }
+            it "same as root child C" do 
+               should be(c_node)
+            end
           end
         end
 
@@ -49,12 +51,16 @@ describe Assignment1 do
 
           describe "child A" do
             subject { b_node.children[0] }
-            it { should == a_node }
+            it "same as root child A" do 
+               should be(a_node)
+            end
           end
 
           describe "child C" do
             subject { b_node.children[1] }
-            it { should == c_node }
+            it "same as root child C" do 
+               should be(c_node)
+            end
           end
         end
 
@@ -107,7 +113,7 @@ describe Assignment1 do
             let(:c_node) { a_node.children[0] }
             subject{ c_node }
 
-            it { should be_an Node }
+            it { should be_an Assignment1::Node }
             its(:id) { should == uri("c.html") }
             its(:inputs_count) { should == 2 }
             its(:children_inputs_count) { should == 0 }
