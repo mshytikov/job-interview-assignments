@@ -42,7 +42,6 @@ describe Assignment1 do
           subject { b_node }
 
           it { should be_an Assignment1::Node }
-          its(:id) { should == uri("a.html") }
           its(:id) { should == uri("b.html") }
           its(:inputs_count) { should == 2 }
           its(:children_inputs_count) { should == 4 }
@@ -65,8 +64,18 @@ describe Assignment1 do
           it { should be_an Assignment1::Node }
           its(:id) { should == uri("c.html") }
           its(:inputs_count) { should == 2 }
-          its(:children_inputs_count) { should == 0 }
-          its("children.size") { should == 0 }
+          its(:children_inputs_count) { should == 2 }
+          its("children.size") { should == 1 }
+
+          describe "child D" do
+            subject { c_node.children[0] }
+
+            it { should be_an Assignment1::Node }
+            its(:id) { should == uri("d.html") }
+            its(:inputs_count) { should == 2 }
+            its(:children_inputs_count) { should == 0 }
+            its("children.size") { should == 0 }
+          end
         end
 
       end
