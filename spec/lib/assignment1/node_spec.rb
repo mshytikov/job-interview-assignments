@@ -27,8 +27,8 @@ describe Assignment1::Node do
   describe "#build" do
 
 
-    it "respond with true" do
-      expect{ node.build }.to be_true
+    it "respond with node" do
+      expect( node.build ).to eq(node)
     end
 
     it "fills links" do
@@ -42,9 +42,8 @@ describe Assignment1::Node do
   end
 
   describe "#add_child" do
-    let(:child) { Assignment1::Node.new(uri("a.html")) }
-    before { child.build }
-    it "increases total_inputs_count"  do
+    let(:child) { Assignment1::Node.new(uri("a.html")).build }
+    it  "increases children_inputs_count" do
       expect{ node.add_child(child) }.to change{ node.children_inputs_count }.from(0).to(2)
     end
 
