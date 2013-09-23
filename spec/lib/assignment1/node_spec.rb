@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Assignment1::Node do
 
   describe ".new" do
-    let(:url) { "http://google.com" }
+    let(:url) { "http://test.droxbob.com/a.html" }
     subject { Assignment1::Node.new(url) }
     it { should respond_to(:id) }
     its(:id) { should == url }
@@ -19,20 +19,23 @@ describe Assignment1::Node do
   end
 
   describe "#build" do
-    let(:url) { "http://google.com" }
-    let(:node) { Assignment1::Node.new(url) }
-    before { node.build }
+    def uri(path)
+      "http://assignment1.droxbob.com/#{path}"
+    end
+
+    let(:node) { Assignment1::Node.new(uri(nil)) }
 
     it "respond with true" do
       expect{ node.build }.to be_true
     end
 
     it "fills links" do
-      expect{ node.build }.to chage(:links).from(nil).to(5)
+      expected_array = ['a.html', 'b.html', 'c.html'].map{|p| uri(p) }
+      expect{ node.build }.to change{ node.links }.from(nil).to(expected_array)
     end
 
     it "fills input_counts" do
-      expect{ node.build }.to chage(:input_counts).from(nil).to(10)
+      expect{ node.build }.to change{ node.inputs_count }.from(nil).to(2)
     end
   end
 end
