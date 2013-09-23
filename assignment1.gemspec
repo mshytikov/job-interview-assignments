@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
 
   spec.add_runtime_dependency "nokogiri", "~> 1.6.0"
+  spec.add_runtime_dependency "faraday",  "~> 0.8.8"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

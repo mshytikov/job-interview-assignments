@@ -11,7 +11,7 @@ module Assignment1
     end
 
     def build
-      doc = Nokogiri::HTML(open(id))
+      doc = Nokogiri::HTML(Faraday.get(id).body)
       @inputs_count = doc.css('input').count
       @links = doc.css('a').map{|e| URIHelper.absolute_uri(id, e['href'])}.compact
       self
