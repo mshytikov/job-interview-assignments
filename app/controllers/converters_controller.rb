@@ -13,6 +13,8 @@ class ConvertersController < ApplicationController
       format.html
       format.any(:xml, :json) { render request.format.to_sym => @result }
     end
+  rescue ArgumentError => e
+    raise InvalidParameterValue, e
   end
 
   private
@@ -22,6 +24,8 @@ class ConvertersController < ApplicationController
     #support of different format for 'values' param: &values=1,2 or &values[]=1&values[]=2
     values = values.split(/,\s*/) unless values.is_a?(Array) 
     values.map{|v| Float(v) }
+  rescue ArgumentError => e
+    raise InvalidParameterValue, e
   end
 
 end

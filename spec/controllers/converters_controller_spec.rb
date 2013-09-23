@@ -10,9 +10,15 @@ describe ConvertersController do
   end
 
   describe "GET 'convert'" do
-    shared_examples_for "successful convert request" do
+    shared_examples_for "successful convert response" do
       subject { response }
       it { should be_success }
+      its("body") { should == expected_body.to_json }
+    end
+
+    shared_examples_for "invalid parameter response" do
+      subject { response }
+      its(:status) { should == 422 }
       its("body") { should == expected_body.to_json }
     end
 
@@ -26,7 +32,7 @@ describe ConvertersController do
           }
         }
         before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5" } }
-        it_behaves_like "successful convert request"
+        it_behaves_like "successful convert response"
       end
 
       context "with multiple value" do
@@ -38,34 +44,28 @@ describe ConvertersController do
           }
         }
         before { get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "5, 0" } }
-        it_behaves_like "successful convert request"
+        it_behaves_like "successful convert response"
 
       end
     end
 
     describe "unsuccessful cases" do
       context "with invalid 'from' parameter" do
-        it "raise error" do
-          expect{
-            get 'convert', { format: 'json', from: 'unknown_conversion', to: 'fahrenheit', values: "1" } 
-          }.to raise_error ArgumentError
-        end
+        let(:expected_body) { {:error => "undefined conversion from 'unknown_conversion' to 'fahrenheit'"} }
+        before{ get 'convert', { format: 'json', from: 'unknown_conversion', to: 'fahrenheit', values: "1" }  }
+        it_behaves_like "invalid parameter response"
       end
 
       context "with invalid 'to' parameter" do
-        it "raise error" do
-          expect{
-            get 'convert', { format: 'json', from: 'celsius', to: 'unknown_conversion', values: "1" } 
-          }.to raise_error ArgumentError
-        end
+        let(:expected_body) { {:error => "undefined conversion from 'celsius' to 'unknown_conversion'"} }
+        before{  get 'convert', { format: 'json', from: 'celsius', to: 'unknown_conversion', values: "1" } }
+        it_behaves_like "invalid parameter response"
       end
 
       context "with invalid 'values' parameter" do
-        it "raise error" do
-          expect{
-            get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "abc" } 
-          }.to raise_error ArgumentError
-        end
+        let(:expected_body) { {:error => 'invalid value for Float(): "abc"'} }
+        before{ get 'convert', { format: 'json', from: 'celsius', to: 'fahrenheit', values: "abc" } }
+        it_behaves_like "invalid parameter response"
       end
 
       context "without required  params" do
