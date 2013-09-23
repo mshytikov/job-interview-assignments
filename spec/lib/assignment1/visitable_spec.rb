@@ -8,8 +8,8 @@ describe Assignment1::Visitable do
 
   describe "include Visitable" do
     subject(:obj) { Dummy.new }
-    it{ should respond_to?(:visit) }
-    it{ should respond_to?(:visited?) }
+    it{ should respond_to(:visit!) }
+    it{ should respond_to(:visited?) }
     its(:visited?) { should be_false}
 
     describe "#.visit!(&block)" do

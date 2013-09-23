@@ -1,5 +1,6 @@
 module Assignment1
   class Node
+    include Visitable
 
     attr_reader :id, :inputs_count, :children_inputs_count, :children, :links
     def initialize(id)
