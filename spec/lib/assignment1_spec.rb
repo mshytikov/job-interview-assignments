@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Assignment1 do
+describe Assignment1, :vcr do
   def uri(path)
     return "http://assignment1.droxbob.com" if path == :root
     "http://assignment1.droxbob.com/#{path}"

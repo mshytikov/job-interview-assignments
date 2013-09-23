@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe Assignment1::Node do
+describe Assignment1::Node, :vcr do
   def uri(path)
     "http://assignment1.droxbob.com/#{path}"
   end
