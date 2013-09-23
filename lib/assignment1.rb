@@ -31,27 +31,6 @@ module Assignment1
       end
     end
 
-    def visit_node(url, visited_nodes)
-      node = Node.new(url)
-
-      #return node if already  visited
-      return visited_nodes[node.id] if visited_nodes.has_key?(node.id)
-
-      # crawl web page
-      node.build
-
-      visited_nodes[node.id] = node
-
-      if level < deep
-        node.links.each{|link|
-            break if visited_nodes.size > limit
-            child = visit_node(link, level + 1, deep, limit, visited_nodes)
-            node.add_child(child)
-        }
-      end
-      node
-    end
-
     def visit_node(url, level, deep, limit, visited_nodes)
       node = Node.new(url)
 

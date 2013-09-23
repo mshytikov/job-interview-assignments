@@ -4,6 +4,7 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new
 task :default => :spec
 
+desc "Crawls a website $rake solve['http://assignment1.droxbob.com']"
 task :solve, [:url] do |t, args|
   require 'assignment1'
   raise "Please specify url of website" unless args.url

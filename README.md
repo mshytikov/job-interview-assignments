@@ -27,6 +27,6 @@ faq.html - 5 inputs
 ## Usage
 
 ```
-rake crawl http://google.com
+rake solve["http://assignment1.droxbob.com"]
 ```
 
