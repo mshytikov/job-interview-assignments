@@ -1,29 +1,32 @@
 # Assignment1
 
-TODO: Write a gem description
+Write a program that crawls a given website (up to 3 levels deep, maximum 50 pages) and
+counts all input elements (<input…) per page. The counts per page are for the inputs on that
+page plus all the inputs of the pages it refers to. Performance is a key factor so do a few
+optimizations for performance, like concurrent processing of the web pages.
+Don't use a gem like Anemone for this, write your own crawling functions.
+
+Provide:
+* Tests
+* A command line runnable class that crawls a website
+
+Acceptance criteria:
+
+Input: url_of_website
+Output example:
+
+home.html - 20 inputs
+contact.html - 5 inputs
+products.html - 10 inputs
+faq.html - 5 inputs
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'assignment1'
-
-And then execute:
-
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install assignment1
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+rake crawl http://google.com
+```
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
