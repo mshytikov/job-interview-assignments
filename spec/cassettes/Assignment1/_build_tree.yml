@@ -1,0 +1,563 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:33 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '491'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:27:11 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/b.html\">b.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<br/>\n<input
+        type='hidden' value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:33 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/a.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:33 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '427'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:29:14 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/c.html\">c.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:34 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/c.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:34 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '435'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:30:09 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/index.html\">index.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:34 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/index.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:34 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '491'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:27:11 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/b.html\">b.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<br/>\n<input
+        type='hidden' value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:34 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/b.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:35 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '456'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:29:51 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<input type='hidden'
+        value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:35 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/a.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:35 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '427'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:29:14 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/c.html\">c.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:35 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/c.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:35 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '435'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:30:09 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/index.html\">index.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:35 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/c.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:36 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '435'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:30:09 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/index.html\">index.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:36 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/index.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:36 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '491'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:27:11 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/b.html\">b.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<br/>\n<input
+        type='hidden' value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:36 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/c.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:37 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '435'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:30:09 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/index.html\">index.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:37 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/index.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:37 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '491'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:27:11 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/b.html\">b.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<br/>\n<input
+        type='hidden' value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:37 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/a.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:37 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '427'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:29:14 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/c.html\">c.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:37 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/b.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:38 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '456'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:29:51 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/a.html\">a.html</a>\n<a href=\"/c.html\">c.html</a>\n\n<input type='hidden'
+        value=\"input1\"/>\n<input type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:38 GMT
+- request:
+    method: get
+    uri: http://assignment1.droxbob.com/c.html
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.1.19
+      Date:
+      - Mon, 23 Sep 2013 17:32:38 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '435'
+      Last-Modified:
+      - Mon, 23 Sep 2013 12:30:09 GMT
+      Connection:
+      - keep-alive
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: US-ASCII
+      string: ! "<body>\n<pre>\n    index.html &lt;--------\n      /  |  \\           |\n
+        \    /   |   \\          |\n    /    |    \\         |\n   v     |     v        |\n
+        a.html&lt;--- b.html      |\n    \\    |    /         |\n     \\   |   /          |\n
+        \     \\  |  /           |\n       v v v            |\n      c.html  ----------\n</pre>\n\n<a
+        href=\"/index.html\">index.html</a>\n\n<input type='hidden' value=\"input1\"/>\n<input
+        type='hidden' value=\"input2\"/>\n\n</body>\n\n"
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 17:32:38 GMT
+recorded_with: VCR 2.5.0

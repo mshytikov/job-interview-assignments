@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Assignment1, :vcr do
+describe Assignment1 do
   def uri(path)
     return "http://assignment1.droxbob.com" if path == :root
     "http://assignment1.droxbob.com/#{path}"
   end
 
-
   describe ".build_tree" do
+    use_vcr_cassette
     context "with deep = 3" do
       let(:root) { Assignment1.build_tree(uri(:root), 3) }
       let(:a_node) { root.children[0] }
@@ -15,9 +15,9 @@ describe Assignment1, :vcr do
       let(:c_node) { root.children[2] }
 
       describe "Root node" do
-        subject{ root}
+        subject{ root }
 
-        it { should be_an Node }
+        it { should be_an Assignment1::Node }
         its(:id) { should == uri(:root) }
         its(:inputs_count) { should == 2 }
         its(:children_inputs_count) { should == 6 }
@@ -26,7 +26,7 @@ describe Assignment1, :vcr do
         describe "child A" do
           subject { a_node }
 
-          it { should be_an Node }
+          it { should be_an Assignment1::Node }
           its(:id) { should == uri("a.html") }
           its(:inputs_count) { should == 2 }
           its(:children_inputs_count) { should == 2 }
@@ -41,7 +41,8 @@ describe Assignment1, :vcr do
         describe "child B" do
           subject { b_node }
 
-          it { should be_an Node }
+          it { should be_an Assignment1::Node }
+          its(:id) { should == uri("a.html") }
           its(:id) { should == uri("b.html") }
           its(:inputs_count) { should == 2 }
           its(:children_inputs_count) { should == 4 }
@@ -61,7 +62,7 @@ describe Assignment1, :vcr do
         describe "child C" do
           subject { c_node }
 
-          it { should be_an Node }
+          it { should be_an Assignment1::Node }
           its(:id) { should == uri("c.html") }
           its(:inputs_count) { should == 2 }
           its(:children_inputs_count) { should == 0 }
@@ -78,7 +79,7 @@ describe Assignment1, :vcr do
       describe "Root node" do
         subject{ root}
 
-        it { should be_an Node }
+        it { should be_an Assignment1::Node }
         its(:id) { should == uri(:root) }
         its(:inputs_count) { should == 2 }
         its(:children_inputs_count) { should == 2 }
@@ -87,7 +88,7 @@ describe Assignment1, :vcr do
         describe "child A" do
           subject { a_node }
 
-          it { should be_an Node }
+          it { should be_an Assignment1::Node }
           its(:id) { should == uri("a.html") }
           its(:inputs_count) { should == 2 }
           its(:children_inputs_count) { should == 2 }
