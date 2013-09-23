@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 
-describe Assignment1::Node, :vcr do
+describe Assignment1::Node do
+
   def uri(path)
     "http://assignment1.droxbob.com/#{path}"
   end
@@ -24,8 +25,7 @@ describe Assignment1::Node, :vcr do
     it { should respond_to(:to_s) }
   end
 
-  describe "#build" do
-
+  describe "#build", :vcr do
 
     it "respond with node" do
       expect( node.build ).to eq(node)
@@ -41,7 +41,7 @@ describe Assignment1::Node, :vcr do
     end
   end
 
-  describe "#add_child" do
+  describe "#add_child", :vcr do
     let(:child) { Assignment1::Node.new(uri("a.html")).build }
     it  "increases children_inputs_count" do
       expect{ node.add_child(child) }.to change{ node.children_inputs_count }.from(0).to(2)
