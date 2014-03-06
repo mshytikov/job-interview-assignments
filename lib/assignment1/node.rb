@@ -17,11 +17,6 @@ module Assignment1
       self
     end
 
-    def absolute_uri(href)
-      @uri.merge(URI.parse(href)).to_s
-    end
-
-
     def add_child(child)
       @children << child
       @children_inputs_count += child.inputs_count
