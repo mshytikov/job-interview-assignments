@@ -1,0 +1,5 @@
+<% provide(:title, "Profile") %>
+<h1>User ID: <%= current_user.id %></h1>
+<h2>Balance: <%= current_user.balance %></h2>
+
+<%= render 'transfers/create' %>

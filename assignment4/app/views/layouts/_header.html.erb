@@ -1,0 +1,17 @@
+<header>
+  <div>
+    <div>
+      <nav>
+        <ul>
+          <% if signed_in? %>
+            <li><%= link_to "Profile",  user_path(current_user) %></li>
+            <li><%= link_to "Hystory",  transfers_path %></li>
+            <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

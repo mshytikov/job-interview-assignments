@@ -1,0 +1,19 @@
+postgresql_defaults: &postgresql_defaults
+  adapter: postgresql
+  encoding: utf8
+  username: bankir
+  password: bankir
+  host: 127.0.0.1
+
+
+development:
+  <<: *postgresql_defaults
+  database: simple_banking_app_development
+
+test:
+  <<: *postgresql_defaults
+  database: simple_banking_app_test
+
+production:
+  <<: *postgresql_defaults
+  database: simple_banking_app_production
