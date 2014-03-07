@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>Super Upload</title>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/super_iframe.css" />
+
+    <script type="text/javascript" src="/javascripts/utils.js"></script>
+    <script type="text/javascript" src="/javascripts/super_iframe.js"></script>
+    <script type="text/javascript">
+      sendJSONP("/uuid.json", 'updateUUID');
+    </script>
+  </head>
+
+  <body>
+    <form id='super_form' action="/upload/" method="POST" enctype="multipart/form-data"  accept-charset="utf-8" >
+        <input id='select_file'  type="file" name="file" onchange='startUpload()'><br>
+      </form>
+
+      <div id='uuid'></div>
+      <div id='state'>init</div>
+  </body>
+
+</html>

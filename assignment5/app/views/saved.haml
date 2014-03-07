@@ -1,0 +1,8 @@
+%h1 Saved
+%h4 Title: #{title}
+
+%h4 Attachment:
+- if attachment.to_s.empty?
+  %div No attachments
+- else
+  %a{:href => attachment} Download
