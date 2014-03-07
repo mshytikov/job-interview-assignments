@@ -1,0 +1,16 @@
+<h1>Convert</h1>
+
+<%= flash[:error] %>
+<%= form_tag converters_convert_path(format: 'html'), :method => :get do %>
+  <%= label_tag "from", "From:" %>
+  <%= convert_from_tag %>
+  <%= label_tag "to", "To:"%>
+  <%= convert_to_tag %>
+  <br/>
+  <br/>
+  <%= label_tag "values", "Values" %>
+  <%= text_field_tag "values", "5, 14" %>
+  <br/>
+  <br/>
+  <%= submit_tag 'Convert', :name =>nil %>
+<% end %>
