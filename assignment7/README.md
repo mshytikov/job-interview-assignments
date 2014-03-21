@@ -156,3 +156,10 @@ the AdMin will have straightforward implementation also keep in mind
 that this is a TEST assignment and not production ready product
 (I can find 100 more excuses which are not excuses)
 Deployment will be done using Chef.
+
+
+P.S.: Complexity of algorithms which will be used in:
+Private API for managing campaign or banner is O(1)
+Public API for getting the banner will be O(N) where N is number of banners
+Also for production ready system the data 'cleanup' could be required
+which can be done easily but it is out of scope of this test.
