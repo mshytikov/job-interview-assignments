@@ -163,3 +163,6 @@ Private API for managing campaign or banner is O(1)
 Public API for getting the banner will be O(N) where N is number of banners
 Also for production ready system the data 'cleanup' could be required
 which can be done easily but it is out of scope of this test.
+
+#### Let's start with implementation !!!
+.
