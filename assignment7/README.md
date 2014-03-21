@@ -86,3 +86,62 @@ performance.
  3. Redis as a Database layer
     Fast in-memory database with persistence ability and also supports
     some data types - exactly what is needed!
+
+
+*API*
+
+The communication between AdMin and AdServer shuld be done using HTTP
+protocol.
+The AdServe should have API like:
+
+Private API accessible for AdMin
+
+```
+# Create of Update the banner
+# returns 201 on create and 204 on update
+PUT    /campaigns/:id
+
+# To delete the compaign
+# returns 204
+DELETE /campaigns/:id
+
+# The same concept for banners
+PUT    /banners/:id
+DELETE /banners/:id
+```
+
+Public API accessible for Visitors
+
+```
+# returns 302 redirect to the banner image
+GET /banner/:campaing_id/:user_id
+```
+
+*Data*
+
+For simplicity banners will be uploaded and stored on *AdMin* server
+and served by Nginx as a static content.
+
+The most interesting part is organisation of data storage in the Redis:
+
+Campaign will be stored in:
+
+```
+campaign:<id>:ratio   => {random => 3, weighted=7}
+campaign:<id>:banners => { <banner_index> => banner_id, ... }
+campaign:<id>:banners:weights => { <banner_index> => banner_weight, ... }
+```
+The `<banner_index>` is a index of the banner needed to support user
+state described below.
+
+User state will be stored in:
+
+```
+u:<id> => "00010101000111001"
+```
+
+The key which stores bitmask of banners which were already shown to user.
+This is most efficient way to minimize memory consumption. One bit per
+banner to indicate is that banner was shown.
+Because of assumption that server should handle at least a million visitors 
+is better to use very short key name to save a memory.
