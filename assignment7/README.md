@@ -145,3 +145,14 @@ This is most efficient way to minimize memory consumption. One bit per
 banner to indicate is that banner was shown.
 Because of assumption that server should handle at least a million visitors 
 is better to use very short key name to save a memory.
+
+
+*Deployment*
+
+The easiest way it is just use Heroku ...
+But it is not what I'm interesting in.
+I decided to relax the testing of the AdMin app in favor of Deployment, (because
+the AdMin will have straightforward implementation also keep in mind
+that this is a TEST assignment and not production ready product
+(I can find 100 more excuses which are not excuses)
+Deployment will be done using Chef.
