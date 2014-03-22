@@ -18,6 +18,7 @@
         <td><%= campaign.name %></td>
         <td><%= campaign.ratio_random %></td>
         <td><%= campaign.ratio_weighted %></td>
+        <td><%= link_to 'Banners', campaign_banners_path(campaign) %></td>
         <td><%= link_to 'Show', campaign %></td>
         <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
         <td><%= link_to 'Destroy', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
