@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  ratio_random: 1
+  ratio_weighted: 1
+
+two:
+  name: MyString
+  ratio_random: 1
+  ratio_weighted: 1
