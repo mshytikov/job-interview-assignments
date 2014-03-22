@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20140322104042) do
   create_table "campaign_banners", force: true do |t|
     t.integer  "campaign_id"
     t.integer  "banner_id"
-    t.integer  "weight"
+    t.integer  "weight",      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20140322104042) do
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
-    t.integer  "ratio_random"
-    t.integer  "ratio_weighted"
+    t.integer  "ratio_random",   default: 0, null: false
+    t.integer  "ratio_weighted", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
