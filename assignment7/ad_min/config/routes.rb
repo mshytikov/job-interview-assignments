@@ -1,4 +1,6 @@
 AdMin::Application.routes.draw do
+  resources :banners
+
   resources :campaigns
 
   # The priority is based upon order of creation: first created -> highest priority.
