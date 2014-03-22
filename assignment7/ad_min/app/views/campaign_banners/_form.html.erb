@@ -13,7 +13,11 @@
 
   <div class="field">
     <%= f.label :banner_id %><br>
-    <%= f.text_field :banner_id %>
+    <% if action_name == 'new' %>
+      <%= f.select :banner_id, available_banners(@campaign) %>
+    <% else %>
+      <%= @campaign_banner.id %>
+    <% end %>
   </div>
   <div class="field">
     <%= f.label :weight %><br>
