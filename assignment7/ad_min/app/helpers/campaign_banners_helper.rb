@@ -1,0 +1,2 @@
+module CampaignBannersHelper
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322093824) do
+ActiveRecord::Schema.define(version: 20140322104042) do
 
   create_table "banners", force: true do |t|
     t.string   "name"
@@ -19,6 +19,17 @@ ActiveRecord::Schema.define(version: 20140322093824) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "campaign_banners", force: true do |t|
+    t.integer  "campaign_id"
+    t.integer  "banner_id"
+    t.integer  "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "campaign_banners", ["banner_id"], name: "index_campaign_banners_on_banner_id"
+  add_index "campaign_banners", ["campaign_id"], name: "index_campaign_banners_on_campaign_id"
 
   create_table "campaigns", force: true do |t|
     t.string   "name"

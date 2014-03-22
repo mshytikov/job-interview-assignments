@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Campaign:</strong>
+  <%= @campaign_banner.campaign %>
+</p>
+
+<p>
+  <strong>Banner:</strong>
+  <%= @campaign_banner.banner %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @campaign_banner.weight %>
+</p>
+
+<%= link_to 'Edit', edit_campaign_banner_path(@campaign_banner) %> |
+<%= link_to 'Back', campaign_banners_path %>

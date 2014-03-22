@@ -1,0 +1,31 @@
+<h1>Listing campaign_banners</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>Banner</th>
+      <th>Weight</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @campaign_banners.each do |campaign_banner| %>
+      <tr>
+        <td><%= campaign_banner.campaign %></td>
+        <td><%= campaign_banner.banner %></td>
+        <td><%= campaign_banner.weight %></td>
+        <td><%= link_to 'Show', campaign_banner %></td>
+        <td><%= link_to 'Edit', edit_campaign_banner_path(campaign_banner) %></td>
+        <td><%= link_to 'Destroy', campaign_banner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Campaign banner', new_campaign_banner_path %>

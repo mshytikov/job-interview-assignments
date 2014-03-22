@@ -1,4 +1,6 @@
 AdMin::Application.routes.draw do
+  resources :campaign_banners
+
   resources :banners
 
   resources :campaigns
