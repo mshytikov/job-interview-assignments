@@ -3,6 +3,8 @@ require 'test_helper'
 class CampaignBannersControllerTest < ActionController::TestCase
   setup do
     @campaign_banner = campaign_banners(:one)
+    @campaign = campaigns(:one)
+    @banner = banners(:one)
   end
 
   test "should get index" do
@@ -18,7 +20,7 @@ class CampaignBannersControllerTest < ActionController::TestCase
 
   test "should create campaign_banner" do
     assert_difference('CampaignBanner.count') do
-      post :create, campaign_banner: { banner_id: @campaign_banner.banner_id, campaign_id: @campaign_banner.campaign_id, weight: @campaign_banner.weight }
+      post :create, campaign_banner: { banner_id: @banner, campaign_id: @campaign, weight: @campaign_banner.weight }
     end
 
     assert_redirected_to campaign_banner_path(assigns(:campaign_banner))
@@ -35,7 +37,7 @@ class CampaignBannersControllerTest < ActionController::TestCase
   end
 
   test "should update campaign_banner" do
-    patch :update, id: @campaign_banner, campaign_banner: { banner_id: @campaign_banner.banner_id, campaign_id: @campaign_banner.campaign_id, weight: @campaign_banner.weight }
+    patch :update, id: @campaign_banner, campaign_banner: { banner_id: @banner, campaign_id: @campaign, weight: @campaign_banner.weight }
     assert_redirected_to campaign_banner_path(assigns(:campaign_banner))
   end
 
