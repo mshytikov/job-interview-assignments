@@ -15,5 +15,5 @@
   <%= @campaign_banner.weight %>
 </p>
 
-<%= link_to 'Edit', edit_campaign_banner_path(@campaign_banner) %> |
-<%= link_to 'Back', campaign_banners_path %>
+<%= link_to 'Edit', edit_campaign_banner_path(@campaign, @campaign_banner) %> |
+<%= link_to 'Back', campaign_banners_path(@campaign) %>

@@ -8,44 +8,43 @@ class CampaignBannersControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index
+    get :index, campaign_id: @campaign
     assert_response :success
     assert_not_nil assigns(:campaign_banners)
   end
 
   test "should get new" do
-    get :new
+    get :new, campaign_id: @campaign
     assert_response :success
   end
 
   test "should create campaign_banner" do
     assert_difference('CampaignBanner.count') do
-      post :create, campaign_banner: { banner_id: @banner, campaign_id: @campaign, weight: @campaign_banner.weight }
+      post :create, campaign_id: @campaign, campaign_banner: { banner_id: @banner, weight: @campaign_banner.weight }
     end
 
-    assert_redirected_to campaign_banner_path(assigns(:campaign_banner))
+    assert_redirected_to campaign_banner_path(@campaign, assigns(:campaign_banner))
   end
 
   test "should show campaign_banner" do
-    get :show, id: @campaign_banner
+    get :show, id: @campaign_banner, campaign_id: @campaign
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @campaign_banner
+    get :edit, id: @campaign_banner, campaign_id: @campaign
     assert_response :success
   end
 
   test "should update campaign_banner" do
-    patch :update, id: @campaign_banner, campaign_banner: { banner_id: @banner, campaign_id: @campaign, weight: @campaign_banner.weight }
-    assert_redirected_to campaign_banner_path(assigns(:campaign_banner))
+    patch :update, id: @campaign_banner, campaign_id: @campaign, campaign_banner: { banner_id: @banner, weight: @campaign_banner.weight }
+    assert_redirected_to campaign_banner_path(@campaign, assigns(:campaign_banner))
   end
 
   test "should destroy campaign_banner" do
     assert_difference('CampaignBanner.count', -1) do
-      delete :destroy, id: @campaign_banner
+      delete :destroy, id: @campaign_banner, campaign_id: @campaign
     end
-
-    assert_redirected_to campaign_banners_path
+    assert_redirected_to campaign_banners_path(@campaign)
   end
 end

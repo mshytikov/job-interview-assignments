@@ -1,9 +1,11 @@
 AdMin::Application.routes.draw do
-  resources :campaign_banners
 
+  #resources :campaign_banners, :only => :destory
   resources :banners
 
-  resources :campaigns
+  resources :campaigns do
+    resources :campaign_banners, path: 'banners', as: "banners"
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
