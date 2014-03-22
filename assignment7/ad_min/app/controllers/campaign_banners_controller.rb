@@ -28,7 +28,7 @@ class CampaignBannersController < ApplicationController
   # POST /campaign_banners
   # POST /campaign_banners.json
   def create
-    @campaign_banner = CampaignBanner.new(campaign_banner_params)
+    @campaign_banner = CampaignBanner.new(campaign_banner_params(:create))
 
     respond_to do |format|
       if @campaign_banner.save
@@ -77,8 +77,11 @@ class CampaignBannersController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def campaign_banner_params
-      permitted = params.require(:campaign_banner).permit(:banner_id, :weight)
-      permitted.merge(campaign_id: @campaign.id)
+    # Allow banner_id only for banner creation
+    # Populate with valid campaign_id 
+    def campaign_banner_params(action=:update)
+      required = params.require(:campaign_banner)
+      permitted = (action == :create ? [:banner_id, :weight] : [:weight])
+      required.permit(permitted).merge(campaign_id: @campaign.id)
     end
 end
