@@ -1,10 +1,10 @@
-<h1>Listing campaign_banners</h1>
+<h1>Listing banners in campaign: <%= @campaign.name %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Campaign</th>
       <th>Banner</th>
+      <th>Image</th>
       <th>Weight</th>
       <th></th>
       <th></th>
@@ -15,8 +15,8 @@
   <tbody>
     <% @campaign_banners.each do |campaign_banner| %>
       <tr>
-        <td><%= campaign_banner.campaign %></td>
-        <td><%= campaign_banner.banner %></td>
+        <td><%= campaign_banner.name %></td>
+        <td><%= image_tag campaign_banner.image.url, :size => "32x32" %></td>
         <td><%= campaign_banner.weight %></td>
         <td><%= link_to 'Show', campaign_banner_path(@campaign, campaign_banner) %></td>
         <td><%= link_to 'Edit', edit_campaign_banner_path(@campaign, campaign_banner) %></td>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Campaign banner', new_campaign_banner_path(@campaign) %>
+<%= link_to 'Add Banner to Campaign', new_campaign_banner_path(@campaign) %>

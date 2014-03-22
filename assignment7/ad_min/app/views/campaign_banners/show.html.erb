@@ -2,12 +2,12 @@
 
 <p>
   <strong>Campaign:</strong>
-  <%= @campaign_banner.campaign %>
+  <%= @campaign_banner.campaign.name %>
 </p>
 
 <p>
   <strong>Banner:</strong>
-  <%= @campaign_banner.banner %>
+  <%=image_tag @campaign_banner.banner.image_url %>
 </p>
 
 <p>
