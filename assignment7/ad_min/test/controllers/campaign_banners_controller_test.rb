@@ -20,10 +20,16 @@ class CampaignBannersControllerTest < ActionController::TestCase
 
   test "should create campaign_banner" do
     assert_difference('CampaignBanner.count') do
-      post :create, campaign_id: @campaign, campaign_banner: { banner_id: @banner, weight: @campaign_banner.weight }
+      post :create, campaign_id: @campaign, campaign_banner: { banner_id: banners(:two), weight: @campaign_banner.weight }
     end
 
     assert_redirected_to campaign_banner_path(@campaign, assigns(:campaign_banner))
+  end
+
+  test "should not create campaign_banner with the same banner_id" do
+    assert_difference('CampaignBanner.count', 0) do
+      post :create, campaign_id: @campaign, campaign_banner: { banner_id: @banner, weight: @campaign_banner.weight }
+    end
   end
 
   test "should show campaign_banner" do
