@@ -26,4 +26,7 @@ AdMin::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # AdServe API base url
+  config.ad_serve_url = "http://localhost:4567"
 end

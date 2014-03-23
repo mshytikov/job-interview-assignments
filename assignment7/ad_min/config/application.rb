@@ -6,6 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
+# Require AdServe
+require_relative '../lib/ad_serve'
+
 module AdMin
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

@@ -33,4 +33,7 @@ AdMin::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # AdServe API base url ':test' will use TestConnection
+  config.ad_serve_url = :test
 end
