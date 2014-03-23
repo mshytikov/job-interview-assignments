@@ -106,8 +106,8 @@ PUT    /campaigns/:id
 DELETE /campaigns/:id
 
 # The same concept for banners
-PUT    /banners/:id
-DELETE /banners/:id
+PUT    /campaigns/:id/banners/:id
+DELETE /campaigns/:id/banners/:id
 ```
 
 Public API accessible for Visitors
@@ -128,7 +128,7 @@ Campaign will be stored in:
 
 ```
 campaign:<id>:ratio   => {random => 3, weighted=7}
-campaign:<id>:banners => { <banner_index> => banner_id, ... }
+campaign:<id>:banners:<id> => { url => 'banner_url', :index => 12}
 campaign:<id>:banners:weights => { <banner_index> => banner_weight, ... }
 ```
 The `<banner_index>` is a index of the banner needed to support user
