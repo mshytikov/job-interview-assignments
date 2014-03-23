@@ -46,5 +46,9 @@ end
 
 # Use Carrierwave for banners upload
 gem 'carrierwave'
+
 gem 'thin', group: :development
+
+# Use faraday for AdServe HTTP client
+gem 'faraday'
 
