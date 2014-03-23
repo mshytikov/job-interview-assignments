@@ -1,7 +1,7 @@
 class Campaign < ActiveRecord::Base
   has_many :campaign_banners, dependent: :destroy
 
-  after_save    {|r| AdServe.save_campaign(r.id, r.ratio_random, b.ratio_weighted) }
+  after_save    {|r| AdServe.save_campaign(r.id, r.ratio_random, r.ratio_weighted) }
   after_destroy {|r| AdServe.delete_campaign(r.id) }
 
   def available_banners

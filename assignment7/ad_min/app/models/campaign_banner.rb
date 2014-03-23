@@ -7,6 +7,6 @@ class CampaignBanner < ActiveRecord::Base
 
   delegate :image, :name, to: :banner
 
-  after_save    {|r| AdServe.save_banner(r.id, r.campaign_id, r.weight, r.image_url) }
-  after_destroy {|r| AdServe.delete_banner(r.id) }
+  after_save    {|r| AdServe.save_banner(r.id, r.campaign_id, r.weight, r.image.url) }
+  after_destroy {|r| AdServe.delete_banner(r.id, r.campaign_id) }
 end
