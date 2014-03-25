@@ -46,11 +46,17 @@ class Campaign
   def save_banner(banner_id, url, weight)
     campaign_lock.lock do
       banner = get_banner(banner_id)
-      index = self.size.value
-      banner.update({url: url , index: index})
-      self.weights[index] = weight
-      self.banners[index] = banner_id
-      self.size.increment
+      index = banner[:index]
+      if index
+        banner[:url]= url
+        self.weights[index] = weight
+      else
+        index = self.size.value
+        banner.update({url: url , index: index})
+        self.weights[index] = weight
+        self.banners[index] = banner_id
+        self.size.increment
+      end
     end
   end
 

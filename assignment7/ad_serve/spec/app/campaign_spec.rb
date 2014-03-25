@@ -61,7 +61,7 @@ describe Campaign do
         }.from(nil).to('1')
       end
 
-      it "should create campaign wights key" do
+      it "should create campaign weights key" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.hgetall("campaign:1:weights")
         }.from({}).to( { '0' => weight })
@@ -87,13 +87,13 @@ describe Campaign do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{ redis.dbsize }.by(1)
       end
 
-      it "should increase the size of campaign" do
-        expect { campaign.save_banner(id, url, weight) }.to change{
+      it "should increase the campaign size key" do
+        expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.get("campaign:1:size")
         }.from('1').to('2')
       end
 
-      it "should create campaign wights key" do
+      it "should create campaign weights key" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.hgetall("campaign:1:weights")
         }.from({ '0' => weight }).to({'0' => weight, '1' => '40'})
@@ -109,6 +109,38 @@ describe Campaign do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.hgetall("campaign:1:banner:2")
         }.from({}).to( {'index' => '1', 'url'=> 'url1' } )
+      end
+    end
+
+    context "existing banner in campaign" do
+      before{ campaign.save_banner(id, url, weight) }
+
+      it "should not add new banner" do
+        expect { campaign.save_banner(id, 'url1', '40') }.to_not change{ redis.dbsize }
+      end
+
+      it "should not increase the size of campaign" do
+        expect { campaign.save_banner(id, 'url1', '40') }.to_not change{
+          redis.get("campaign:1:size")
+        }
+      end
+
+      it "should update campaign weights key" do
+        expect { campaign.save_banner(id, 'url1', '40') }.to change{
+          redis.hgetall("campaign:1:weights")
+        }.from({ '0' => weight }).to({'0' => '40' })
+      end
+
+      it "should not update campaign banners key" do
+        expect { campaign.save_banner(id, 'url1', '40') }.to_not change{
+          redis.hgetall("campaign:1:banners")
+        }
+      end
+
+      it "should update banner key" do
+        expect { campaign.save_banner(id, 'url1', '40') }.to change{
+          redis.hgetall("campaign:1:banner:10")
+        }.from({'index' => '0', 'url'=> url }).to({'index' => '0', 'url'=> 'url1' })
       end
     end
   end
