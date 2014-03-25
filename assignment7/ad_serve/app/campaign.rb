@@ -27,6 +27,11 @@ class Campaign
     @id = id
   end
 
+
+  def build_key(*args)
+   ([self.class.redis_prefix, self.id]+args).join(':')
+  end
+
   def save(random, weighted)
     self.ratio.update({
       random: random,
@@ -36,11 +41,11 @@ class Campaign
 
   # Delete all keys with  prefix campaign:<id>
   def delete
-    redis.eval(LUA_SCRIPT_DELETE, :keys => ["#{self.class.redis_prefix}:#{id}:*"])
+    redis.eval(LUA_SCRIPT_DELETE, :keys => [build_key('*')])
   end
 
   def get_banner(banner_id)
-    Redis::HashKey.new("#{self.class.redis_prefix}:#{id}:banner:#{banner_id}")
+    Redis::HashKey.new(build_key('banner', banner_id))
   end
 
   def save_banner(banner_id, url, weight)
@@ -73,12 +78,9 @@ class Campaign
     end
   end
 
-  def user_key(user_id)
-    "#{redix_prefix}:user:#{user_id}"
-  end
 
   def get_next_banner_url(user_id)
-    key = user_key(user_id)
+    key = build_key('user', user_id)
     bitmask = redis.get(key) || ''
     available = Calculation.filter_indexed_hash(weights.all, bitmask)
 

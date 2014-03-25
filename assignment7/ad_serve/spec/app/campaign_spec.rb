@@ -150,7 +150,7 @@ describe Campaign do
     let(:id)      { "10" }
     let(:id1)     { "20" }
     let(:url)     { "http://ad.serve.com" }
-    let(:url)     { "http://ad1.serve.com" }
+    let(:url1)     { "http://ad1.serve.com" }
     let(:weight)  { '30' }
     let(:weight1) { '40' }
 
