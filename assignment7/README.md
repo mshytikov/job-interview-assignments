@@ -127,9 +127,10 @@ The most interesting part is organisation of data storage in the Redis:
 Campaign will be stored in:
 
 ```
-campaign:<id>:ratio   => {random => 3, weighted=7}
-campaign:<id>:banners:<id> => { url => 'banner_url', :index => 12}
-campaign:<id>:banners:weights => { <banner_index> => banner_weight, ... }
+campaigns:<id>:ratio   => {random => 3, weighted=7}
+campaigns:<id>:banners:<id> => { url => 'banner_url', :index => 12}
+campaigns:<id>:weights => { <banner_index> => banner_weight, ... }
+campaigns:<id>:banners => { <banner_index> => banner_id, ... }
 ```
 The `<banner_index>` is a index of the banner needed to support user
 state described below.
@@ -137,7 +138,7 @@ state described below.
 User state will be stored in:
 
 ```
-u:<id> => "00010101000111001"
+campaigns:<id>:user:<uid> => "00010101000111001"
 ```
 
 The key which stores bitmask of banners which were already shown to user.
