@@ -14,3 +14,8 @@ gem 'puma'
 
 # Use Foreman for starting server
 gem 'foreman'
+
+group :test do
+  # Use rspec for testing
+  gem 'rspec'
+end
