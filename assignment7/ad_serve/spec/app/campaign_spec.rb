@@ -124,11 +124,16 @@ describe Campaign do
     context "compaign exists" do
       before { campaign.save(1,1) }
 
-      it "should delete campaign" do
+      it "should delete empty campaign" do
         expect { campaign.delete }.to change{ redis.dbsize }.by(-1)
       end
+
+      it "should delete non empty campaign" do
+        campaign.save_banner('1', '1', '1')
+        expect { campaign.delete }.to change{ redis.dbsize }.by(-5)
+      end
+
     end
   end
-
 end
 
