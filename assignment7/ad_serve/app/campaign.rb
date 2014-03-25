@@ -82,9 +82,9 @@ class Campaign
   def get_next_banner_url(user_id)
     key = build_key('user', user_id)
     bitmask = redis.get(key) || ''
-    available = Calculation.filter_indexed_hash(weights.all, bitmask)
+    available = filter_indexed_hash(weights.all, bitmask)
 
-    mechanisms= pick_random_weighted_key(ratio)
+    mechanisms= pick_random_weighted_key(ratio.all)
     if mechanisms.to_sym == :weighted
       banner_index = pick_random_weighted_key(available)
     else
@@ -99,6 +99,6 @@ class Campaign
       url = get_banner(banner_id)[:url]
     end
 
-    reutrn url 
+    return
   end
 end

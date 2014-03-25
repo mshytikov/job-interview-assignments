@@ -205,5 +205,17 @@ describe Campaign do
 
     end
   end
+
+  describe '#get_next_banner_url' do
+    let(:user_id) { '1' }
+    before { campaign.save(50,50) }
+    context 'empty campaign' do
+      it 'returns nil' do
+        campaign.get_next_banner_url(user_id).should be_nil
+      end
+
+    end
+
+  end
 end
 
