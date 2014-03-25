@@ -1,10 +1,18 @@
 include AdServe
 
-get '/banner/:id/:user_id' do
-  url = Campaign.new(params[:id]).get_next_banner(user_id)
-  redirect url || settings.default_banner_url, 302
+#
+# Public API available for Visitors
+#
+get '/campaigns/:id/users/:user_id/banners' do
+  url = Campaign.new(params[:id]).get_next_banner(params[:user_id])
+  url ||= settings.default_banner_url
+  redirect url , 302
 end
 
+
+#
+# Private API available for AdMin
+#
 put '/campaigns/:id' do
   Campaign.new(params[:id]).save(params[:random], params[:weighted])
   status 204
