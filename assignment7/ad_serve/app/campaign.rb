@@ -36,7 +36,7 @@ class Campaign
 
   # Delete all keys with  prefix campaign:<id>
   def delete
-    redis.eval(DELETE_LUA_SCRIPT, :keys => ["#{redis_prefix}:#{id}"])
+    redis.eval(DELETE_LUA_SCRIPT, :keys => ["#{self.class.redis_prefix}:#{id}"])
   end
 
   def get_banner(banner_id)

@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Campaign do 
   let(:redis) { Redis.current }
 
+  subject(:campaign) { Campaign.new('1') }
+
   describe '.new(id)' do
-    subject { Campaign.new('1') }
     it { should respond_to(:id) }
     its(:id) { should == '1' }
   end
 
   describe '#save' do
-    let(:campaign) { Campaign.new(1) }
     let(:key)      { "campaign:1:ratio" }
     let(:value)    { {'random' => '40', 'weighted' => '60'} }
 
@@ -42,5 +42,16 @@ describe Campaign do
     end
 
   end
+
+
+  describe '#delete' do
+    let!(:another_campaign) { Campaign.new(2).save(0,0) }
+    context "compaign does not exitst" do
+      it "should not change db" do
+        expect { campaign.delete }.to_not change{ redis.dbsize }
+      end
+    end
+  end
+
 end
 
