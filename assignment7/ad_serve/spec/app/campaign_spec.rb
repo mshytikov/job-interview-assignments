@@ -51,6 +51,14 @@ describe Campaign do
         expect { campaign.delete }.to_not change{ redis.dbsize }
       end
     end
+
+    context "compaign exists" do
+      before { campaign.save(1,1) }
+
+      it "should delete campaign" do
+        expect { campaign.delete }.to change{ redis.dbsize }.by(-1)
+      end
+    end
   end
 
 end

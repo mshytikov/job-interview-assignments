@@ -4,7 +4,7 @@ class Campaign
 
   # This lua script needed to fully delete campaign which
   # can have millions keys with users data this is most efficient way
-  DELETE_LUA_SCRIPT = "for _,k in ipairs(redis.call('keys','KEYS[1]:*')) do redis.call('del',k) end"
+  LUA_SCRIPT_DELETE = "for _,k in ipairs(redis.call('keys', KEYS[1])) do redis.call('del',k) end"
 
   lock :lock, :expiration => 5, :timeout => 0.1
 
@@ -36,7 +36,7 @@ class Campaign
 
   # Delete all keys with  prefix campaign:<id>
   def delete
-    redis.eval(DELETE_LUA_SCRIPT, :keys => ["#{self.class.redis_prefix}:#{id}"])
+    redis.eval(LUA_SCRIPT_DELETE, :keys => ["#{self.class.redis_prefix}:#{id}:*"])
   end
 
   def get_banner(banner_id)
