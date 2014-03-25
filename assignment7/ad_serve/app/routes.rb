@@ -12,7 +12,7 @@ end
 # Private API available for AdMin
 #
 put '/campaigns/:id' do
-  Campaign.new(params[:id]).save(params[:random], params[:weighted])
+  Campaign.new(params[:id]).save(params[:random].to_i, params[:weighted].to_i)
   status 204
 end
 

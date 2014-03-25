@@ -24,14 +24,14 @@ class Campaign
   attr_reader :id
 
   def initialize(id)
-    self.id = id
+    @id = id
   end
 
-  def save(random, weights)
-    self.ratio = {
+  def save(random, weighted)
+    self.ratio.update({
       random: random,
-      weights: weights
-    }
+      weighted: weighted
+    })
   end
 
   # Delete all keys with  prefix campaign:<id>
