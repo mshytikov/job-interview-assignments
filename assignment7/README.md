@@ -127,10 +127,10 @@ The most interesting part is organisation of data storage in the Redis:
 Campaign will be stored in:
 
 ```
-campaigns:<id>:ratio   => {random => 3, weighted=7}
-campaigns:<id>:banners:<id> => { url => 'banner_url', :index => 12}
-campaigns:<id>:weights => { <banner_index> => banner_weight, ... }
-campaigns:<id>:banners => { <banner_index> => banner_id, ... }
+campaign:<id>:ratio   => {random => 3, weighted=7}
+campaign:<id>:banner:<id> => { url => 'banner_url', :index => 12}
+campaign:<id>:weights => { <banner_index> => banner_weight, ... }
+campaign:<id>:banners => { <banner_index> => banner_id, ... }
 ```
 The `<banner_index>` is a index of the banner needed to support user
 state described below.

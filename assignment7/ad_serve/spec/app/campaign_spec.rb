@@ -35,7 +35,7 @@ describe Campaign do
       end
 
       it "should update the campaign" do
-        expect { campaign.save(60, 40) }.to change{ 
+        expect { campaign.save(60, 40) }.to change{
           redis.hgetall(key)
         }.from(value).to(new_value)
       end
@@ -43,6 +43,75 @@ describe Campaign do
 
   end
 
+  describe "#save_banner" do
+    let(:weights)    { "campaign:1:banners" }
+    let(:banners)    { "campaign:1:weights" }
+    let(:id)    { "10" }
+    let(:url)    { "http://ad.serve.com" }
+    let(:weight) { '30' }
+
+    context "first banner in campaign" do
+      it "should create set of keys" do
+        expect { campaign.save_banner(id, url, weight) }.to change{ redis.dbsize }.by(4)
+      end
+
+      it "should increase the size of campaign" do
+        expect { campaign.save_banner(id, url, weight) }.to change{
+          redis.get("campaign:1:size")
+        }.from(nil).to('1')
+      end
+
+      it "should create campaign wights key" do
+        expect { campaign.save_banner(id, url, weight) }.to change{
+          redis.hgetall("campaign:1:weights")
+        }.from({}).to( { '0' => weight })
+      end
+
+      it "should create campaign banner key" do
+        expect { campaign.save_banner(id, url, weight) }.to change{
+          redis.hgetall("campaign:1:banners")
+        }.from({}).to( { '0' => id })
+      end
+
+      it "should create banner key" do
+        expect { campaign.save_banner(id, url, weight) }.to change{
+          redis.hgetall("campaign:1:banner:10")
+        }.from({}).to( {'index' => '0', 'url'=> url } )
+      end
+    end
+
+    context "new banner in campaign" do
+      before{ campaign.save_banner(id, url, weight) }
+
+      it "should add new banner" do
+        expect { campaign.save_banner('2', 'url1', '40') }.to change{ redis.dbsize }.by(1)
+      end
+
+      it "should increase the size of campaign" do
+        expect { campaign.save_banner(id, url, weight) }.to change{
+          redis.get("campaign:1:size")
+        }.from('1').to('2')
+      end
+
+      it "should create campaign wights key" do
+        expect { campaign.save_banner('2', 'url1', '40') }.to change{
+          redis.hgetall("campaign:1:weights")
+        }.from({ '0' => weight }).to({'0' => weight, '1' => '40'})
+      end
+
+      it "should create campaign banners key" do
+        expect { campaign.save_banner('2', 'url1', '40') }.to change{
+          redis.hgetall("campaign:1:banners")
+        }.from({ '0' => id }).to({'0' => id, '1' => '2'})
+      end
+
+      it "should create banner key" do
+        expect { campaign.save_banner('2', 'url1', '40') }.to change{
+          redis.hgetall("campaign:1:banner:2")
+        }.from({}).to( {'index' => '1', 'url'=> 'url1' } )
+      end
+    end
+  end
 
   describe '#delete' do
     let!(:another_campaign) { Campaign.new(2).save(0,0) }

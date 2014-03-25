@@ -6,7 +6,7 @@ class Campaign
   # can have millions keys with users data this is most efficient way
   LUA_SCRIPT_DELETE = "for _,k in ipairs(redis.call('keys', KEYS[1])) do redis.call('del',k) end"
 
-  lock :lock, :expiration => 5, :timeout => 0.1
+  lock :campaign, :expiration => 5, :timeout => 0.1
 
   # This counter keeps size of the campaign
   # It needed because keys in 'weights' can be deleted but size 
@@ -40,17 +40,17 @@ class Campaign
   end
 
   def get_banner(banner_id)
-    Redis::HashKey.new("#{redix_prefix}:banner:#{banner_id}")
+    Redis::HashKey.new("#{self.class.redis_prefix}:#{id}:banner:#{banner_id}")
   end
 
   def save_banner(banner_id, url, weight)
-    lock do 
-      size.increment do |new_size|
-        banner = get_banner(banner_id)
-        banner = {url: url , index: new_size - 1}
-        weights[index] = weight
-        banners[index] = banner_id
-      end
+    campaign_lock.lock do
+      banner = get_banner(banner_id)
+      index = self.size.value
+      banner.update({url: url , index: index})
+      self.weights[index] = weight
+      self.banners[index] = banner_id
+      self.size.increment
     end
   end
 
@@ -58,7 +58,7 @@ class Campaign
   # The functionality like cleanup (vacuum) for rebuilding the index
   # should be done in separate method 
   def delete_banner(id, url, weight)
-    lock do 
+    campaign_lock.lock do 
       banner = get_banner(id)
       index = banner[:index]
       weights.delete(index)
