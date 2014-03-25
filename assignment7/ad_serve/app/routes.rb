@@ -1,5 +1,3 @@
-include AdServe
-
 #
 # Public API available for Visitors
 #
