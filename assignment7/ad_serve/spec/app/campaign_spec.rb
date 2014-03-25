@@ -5,10 +5,12 @@ describe Campaign do
 
   subject(:campaign) { Campaign.new('1') }
 
+
   describe '.new(id)' do
     it { should respond_to(:id) }
     its(:id) { should == '1' }
   end
+
 
   describe '#save' do
     let(:key)      { "campaign:1:ratio" }
@@ -40,12 +42,10 @@ describe Campaign do
         }.from(value).to(new_value)
       end
     end
-
   end
 
+
   describe "#save_banner" do
-    let(:weights)    { "campaign:1:banners" }
-    let(:banners)    { "campaign:1:weights" }
     let(:id)    { "10" }
     let(:url)    { "http://ad.serve.com" }
     let(:weight) { '30' }
@@ -67,7 +67,7 @@ describe Campaign do
         }.from({}).to( { '0' => weight })
       end
 
-      it "should create campaign banner key" do
+      it "should create campaign banners key" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.hgetall("campaign:1:banners")
         }.from({}).to( { '0' => id })
@@ -144,6 +144,44 @@ describe Campaign do
       end
     end
   end
+
+
+  describe "#delete_banner" do
+    let(:id)      { "10" }
+    let(:id1)     { "20" }
+    let(:url)     { "http://ad.serve.com" }
+    let(:url)     { "http://ad1.serve.com" }
+    let(:weight)  { '30' }
+    let(:weight1) { '40' }
+
+    before{
+      campaign.save_banner(id, url, weight)
+      campaign.save_banner(id1, url1, weight1)
+    }
+
+    it "should delete banner_key" do
+      expect { campaign.delete_banner(id) }.to change{ redis.dbsize }.by(-1)
+    end
+
+    it "should not decrease the size of campaign" do
+      expect { campaign.delete_banner(id) }.to_not change{
+        redis.get("campaign:1:size")
+      }
+    end
+
+    it "should delete from campaign weights key" do
+      expect { campaign.delete_banner(id) }.to change{
+        redis.hgetall("campaign:1:weights")
+      }.from( { '0' => weight, '1' => weight1 }).to({'1' => weight1 })
+    end
+
+    it "should delete from campaign banners key" do
+      expect { campaign.delete_banner(id) }.to change{
+        redis.hgetall("campaign:1:banners")
+      }.from( { '0' => id, '1' => id1 }).to({'1' => id1 })
+    end
+  end
+
 
   describe '#delete' do
     let!(:another_campaign) { Campaign.new(2).save(0,0) }

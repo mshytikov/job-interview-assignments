@@ -63,12 +63,12 @@ class Campaign
   # Delete banner without decremeting the size
   # The functionality like cleanup (vacuum) for rebuilding the index
   # should be done in separate method 
-  def delete_banner(id, url, weight)
+  def delete_banner(id)
     campaign_lock.lock do 
       banner = get_banner(id)
       index = banner[:index]
-      weights.delete(index)
-      banners.delete(index)
+      self.weights.delete(index)
+      self.banners.delete(index)
       banner.clear
     end
   end
