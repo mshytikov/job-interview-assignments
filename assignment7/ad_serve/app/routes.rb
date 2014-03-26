@@ -2,9 +2,9 @@
 # Public API available for Visitors
 #
 get '/campaigns/:id/users/:user_id/next_banner' do
-  url = Campaign.new(params[:id]).get_next_banner(params[:user_id])
+  url = Campaign.new(params[:id]).get_next_banner_url(params[:user_id])
   url ||= settings.default_banner_url
-  redirect url , 302
+  redirect url, 302
 end
 
 
