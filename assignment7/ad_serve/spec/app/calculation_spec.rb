@@ -17,14 +17,14 @@ describe Calculation do
   describe "#pick_random_weighted_key" do
 
     it "picks mostly all elements" do
-      picked_keys = 1000.times.map{ pick_random_weighted_key(input) }
+      picked_keys = 10000.times.map{ pick_random_weighted_key(input) }
       (input.keys - picked_keys).size.should <= 5
     end
 
     it "picks more weighted key first with high porbability" do
       input[99] = 1000
       keys_frequency = Hash.new(0)
-      1000.times{|i|
+      10000.times{|i|
         k = pick_random_weighted_key(input)
         keys_frequency[k] += 1
       }
