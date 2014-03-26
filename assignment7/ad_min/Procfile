@@ -1,1 +1,1 @@
-ad_min: bundle exec rackup --server unicorn --port 3000
+ad-min: bundle exec rackup --server unicorn --port 3000

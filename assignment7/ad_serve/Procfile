@@ -1,1 +1,1 @@
-ad_serve: bundle exec rackup --server puma --port 3001
+ad-serve: bundle exec rackup --server puma --port 3001
