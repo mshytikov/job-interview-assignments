@@ -65,9 +65,11 @@ class Campaign
     end
   end
 
+  #
   # Delete banner without decremeting the size
   # The functionality like cleanup (vacuum) for rebuilding the index
   # should be done in separate method 
+  #
   def delete_banner(id)
     campaign_lock.lock do 
       banner = get_banner(id)
@@ -78,26 +80,26 @@ class Campaign
     end
   end
 
-
+  #
+  # Returns next new banner url and marks banner as viewed
+  #
   def get_next_banner_url(user_id)
     key = build_key('user', user_id)
     bitmask = redis.get(key) || ''
+
     available = filter_indexed_hash(weights.all, bitmask)
+    return nil if available.empty?
 
     mechanisms= pick_random_weighted_key(ratio.all)
     if mechanisms.to_sym == :weighted
-      banner_index = pick_random_weighted_key(available)
+      banner_index = pick_random_weighted_key(available).to_i
     else
-      banner_index = pick_random_key(available)
+      banner_index = pick_random_key(available).to_i
     end
 
-    url = nil
-
-    if banner_index
-      redis.setbit(key, banner_index, 1) # set bit to 1 means banner was showed
-      banner_id = banners[banner_index]
-      url = get_banner(banner_id)[:url]
-    end
+    redis.setbit(key, banner_index, 1) # set bit to 1 means banner was showed
+    banner_id = banners[banner_index]
+    url = get_banner(banner_id)[:url]
 
     return url
   end
