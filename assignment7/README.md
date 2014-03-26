@@ -192,8 +192,8 @@ Create DB
 
 ```
 redis-cli flushdb
-sh -c 'cd ad_min && bundle exec db:create'
-sh -c 'cd ad_min && bundle exec db:migrate'
+sh -c 'cd ad_min && bundle exec rake db:create'
+sh -c 'cd ad_min && bundle exec rake db:migrate'
 ```
 
 Start services
