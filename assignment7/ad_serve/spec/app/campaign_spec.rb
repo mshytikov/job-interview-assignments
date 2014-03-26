@@ -252,6 +252,28 @@ describe Campaign do
         campaign.get_next_banner_url(user_id).should == url
       end
     end
+
+    context "full campaign" do
+
+      it "should correctly return banner" do
+        ids = (0..49)
+        ids.each{ |i|
+          campaign.save_banner(i.to_s, "http://#{i}.com", "#{i*10}")
+        }
+        campaign.size.should == 50
+
+        returned_banners = ids.map{|i| campaign.get_next_banner_url(user_id) }
+        returned_banners.size.should == 50
+        returned_banners.uniq.size.should == 50
+
+        campaign.get_next_banner_url.should be_nil
+
+        campaign.save_banner(id.to_s, "http://50.com", 50)
+        campaign.get_next_banner_url.should == 'http://50.com'
+      end
+
+    end
+
   end
 end
 

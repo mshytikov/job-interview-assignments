@@ -13,6 +13,8 @@ module Calculation
     weights.each{|k, w| weights[k] = w.to_i}
 
     total_weight = weights.values.inject(:+)
+    return pick_random_key(weights) if total_weight == 0
+
     random_weight = SecureRandom.random_number(total_weight)
     s = 0
     weights.each do |k, w|
@@ -22,7 +24,7 @@ module Calculation
   end
 
   def pick_random_key(weights)
-    weights.keys().sample()
+    weights.keys.sample
   end
 
   #
