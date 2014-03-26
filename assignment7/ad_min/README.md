@@ -22,5 +22,5 @@ rake test
 Start server
 
 ```
-rails s
+foreman start
 ```

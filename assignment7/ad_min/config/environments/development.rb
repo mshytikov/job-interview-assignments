@@ -28,5 +28,7 @@ AdMin::Application.configure do
   config.assets.debug = true
 
   # AdServe API base url
-  config.ad_serve_url = "http://localhost:4567"
+  config.ad_serve_url = "http://localhost:3001"
+
+  config.action_controller.asset_host = "http://localhost:3000"
 end

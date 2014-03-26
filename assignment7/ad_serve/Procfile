@@ -1,1 +1,1 @@
-app: rackup -p 4567
+ad_serve: bundle exec rackup --server puma --port 3001
