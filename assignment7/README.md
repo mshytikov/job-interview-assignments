@@ -167,3 +167,55 @@ which can be done easily but it is out of scope of this test.
 
 #### Let's start with implementation !!!
 .
+.
+.
+.
+.
+
+### Instalation
+
+Was developed and tested using ruby 1.9.3, SQLlite 3.7.17, Redis 2.8.6 
+
+See sub-projects `README` files for more information.
+
+
+Install dependencies
+
+``` 
+bundle install
+
+sh -c 'cd ad_serve && bundle install'
+sh -c 'cd ad_min && bundle install'
+```
+
+Create DB
+
+```
+redis-cli flushdb
+sh -c 'cd ad_min && bundle exec db:create'
+sh -c 'cd ad_min && bundle exec db:migrate'
+```
+
+Start services
+```
+foreman start
+```
+
+
+Seed Data
+```
+sh -c 'cd ad_min && bundle exec db:seed'
+```
+
+AdMin   http://localhost:3000
+AdServe http://localhost:3001/campaings/1/users/1/next_banner
+
+
+### Tests
+
+Run tests
+
+```
+sh -c 'cd ad_min   && bundle rake'
+sh -c 'cd ad_serve && bundle rake'
+```
