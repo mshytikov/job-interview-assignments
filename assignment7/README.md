@@ -174,7 +174,7 @@ which can be done easily but it is out of scope of this test.
 
 ### Instalation
 
-Was developed and tested using ruby 1.9.3, SQLlite 3.7.17, Redis 2.8.6 
+Was developed and tested using ruby 1.9.3 and 2.1, SQLlite 3.7.17, Redis 2.8.6 
 
 See sub-projects `README` files for more information.
 
