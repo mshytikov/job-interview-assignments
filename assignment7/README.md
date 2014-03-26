@@ -204,18 +204,17 @@ foreman start
 
 Seed Data
 ```
-sh -c 'cd ad_min && bundle exec db:seed'
+sh -c 'cd ad_min && bundle exec rake db:seed'
 ```
 
-AdMin   http://localhost:3000
-AdServe http://localhost:3001/campaings/1/users/1/next_banner
+AdMin url   [http://localhost:3000](http://localhost:3000)
+AdServe url [http://localhost:3001/campaigns/1/users/1/next_banner](http://localhost:3001/campaigns/1/users/1/next_banner)
 
 
 ### Tests
 
 Run tests
-
 ```
-sh -c 'cd ad_min   && bundle rake'
-sh -c 'cd ad_serve && bundle rake'
+sh -c 'cd ad_min   && bundle exec rake'
+sh -c 'cd ad_serve && bundle exec rake'
 ```
