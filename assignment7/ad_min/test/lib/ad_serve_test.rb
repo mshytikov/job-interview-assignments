@@ -44,7 +44,7 @@ class AdClientTest< ActiveSupport::TestCase
 
     assert_equal(true, @client.process_response(with_status[201]))
     assert_equal(true, @client.process_response(with_status[204]))
-    assert_equal(false, @client.process_response(with_status[200]))
-    assert_equal(false, @client.process_response(with_status[500]))
+    assert_raises(RuntimeError){ @client.process_response(with_status[200])}
+    assert_raises(RuntimeError){ @client.process_response(with_status[500])}
   end
 end

@@ -68,7 +68,7 @@ module AdServe
 
     # Simple response handling
     def process_response(resp)
-      [201, 204].include?(resp.status)
+      [201, 204].include?(resp.status) || raise("Invalid AdServe response")
     end
 
     # Helper function to generate api path
