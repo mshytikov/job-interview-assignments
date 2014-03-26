@@ -1,2 +1,2 @@
-ad-min:   sh -c 'cd ./ad_min && foreman start'
-ad-serve: sh -c 'cd ./ad_serve && foreman start'
+ad-min:   sh -c 'cd ./ad_min   && BUNDLE_GEMFILE=`pwd`/Gemfile foreman start'
+ad-serve: sh -c 'cd ./ad_serve && BUNDLE_GEMFILE=`pwd`/Gemfile foreman start'
