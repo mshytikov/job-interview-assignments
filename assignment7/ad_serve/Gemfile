@@ -19,3 +19,6 @@ group :test do
   # Use rspec for testing
   gem 'rspec'
 end
+
+# Use rake to run commands
+gem 'rake'

@@ -1,0 +1,6 @@
+require 'rspec/core/rake_task'
+
+# Run rspec test using rake
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
