@@ -16,17 +16,17 @@ put '/campaigns/:id' do
   status 204
 end
 
-delete '/compaigns/:id' do
+delete '/campaigns/:id' do
   Campaign.new(params[:id]).delete
   status 204
 end
 
-put '/compaigns/:id/banners/:banner_id' do
+put '/campaigns/:id/banners/:banner_id' do
   Campaign.new(params[:id]).save_banner(params[:banner_id], params[:url], params[:weight])
   status 204
 end
 
-delete '/compaigns/:campaign_id/banners/:id' do
+delete '/campaigns/:campaign_id/banners/:id' do
   Campaign.new(params[:id]).delete_banner(params[:banner_id])
   status 204
 end
