@@ -8,7 +8,7 @@ class Campaign < ActiveRecord::Base
     if campaign_banner_ids.empty?
       Banner.all
     else
-      Banner.where('id NOT in (?)', campaign_banner_ids)
+      Banner.where('id NOT in (?)', campaign_banners.pluck(:banner_id))
     end
   end
 end
