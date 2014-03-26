@@ -1,0 +1,2 @@
+ad-min:   sh -c 'cd ./ad_min && foreman start'
+ad-serve: sh -c 'cd ./ad_serve && foreman start'
