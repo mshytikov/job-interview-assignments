@@ -263,13 +263,14 @@ describe Campaign do
         campaign.size.should == 50
 
         returned_banners = ids.map{|i| campaign.get_next_banner_url(user_id) }
+
         returned_banners.size.should == 50
         returned_banners.uniq.size.should == 50
 
-        campaign.get_next_banner_url.should be_nil
+        campaign.get_next_banner_url(user_id).should be_nil
 
-        campaign.save_banner(id.to_s, "http://50.com", 50)
-        campaign.get_next_banner_url.should == 'http://50.com'
+        campaign.save_banner('50', "http://50.com", 50)
+        campaign.get_next_banner_url(user_id).should == 'http://50.com'
       end
 
     end
