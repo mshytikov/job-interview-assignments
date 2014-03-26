@@ -213,7 +213,6 @@ describe Campaign do
     def bitstr_value(bitstr)
       key = 'tmpbitstr'
       bitstr.each_char.with_index{|c, i|
-        puts "="*20
         bit = (c == '0' ? 0 : 1)
         redis.setbit(key, i, bit)
       }
