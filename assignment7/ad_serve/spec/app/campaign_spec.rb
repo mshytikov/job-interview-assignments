@@ -17,11 +17,11 @@ describe Campaign do
     let(:value)    { {'random' => '40', 'weighted' => '60'} }
 
     context "campaign does not exitst" do
-      it "should add new campaign" do
+      it "adds new campaign" do
         expect { campaign.save(40, 60) }.to change{ redis.dbsize }.by(1)
       end
 
-      it "should store correct value" do
+      it "stores correct value" do
         expect { campaign.save(40, 60) }.to change{ 
           redis.hgetall(key)
         }.from({}).to(value)
@@ -32,11 +32,11 @@ describe Campaign do
       before { campaign.save(40, 60) }
       let(:new_value) { {'random' => '60', 'weighted' => '40'} }
 
-      it "should not create new campaign" do
+      it "does not create new campaign" do
         expect { campaign.save(60, 40) }.to_not change{ redis.dbsize }
       end
 
-      it "should update the campaign" do
+      it "updates the campaign" do
         expect { campaign.save(60, 40) }.to change{
           redis.hgetall(key)
         }.from(value).to(new_value)
@@ -51,29 +51,29 @@ describe Campaign do
     let(:weight) { '30' }
 
     context "first banner in campaign" do
-      it "should create set of keys" do
+      it "creates set of keys" do
         expect { campaign.save_banner(id, url, weight) }.to change{ redis.dbsize }.by(4)
       end
 
-      it "should increase the size of campaign" do
+      it "increases the size of campaign" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.get("campaign:1:size")
         }.from(nil).to('1')
       end
 
-      it "should create campaign weights key" do
+      it "creates campaign :weights key" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.hgetall("campaign:1:weights")
         }.from({}).to( { '0' => weight })
       end
 
-      it "should create campaign banners key" do
+      it "creates campaign :banners key" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.hgetall("campaign:1:banners")
         }.from({}).to( { '0' => id })
       end
 
-      it "should create banner key" do
+      it "creates banner key" do
         expect { campaign.save_banner(id, url, weight) }.to change{
           redis.hgetall("campaign:1:banner:10")
         }.from({}).to( {'index' => '0', 'url'=> url } )
@@ -83,29 +83,29 @@ describe Campaign do
     context "new banner in campaign" do
       before{ campaign.save_banner(id, url, weight) }
 
-      it "should add new banner" do
+      it "adds new banner" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{ redis.dbsize }.by(1)
       end
 
-      it "should increase the campaign size key" do
+      it "increases the campaign :size key" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.get("campaign:1:size")
         }.from('1').to('2')
       end
 
-      it "should create campaign weights key" do
+      it "creates campaign :weights key" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.hgetall("campaign:1:weights")
         }.from({ '0' => weight }).to({'0' => weight, '1' => '40'})
       end
 
-      it "should create campaign banners key" do
+      it "creates campaign :banners key" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.hgetall("campaign:1:banners")
         }.from({ '0' => id }).to({'0' => id, '1' => '2'})
       end
 
-      it "should create banner key" do
+      it "creates banner key" do
         expect { campaign.save_banner('2', 'url1', '40') }.to change{
           redis.hgetall("campaign:1:banner:2")
         }.from({}).to( {'index' => '1', 'url'=> 'url1' } )
@@ -115,29 +115,29 @@ describe Campaign do
     context "existing banner in campaign" do
       before{ campaign.save_banner(id, url, weight) }
 
-      it "should not add new banner" do
+      it "does not add new banner" do
         expect { campaign.save_banner(id, 'url1', '40') }.to_not change{ redis.dbsize }
       end
 
-      it "should not increase the size of campaign" do
+      it "does not increase the size of campaign" do
         expect { campaign.save_banner(id, 'url1', '40') }.to_not change{
           redis.get("campaign:1:size")
         }
       end
 
-      it "should update campaign weights key" do
+      it "updates campaign :weights key" do
         expect { campaign.save_banner(id, 'url1', '40') }.to change{
           redis.hgetall("campaign:1:weights")
         }.from({ '0' => weight }).to({'0' => '40' })
       end
 
-      it "should not update campaign banners key" do
+      it "does not update campaign :banners key" do
         expect { campaign.save_banner(id, 'url1', '40') }.to_not change{
           redis.hgetall("campaign:1:banners")
         }
       end
 
-      it "should update banner key" do
+      it "updates banner key" do
         expect { campaign.save_banner(id, 'url1', '40') }.to change{
           redis.hgetall("campaign:1:banner:10")
         }.from({'index' => '0', 'url'=> url }).to({'index' => '0', 'url'=> 'url1' })
@@ -159,23 +159,23 @@ describe Campaign do
       campaign.save_banner(id1, url1, weight1)
     }
 
-    it "should delete banner_key" do
+    it "deletes banner_key" do
       expect { campaign.delete_banner(id) }.to change{ redis.dbsize }.by(-1)
     end
 
-    it "should not decrease the size of campaign" do
+    it "does not decrease the size of campaign" do
       expect { campaign.delete_banner(id) }.to_not change{
         redis.get("campaign:1:size")
       }
     end
 
-    it "should delete from campaign weights key" do
+    it "deletes pair from campaign :weights key" do
       expect { campaign.delete_banner(id) }.to change{
         redis.hgetall("campaign:1:weights")
       }.from( { '0' => weight, '1' => weight1 }).to({'1' => weight1 })
     end
 
-    it "should delete from campaign banners key" do
+    it "deletes pair from campaign :banners key" do
       expect { campaign.delete_banner(id) }.to change{
         redis.hgetall("campaign:1:banners")
       }.from( { '0' => id, '1' => id1 }).to({'1' => id1 })
@@ -186,7 +186,7 @@ describe Campaign do
   describe '#delete' do
     let!(:another_campaign) { Campaign.new(2).save(0,0) }
     context "campaign does not exists" do
-      it "should not change db" do
+      it "does not change db" do
         expect { campaign.delete }.to_not change{ redis.dbsize }
       end
     end
@@ -194,11 +194,11 @@ describe Campaign do
     context "campaign exists" do
       before { campaign.save(1,1) }
 
-      it "should delete empty campaign" do
+      it "deletes empty campaign" do
         expect { campaign.delete }.to change{ redis.dbsize }.by(-1)
       end
 
-      it "should delete non empty campaign" do
+      it "deletes non empty campaign" do
         campaign.save_banner('1', '1', '1')
         expect { campaign.delete }.to change{ redis.dbsize }.by(-5)
       end
@@ -225,7 +225,7 @@ describe Campaign do
     let(:user_id) { '1' }
     before { campaign.save(50,50) }
 
-    
+
     context 'empty campaign' do
       it 'returns nil' do
         campaign.get_next_banner_url(user_id).should be_nil
