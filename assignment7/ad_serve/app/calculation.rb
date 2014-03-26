@@ -8,8 +8,9 @@ module Calculation
   # It picks the key with weighted probability
   #
   def pick_random_weighted_key(weights)
+    return nil if weights.empty?
     # Convert string weights to integer
-    weights.each{|k, v| weights[k] = v.to_i}
+    weights.each{|k, w| weights[k] = w.to_i}
 
     total_weight = weights.values.inject(:+)
     random_weight = SecureRandom.random_number(total_weight)
@@ -29,8 +30,8 @@ module Calculation
   # Returns hash without keys with corresponding bit '1' in bitmask
   #
   def filter_indexed_hash(indexed_hash, bitmask)
-    bitmask.unpack('B*').map
-    indexed_hash.select{|idx, w| idx >= bitmask.size ||  bitmask[idx] == '0'}
+    bitmask = bitmask.unpack('B*').first
+    indexed_hash.select{|idx, w| idx.to_i >= bitmask.size ||  bitmask[idx] == '0'}
   end
 
 end

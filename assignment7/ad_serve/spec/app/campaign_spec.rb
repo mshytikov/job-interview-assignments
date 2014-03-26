@@ -16,7 +16,7 @@ describe Campaign do
     let(:key)      { "campaign:1:ratio" }
     let(:value)    { {'random' => '40', 'weighted' => '60'} }
 
-    context "compaign does not exitst" do
+    context "campaign does not exitst" do
       it "should add new campaign" do
         expect { campaign.save(40, 60) }.to change{ redis.dbsize }.by(1)
       end
@@ -28,7 +28,7 @@ describe Campaign do
       end
     end
 
-    context "compaign already exitst" do
+    context "campaign already exitst" do
       before { campaign.save(40, 60) }
       let(:new_value) { {'random' => '60', 'weighted' => '40'} }
 
@@ -185,13 +185,13 @@ describe Campaign do
 
   describe '#delete' do
     let!(:another_campaign) { Campaign.new(2).save(0,0) }
-    context "compaign does not exitst" do
+    context "campaign does not exists" do
       it "should not change db" do
         expect { campaign.delete }.to_not change{ redis.dbsize }
       end
     end
 
-    context "compaign exists" do
+    context "campaign exists" do
       before { campaign.save(1,1) }
 
       it "should delete empty campaign" do
@@ -207,15 +207,51 @@ describe Campaign do
   end
 
   describe '#get_next_banner_url' do
+
+    # This helper method returns exact value from redis
+    # which is corresponding to input bit string
+    def bitstr_value(bitstr)
+      key = 'tmpbitstr'
+      bitstr.each_char.with_index{|c, i|
+        puts "="*20
+        bit = (c == '0' ? 0 : 1)
+        redis.setbit(key, i, bit)
+      }
+      value = redis.get(key)
+      redis.del(key)
+      return value
+    end
+
     let(:user_id) { '1' }
     before { campaign.save(50,50) }
+
+    
     context 'empty campaign' do
       it 'returns nil' do
         campaign.get_next_banner_url(user_id).should be_nil
       end
-
     end
 
+    context 'non empty campaign' do
+      let(:url) { 'http://test.com' }
+      before{ campaign.save_banner('1', url, '1') }
+
+      context 'new user' do
+        it 'creates user key' do
+          expect { campaign.get_next_banner_url(user_id) }.to change{ redis.dbsize }.by(1)
+        end
+
+        it 'sets bit for showed banner' do
+          expect { campaign.get_next_banner_url(user_id) }.to change{
+            redis.get('campaign:1:user:1')
+          }.from(nil).to(bitstr_value("1"))
+        end
+      end
+
+      it 'returns url' do
+        campaign.get_next_banner_url(user_id).should == url
+      end
+    end
   end
 end
 

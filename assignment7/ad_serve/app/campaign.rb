@@ -99,6 +99,6 @@ class Campaign
       url = get_banner(banner_id)[:url]
     end
 
-    return
+    return url
   end
 end
