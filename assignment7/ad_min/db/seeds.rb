@@ -9,8 +9,7 @@
 
 campaign = Campaign.create({ratio_random: 60, ratio_weighted: 40})
 
-Dir[Rails.root.join('tests', 'fixtures', 'banners', '*.png')].each do |f|
-  puts f
+Dir[Rails.root.join('test', 'fixtures', 'banners', '*.png')].sort.each do |f|
   Banner.create(name: File.basename(f), image: File.open(f))
 end
 
