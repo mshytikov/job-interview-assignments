@@ -159,12 +159,6 @@ that this is a TEST assignment and not production ready product
 Deployment will be done using Chef.
 
 
-P.S.: Complexity of algorithms which will be used in:
-Private API for managing campaign or banner is O(1)
-Public API for getting the banner will be O(N) where N is number of banners
-Also for production ready system the data 'cleanup' could be required
-which can be done easily but it is out of scope of this test.
-
 #### Let's start with implementation !!!
 .
 .
@@ -218,3 +212,62 @@ Run tests
 sh -c 'cd ad_min   && bundle exec rake'
 sh -c 'cd ad_serve && bundle exec rake'
 ```
+
+
+## Deployed examples:
+AdMin: [http://ad-min.herokuapp.com](http://ad-min.herokuapp.com)
+
+AdServe: [http://ad-serve.herokuapp.com](http://ad-serve.herokuapp.com/campaigns/1/users/1/next_banner)
+
+Url for testing ```http://ad-serve.herokuapp.com/campaigns/:campaign_id/users/:user_id/next_banner```
+
+Page for testing : [http://ad-min.herokuapp.com](http://ad-min.herokuapp.com/test.html)
+
+### Some test results
+
+```
+ab -k -n 500 -c 10
+http://ad-serve.herokuapp.com/campaigns/1/users/567/next_banner
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking ad-serve.herokuapp.com (be patient)
+
+Server Software:        
+Server Hostname:        ad-serve.herokuapp.com
+Server Port:            80
+
+Document Path:          /campaigns/1/users/567/next_banner
+Document Length:        0 bytes
+
+Concurrency Level:      10
+Time taken for tests:   6.864 seconds
+Complete requests:      500
+Failed requests:        0
+Write errors:           0
+Non-2xx responses:      500
+Keep-Alive requests:    500
+Total transferred:      136609 bytes
+HTML transferred:       0 bytes
+Requests per second:    72.85 [#/sec] (mean)
+Time per request:       137.270 [ms] (mean)
+Time per request:       13.727 [ms] (mean, across all concurrent
+requests)
+Transfer rate:          19.44 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   4.9      0      43
+Processing:    38  136  36.5    147     215
+Waiting:       38  136  36.5    147     215
+Total:         38  136  37.0    148     215
+
+```
+
+
+P.S.: Known bugs - a lot of them )))) because it is **test** assignment. The
+deletion for campaign does not work because default redis version on
+Heroku < 2.6.0.
+
+
