@@ -1,0 +1,36 @@
+<!-- This for test purpose only don't try to read the code-->
+
+<html>
+<head>
+<title>Test AdServe</title>
+</head>
+<body>
+
+<h3>Test AdServe</h3>
+
+<script type="text/javascript">
+function next_banner(){
+  userId = document.getElementById('user_id').value;
+  campaignId = document.getElementById('campaign_id').value;
+  banner = document.getElementById('banner');
+  banner.src = 'http://ad-serve.herokuapp.com/campaigns/'
+               + campaignId + '/users/' + userId +'/next_banner?'
+               + new Date().getTime();
+
+}
+
+</script>
+
+<form action="#" onsubmit="next_banner();return false;">
+  <label for 'campaign_id'>Campaign ID</label>
+  <input  id='campaign_id' name="cid" value="1" type="number"/>
+
+  <label for 'user_id'>User ID</label>
+  <input  id='user_id' name="uid" value="1" type="number"/>
+  <input type="submit" value='Next Banner' />
+</form>
+
+<image id='banner' src='' />
+
+</body>
+</html>
