@@ -33,7 +33,7 @@ module Calculation
   #
   def filter_indexed_hash(indexed_hash, bitmask)
     bitmask = bitmask.unpack('B*').first
-    indexed_hash.select{|idx, w| idx.to_i >= bitmask.size ||  bitmask[idx.to_i] == '0'}
+    indexed_hash.select{|idx, w| bitmask[idx.to_i] != '1'}
   end
 
 end
