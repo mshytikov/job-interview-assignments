@@ -15,8 +15,8 @@ module Mer
       validate_rover_position!
 
       @mission.instructions.each do |instruction|
-        if can_perform_instruction?(@plateau, @rover, instruction)
-          perform_instruction(@rover, instruction)
+        if can_perform_instruction?(plateau, rover, instruction)
+          perform_instruction(rover, instruction)
         else
           logger.warn("Skipping instruction #{instruction}")
         end
@@ -26,8 +26,11 @@ module Mer
     end
 
     private
+
+    attr_reader :plateau, :logger, :rover, :mission
+
     def validate_rover_position!
-      unless rover_position_valid?(@plateau, @rover)
+      unless rover_position_valid?(plateau, rover)
         fail(RoverPositionError, "Invalid postion: #{rover.inspect}")
       end
     end
