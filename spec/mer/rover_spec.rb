@@ -14,6 +14,7 @@ describe Mer::Rover do
     end
   end
 
+
   let(:x) { 10 }
   let(:y) { 20 }
   let(:orientation) { :west }
@@ -34,6 +35,28 @@ describe Mer::Rover do
     end
   end
 
+
+  describe "#move" do
+    variations =  {
+      north: [0,  1],
+      west:  [-1, 0],
+      south: [0, -1],
+      east:  [1,  0],
+    }
+
+    variations.each_pair do |orientation, expected_location|
+      let(:x) { 0 }
+      let(:y) { 0 }
+      context "when x=0, y=0 and current orientation is '#{orientation}'" do
+        let(:orientation) { orientation }
+        it "moves to #{expected_location}" do
+          expect { subject.move }
+            .to change{ [subject.x, subject.y] }
+            .from([0, 0]).to(expected_location)
+        end
+      end
+    end
+  end
 
   describe "#left" do
     it_behaves_like "rotating", :left, {

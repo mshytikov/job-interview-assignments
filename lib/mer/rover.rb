@@ -18,7 +18,7 @@ module Mer
     end
 
     def move
-      (shift_x, shift_y) = DIRECTIONS[direction]
+      (shift_x, shift_y) = DIRECTIONS[orientation]
       @x += shift_x
       @y += shift_y
     end
