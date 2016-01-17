@@ -52,4 +52,20 @@ describe Mer::Rover do
       west:  :north,
     }
   end
+
+  describe "#orientation_lebel" do
+    variations = {
+      north: "N",
+      west:  "W",
+      south: "S",
+      east:  "E"
+    }
+
+    variations.each_pair do |orientation, expected_label|
+      context "when orientation is '#{orientation}'" do
+        let(:orientation) { orientation }
+        its(:orientation_label) { is_expected.to eq(expected_label) }
+      end
+    end
+  end
 end

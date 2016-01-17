@@ -31,6 +31,10 @@ module Mer
       rotate(+1)
     end
 
+    def orientation_label
+      ORIENTATION_LABELS[orientation]
+    end
+
     private
 
     def rotate(shift)
