@@ -1,0 +1,79 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "logger"
+require "mer"
+
+
+# XXX: The fast made script to provide simple wrapper for execution from bash
+# Not ready for review
+
+mission_path = ARGV[0]
+
+fails('Please provide path to the mission file') if mission_path.nil?
+
+logger = Logger.new(STDERR)
+
+def fail_mission(line)
+  fail("Invalid mission: #{line}")
+end
+
+def initialise_plateau(line)
+  if line =~ /(\d+) (\d+)/
+    Mer::Plateau.new($1.to_i, $2.to_i)
+  else
+    fail_mission(line)
+  end
+end
+
+def initialise_rover(line)
+  if line =~ /(\d+) (\d+) ([NWES])/
+    orientation = Mer::ORIENTATION_LABELS.key($3)
+    Mer::Rover.new($1.to_i, $2.to_i, orientation)
+  else
+    fail_mission(line)
+  end
+end
+
+def initialise_mission(line)
+  if line =~ /([LRM]+)/
+    Mer::Mission.new($1)
+  else
+    fail_mission(line)
+  end
+end
+
+
+plateau = nil
+rover = nil
+mission = nil
+
+# Perform mission in a lazy way (one by one),
+# because number of rovers could be huge :)
+
+File.foreach(mission_path) do |line|
+  unless plateau
+    # performed only once for the first line in the file
+    plateau = initialise_plateau(line)
+    next
+  end
+
+  unless rover
+    rover = initialise_rover(line)
+    next
+  end
+
+  mission = initialise_mission(line)
+
+  engine = Mer::Engine.new(
+    plateau: plateau,
+    rover: rover,
+    mission: mission,
+    logger:logger
+  )
+  engine.run
+  puts("#{rover.x} #{rover.y} #{rover.orientation_label}")
+
+  # reset rover
+  rover = nil
+end
