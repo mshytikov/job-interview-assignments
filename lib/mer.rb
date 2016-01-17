@@ -2,6 +2,7 @@ require "mer/version"
 require "mer/rover"
 require "mer/plateau"
 require "mer/mission"
+require "mer/engine"
 
 module Mer
   ORIENTATIONS = [:north, :east, :south, :west]
