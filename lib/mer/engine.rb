@@ -18,7 +18,7 @@ module Mer
         if can_perform_instruction?(plateau, rover, instruction)
           perform_instruction(rover, instruction)
         else
-          logger.warn("Skipping instruction #{instruction}")
+          logger.warn("Skipping instruction: #{instruction}")
         end
       end
 

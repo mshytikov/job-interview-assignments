@@ -32,9 +32,13 @@ describe Mer::Engine do
     end
 
     context "when some instructions can't be performed" do
-      it "otputs coordinates of rover" do
+      let(:mission) { Mer::Mission.new("MMMMLM") }
+      it "otputs warning and final coordinates of rover " do
         expect(logger)
-          .to receive(:warn).once.with("Skipping instruction: :move")
+          .to receive(:warn).once.with("Skipping instruction: move")
+
+        expect(logger).to receive(:info).once.with("0 5 W")
+
         subject.run
       end
     end
@@ -42,9 +46,7 @@ describe Mer::Engine do
     context "when some initial position of rover is invalid" do
       let(:rover) { Mer::Rover.new(6, 20, :north) }
       it "raises error" do
-        expect { subject.run }.to raise_error(Mer::RoverPositionError, /invalid/)
-        gger
-
+        expect { subject.run }.to raise_error(Mer::RoverPositionError)
       end
     end
   end
