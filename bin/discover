@@ -27,7 +27,7 @@ end
 
 def initialise_rover(line)
   if line =~ /(\d+) (\d+) ([NWES])/
-    Mer::Rover.parse(line)
+    Mer::Rover.parse(line.chomp)
   else
     fail_mission(line)
   end

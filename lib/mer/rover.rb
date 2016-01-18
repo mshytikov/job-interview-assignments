@@ -1,7 +1,7 @@
 module Mer
   class Rover
     STATE_PATTERN =
-      /(?<x>\d+) (?<y>\d+) (?<orientation>[#{ORIENTATIONS.keys}])/
+      /\A(?<x>\d+) (?<y>\d+) (?<orientation>[#{ORIENTATIONS.keys}])\z/
 
     DIRECTIONS = {
       north: [0, +1],
