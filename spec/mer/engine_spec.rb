@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Mer::Engine do
   let(:plateau) { Mer::Plateau.new(5, 5) }
   let(:rover) { Mer::Rover.new(1, 2, :north) }
-  let(:mission) { Mer::Mission.new("LMLMLMLMM") }
+  let(:mission) { Mer::Mission.parse("LMLMLMLMM") }
   let(:logger) { instance_double("Logger") }
 
   subject(:engine) {
@@ -32,7 +32,7 @@ describe Mer::Engine do
     end
 
     context "when some instructions can't be performed" do
-      let(:mission) { Mer::Mission.new("MMMMLM") }
+      let(:mission) { Mer::Mission.parse("MMMMLM") }
       it "otputs warning and final coordinates of rover " do
         expect(logger)
           .to receive(:warn).once.with("Skipping instruction: move")
