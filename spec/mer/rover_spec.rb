@@ -35,7 +35,6 @@ describe Mer::Rover do
     end
   end
 
-
   describe "#move" do
     variations =  {
       north: [0,  1],
@@ -51,7 +50,7 @@ describe Mer::Rover do
         let(:orientation) { orientation }
         it "moves to #{expected_location}" do
           expect { subject.move }
-            .to change{ [subject.x, subject.y] }
+            .to change { [subject.x, subject.y] }
             .from([0, 0]).to(expected_location)
         end
       end

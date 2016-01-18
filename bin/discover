@@ -4,13 +4,12 @@ require "bundler/setup"
 require "logger"
 require "mer"
 
-
 # XXX: The fast made script to provide simple wrapper for execution from bash
 # Not ready for review
 
 mission_path = ARGV[0]
 
-fails('Please provide path to the mission file') if mission_path.nil?
+fails("Please provide path to the mission file") if mission_path.nil?
 
 logger = Logger.new(STDERR)
 
@@ -37,12 +36,11 @@ end
 
 def initialise_mission(line)
   if line =~ /([LRM]+)/
-    Mer::Mission.new($1)
+    Mer::Mission.parse($1)
   else
     fail_mission(line)
   end
 end
-
 
 plateau = nil
 rover = nil
@@ -69,7 +67,7 @@ File.foreach(mission_path) do |line|
     plateau: plateau,
     rover: rover,
     mission: mission,
-    logger:logger
+    logger: logger
   )
   engine.run
   puts("#{rover.x} #{rover.y} #{rover.orientation_label}")

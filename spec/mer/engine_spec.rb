@@ -15,14 +15,13 @@ describe Mer::Engine do
     )
   }
 
-
   describe "#run" do
     context "when all can be performed" do
       it "performs mission" do
         allow(logger).to receive(:info)
         expect { subject.run }
-          .to change{ [rover.x, rover.y, rover.orientation] }
-          .from([1, 2, :north]).to([1 ,3, :north])
+          .to change { [rover.x, rover.y, rover.orientation] }
+          .from([1, 2, :north]).to([1, 3, :north])
       end
 
       it "otputs coordinates of rover" do
@@ -50,6 +49,4 @@ describe Mer::Engine do
       end
     end
   end
-
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Mer::Mission do
-
   describe ".new" do
     let(:instructions) { [:left, :right, :move] }
     subject { described_class.new(instructions) }
@@ -27,4 +26,3 @@ describe Mer::Mission do
     end
   end
 end
-

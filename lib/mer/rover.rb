@@ -1,12 +1,11 @@
 module Mer
   class Rover
     DIRECTIONS = {
-      :north => [0, +1],
-      :south => [0, -1],
-      :east =>  [+1, 0],
-      :west =>  [-1, 0],
-    }
-
+      north: [0, +1],
+      south: [0, -1],
+      east:  [+1, 0],
+      west:  [-1, 0],
+    }.freeze
 
     attr_reader :x, :y, :orientation
 
@@ -47,7 +46,5 @@ module Mer
         fail(ArgumentError, "Invalid orientation: #{orientation}")
       end
     end
-
-
   end
 end
