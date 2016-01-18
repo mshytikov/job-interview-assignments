@@ -1,7 +1,7 @@
 module Mer
   class Rover
     STATE_PATTERN =
-      /(?<x>\d+) (?<y>\d+) (?<orientation>[NESW])/
+      /(?<x>\d+) (?<y>\d+) (?<orientation>[#{ORIENTATIONS.keys}])/
 
     DIRECTIONS = {
       north: [0, +1],
@@ -18,7 +18,7 @@ module Mer
 
         x = Regexp.last_match[:x].to_i
         y = Regexp.last_match[:y].to_i
-        orientation = ORIENTATION_LABELS.key(Regexp.last_match[:orientation])
+        orientation = ORIENTATIONS.fetch(Regexp.last_match[:orientation])
 
         new(x, y, orientation)
       end
@@ -48,18 +48,22 @@ module Mer
     end
 
     def orientation_label
-      ORIENTATION_LABELS[orientation]
+      ORIENTATIONS.key(orientation)
     end
 
     private
 
+    def orientations
+      ORIENTATIONS.values
+    end
+
     def rotate(shift)
-      index = (ORIENTATIONS.index(orientation) + shift) % ORIENTATIONS.length
-      @orientation = ORIENTATIONS[index]
+      index = (orientations.index(orientation) + shift) % orientations.length
+      @orientation = orientations[index]
     end
 
     def validate_orientation!(orientation)
-      unless ORIENTATIONS.include?(orientation)
+      unless orientations.include?(orientation)
         fail(ArgumentError, "Invalid orientation: #{orientation}")
       end
     end
