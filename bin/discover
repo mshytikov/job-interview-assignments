@@ -27,8 +27,7 @@ end
 
 def initialise_rover(line)
   if line =~ /(\d+) (\d+) ([NWES])/
-    orientation = Mer::ORIENTATION_LABELS.key($3)
-    Mer::Rover.new($1.to_i, $2.to_i, orientation)
+    Mer::Rover.parse(line)
   else
     fail_mission(line)
   end

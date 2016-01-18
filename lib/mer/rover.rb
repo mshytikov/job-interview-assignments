@@ -1,11 +1,28 @@
 module Mer
   class Rover
+    STATE_PATTERN =
+      /(?<x>\d+) (?<y>\d+) (?<orientation>[NESW])/
+
     DIRECTIONS = {
       north: [0, +1],
       south: [0, -1],
       east:  [+1, 0],
       west:  [-1, 0],
     }.freeze
+
+    class << self
+      def parse(state_str)
+        unless state_str =~ STATE_PATTERN
+          fail(ArgumentError, "Invalid rover state: '#{state_str}'")
+        end
+
+        x = Regexp.last_match[:x].to_i
+        y = Regexp.last_match[:y].to_i
+        orientation = ORIENTATION_LABELS.key(Regexp.last_match[:orientation])
+
+        new(x, y, orientation)
+      end
+    end
 
     attr_reader :x, :y, :orientation
 
