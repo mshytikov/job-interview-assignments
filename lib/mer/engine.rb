@@ -4,7 +4,7 @@ module Mer
   class Engine
     include EngineHelper
 
-    def initialize(plateau:, rover: , mission:, logger:)
+    def initialize(plateau:, rover:, mission:, logger:)
       @plateau = plateau
       @rover = rover
       @mission = mission
@@ -14,7 +14,7 @@ module Mer
     def run
       validate_rover_position!
 
-      @mission.instructions.each do |instruction|
+      mission.instructions.each do |instruction|
         if can_perform_instruction?(plateau, rover, instruction)
           perform_instruction(rover, instruction)
         else
@@ -35,5 +35,4 @@ module Mer
       end
     end
   end
-
 end

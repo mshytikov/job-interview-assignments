@@ -1,12 +1,11 @@
 module Mer
   class Rover
     DIRECTIONS = {
-      :north => [0, +1],
-      :south => [0, -1],
-      :east =>  [+1, 0],
-      :west =>  [-1, 0],
-    }
-
+      north: [0, +1],
+      south: [0, -1],
+      east:  [+1, 0],
+      west:  [-1, 0],
+    }.freeze
 
     attr_reader :x, :y, :orientation
 
@@ -32,22 +31,24 @@ module Mer
     end
 
     def orientation_label
-      ORIENTATION_LABELS[orientation]
+      ORIENTATIONS.key(orientation)
     end
 
     private
 
+    def orientations
+      ORIENTATIONS.values
+    end
+
     def rotate(shift)
-      index = (ORIENTATIONS.index(orientation) + shift) % ORIENTATIONS.length
-      @orientation = ORIENTATIONS[index]
+      index = (orientations.index(orientation) + shift) % orientations.length
+      @orientation = orientations[index]
     end
 
     def validate_orientation!(orientation)
-      unless ORIENTATIONS.include?(orientation)
+      unless orientations.include?(orientation)
         fail(ArgumentError, "Invalid orientation: #{orientation}")
       end
     end
-
-
   end
 end

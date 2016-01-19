@@ -1,6 +1,5 @@
 module Mer
   module EngineHelper
-
     def rover_position_valid?(plateau, rover)
       plateau.include?(rover.x, rover.y)
     end

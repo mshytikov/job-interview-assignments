@@ -1,20 +1,11 @@
 require 'spec_helper'
 
 describe Mer::Mission do
-  subject { described_class.new(instructions) }
-
   describe ".new" do
-    context "with correct instructions" do
-      let(:instructions) { "LMRL" }
-      its(:instructions) { is_expected.to eq([:left, :move, :right, :left]) }
-    end
+    let(:instructions) { [:left, :right, :move] }
+    subject { described_class.new(instructions) }
 
-    context "with invalid instructions" do
-      let(:instructions) { "LMIR" }
-      it "raises error" do
-        expect { subject }.to raise_error(ArgumentError, /instruction: 'I'/)
-      end
-    end
+    it { is_expected.to respond_to(:instructions) }
+    its(:instructions) { is_expected.to eq(instructions) }
   end
 end
-
