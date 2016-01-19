@@ -1,4 +1,4 @@
-# Mer [![Build Status](https://travis-ci.org/mshytikov/mer.svg?branch=master)](https://travis-ci.org/mshytikov/mer)
+# Mer [![Build Status](https://travis-ci.org/mshytikov/mer.svg?branch=master)](https://travis-ci.org/mshytikov/mer) [![Code Climate](https://codeclimate.com/github/mshytikov/mer/badges/gpa.svg)](https://codeclimate.com/github/mshytikov/mer)
 
 
 A squad of robotic rovers are to be landed by NASA on a plateau on Mars
