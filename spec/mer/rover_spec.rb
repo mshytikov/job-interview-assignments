@@ -1,19 +1,17 @@
 require 'spec_helper'
 
 describe Mer::Rover do
-
   shared_examples "rotating" do |direction, rotations|
     rotations.each_pair do |current, expected|
       context "when current orientation is '#{current}'" do
         let(:orientation) { current }
         it "rotates to #{expected}" do
           expect { subject.public_send(direction) }
-            .to change{ subject.orientation }.from(current).to(expected)
+            .to change { subject.orientation }.from(current).to(expected)
         end
       end
     end
   end
-
 
   let(:x) { 10 }
   let(:y) { 20 }
@@ -34,7 +32,6 @@ describe Mer::Rover do
       end
     end
   end
-
 
   describe "#move" do
     variations =  {
