@@ -34,6 +34,7 @@ module Mer
 
         x_max = Regexp.last_match[:x_max].to_i
         y_max = Regexp.last_match[:y_max].to_i
+
         Plateau.new(x_max, y_max)
       end
 
@@ -53,7 +54,9 @@ module Mer
         unless spec =~ MISSION_INSTRUCTIONS_PATTERN
           fail(ArgumentError, "Invalid mission instructions: '#{spec}'")
         end
+
         instructions = spec.chars.map { |c| INSTRUCTIONS.fetch(c) }
+
         Mission.new(instructions)
       end
     end
