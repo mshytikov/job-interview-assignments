@@ -13,29 +13,10 @@ fails("Please provide path to the mission file") if mission_path.nil?
 
 logger = Logger.new(STDERR)
 
-plateau = nil
-rover = nil
-mission = nil
-
 # Perform mission in a lazy way (one by one),
 # because number of rovers could be huge :)
 
-File.foreach(mission_path) do |line|
-  line = line.chomp
-
-  unless plateau
-    # performed only once for the first line in the file
-    plateau = Mer::Plateau.parse(line)
-    next
-  end
-
-  unless rover
-    rover = Mer::Rover.parse(line)
-    next
-  end
-
-  mission = Mer::Mission.parse(line)
-
+Mer::Parser.parse_file(mission_path) do |plateau, rover, mission|
   engine = Mer::Engine.new(
     plateau: plateau,
     rover: rover,
@@ -44,7 +25,4 @@ File.foreach(mission_path) do |line|
   )
   engine.run
   puts("#{rover.x} #{rover.y} #{rover.orientation_label}")
-
-  # reset rover
-  rover = nil
 end

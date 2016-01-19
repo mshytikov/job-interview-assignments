@@ -18,6 +18,7 @@ module Mer
 end
 
 require "mer/version"
+require "mer/parser"
 require "mer/rover"
 require "mer/plateau"
 require "mer/mission"
