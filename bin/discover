@@ -1,21 +1,17 @@
 #!/usr/bin/env ruby
+# Simple wrapper script to discover the Mars
 
 require "bundler/setup"
 require "logger"
 require "mer"
 
-# XXX: The fast made script to provide simple wrapper for execution from bash
-# Not ready for review
-
 mission_path = ARGV[0]
-
 fails("Please provide path to the mission file") if mission_path.nil?
 
 logger = Logger.new(STDERR)
 
 # Perform mission in a lazy way (one by one),
 # because number of rovers could be huge :)
-
 Mer::Parser.parse_file(mission_path) do |plateau, rover, mission|
   engine = Mer::Engine.new(
     plateau: plateau,

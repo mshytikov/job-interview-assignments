@@ -35,33 +35,6 @@ describe Mer::Rover do
     end
   end
 
-  describe ".parse" do
-    subject { described_class.parse(state_str) }
-
-    context "with correct arguments" do
-      let(:state_str) { "1 2 N" }
-      it { is_expected.to be_a(Mer::Rover) }
-      its(:x) { is_expected.to eq(1) }
-      its(:y) { is_expected.to be(2) }
-      its(:orientation) { is_expected.to eq(:north) }
-    end
-
-    context "with invalid orientation" do
-      variations = [
-        "1 2 n",
-        "a 2 N",
-        "1 b N",
-      ]
-      variations.each do |state_str|
-        describe "like '#{state_str}'" do
-          let(:state_str) { state_str }
-          it "raises error" do
-            expect { subject }.to raise_error(ArgumentError, /rover state/)
-          end
-        end
-      end
-    end
-  end
 
   describe "#move" do
     variations =  {

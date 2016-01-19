@@ -10,22 +10,6 @@ describe Mer::Plateau do
     its(:y_side) { is_expected.to eq(0..20) }
   end
 
-  describe ".parse" do
-    subject { described_class.parse(size_str) }
-
-    context "with correct size" do
-      let(:size_str) { "10 20" }
-      it { is_expected.to be_a(Mer::Plateau) }
-      its(:x_side) { is_expected.to eq(0..10) }
-      its(:y_side) { is_expected.to eq(0..20) }
-    end
-
-    context "with invalid size" do
-      let(:size_str) { "-1 20" }
-      it { expect { subject }.to raise_error(ArgumentError, /plateau size/) }
-    end
-  end
-
   describe "#include?" do
     subject { described_class.new(10, 20).include?(x, y) }
 

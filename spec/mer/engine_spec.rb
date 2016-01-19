@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Mer::Engine do
   let(:plateau) { Mer::Plateau.new(5, 5) }
   let(:rover) { Mer::Rover.new(1, 2, :north) }
-  let(:mission) { Mer::Mission.parse("LMLMLMLMM") }
+  let(:mission) { Mer::Mission.new([:move, :left, :move]) }
   let(:logger) { instance_double("Logger") }
 
   subject(:engine) {
@@ -21,17 +21,17 @@ describe Mer::Engine do
         allow(logger).to receive(:info)
         expect { subject.run }
           .to change { [rover.x, rover.y, rover.orientation] }
-          .from([1, 2, :north]).to([1, 3, :north])
+          .from([1, 2, :north]).to([0, 3, :west])
       end
 
       it "otputs coordinates of rover" do
-        expect(logger).to receive(:info).once.with("1 3 N")
+        expect(logger).to receive(:info).once.with("0 3 W")
         subject.run
       end
     end
 
     context "when some instructions can't be performed" do
-      let(:mission) { Mer::Mission.parse("MMMMLM") }
+      let(:mission) { Mer::Mission.new([:move] * 4 + [:left, :move]) }
       it "otputs warning and final coordinates of rover " do
         expect(logger)
           .to receive(:warn).once.with("Skipping instruction: move")
