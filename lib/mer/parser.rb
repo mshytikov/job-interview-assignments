@@ -10,30 +10,20 @@ module Mer
 
     class << self
       def parse_file(file_path)
-        plateau = nil
-        rover = nil
-        mission = nil
+        read_spec = ->(f) { f.readline.chomp }
+        File.open(file_path) do |f|
+          plateau = parse_plateau(read_spec[f])
 
-        File.foreach(file_path) do |line|
-          line = line.chomp
+          loop do
+            begin
+              rover = parse_rover(read_spec[f])
+            rescue EOFError # no more rovers in the file
+              break
+            end
+            mission = parse_mission(read_spec[f])
 
-          unless plateau
-            # performed only once for the first line in the file
-            plateau = parse_plateau(line)
-            next
+            yield(plateau, rover, mission)
           end
-
-          unless rover
-            rover = parse_rover(line)
-            next
-          end
-
-          mission = parse_mission(line)
-
-          yield(plateau, rover, mission)
-
-          # reset rover
-          rover = nil
         end
       end
 
