@@ -1,0 +1,24 @@
+source 'https://rubygems.org'
+
+# Use sinatra for quickly create web app
+gem 'sinatra'
+
+# Use redis as a storage
+gem 'redis'
+
+# Use redis-objects for object wrapping
+gem 'redis-objects'
+
+# Use Puma for running server
+gem 'puma'
+
+# Use Foreman for starting server
+gem 'foreman'
+
+group :test do
+  # Use rspec for testing
+  gem 'rspec'
+end
+
+# Use rake to run commands
+gem 'rake'

@@ -1,0 +1,29 @@
+<%= form_for([@campaign,@campaign_banner]) do |f| %>
+  <% if @campaign_banner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@campaign_banner.errors.count, "error") %> prohibited this campaign_banner from being saved:</h2>
+
+      <ul>
+      <% @campaign_banner.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :banner_id %><br>
+    <% if action_name == 'new' %>
+      <%= f.select :banner_id, available_banners(@campaign) %>
+    <% else %>
+      <%= @campaign_banner.id %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

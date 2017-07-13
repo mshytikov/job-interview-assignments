@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @campaign.name %>
+</p>
+
+<p>
+  <strong>Ratio random:</strong>
+  <%= @campaign.ratio_random %>
+</p>
+
+<p>
+  <strong>Ratio weighted:</strong>
+  <%= @campaign.ratio_weighted %>
+</p>
+
+<p>
+  <%= link_to 'Banners in this Campaign', campaign_banners_path(@campaign) %>
+</p>
+
+<%= link_to 'Edit', edit_campaign_path(@campaign) %> |
+<%= link_to 'Back', campaigns_path %>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AdMin</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= link_to 'Campaigns', campaigns_path %>
+<%= link_to 'Banners',   banners_path %>
+
+<br>
+
+<%= yield %>
+
+</body>
+</html>
